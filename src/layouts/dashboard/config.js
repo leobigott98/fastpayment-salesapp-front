@@ -9,25 +9,25 @@ import XCircleIcon from '@heroicons/react/24/solid/XCircleIcon';
 import { SvgIcon } from '@mui/material';
 
 export const items = [
-  {
+  /* {
     title: 'Overview',
-    path: '/',
+    path: '/overview',
     icon: (
       <SvgIcon fontSize="small">
         <ChartBarIcon />
       </SvgIcon>
     )
-  },
+  }, */
   {
-    title: 'Customers',
-    path: '/customers',
+    title: 'Clientes',
+    path: '/',
     icon: (
       <SvgIcon fontSize="small">
         <UsersIcon />
       </SvgIcon>
     )
   },
-  {
+ /*  {
     title: 'Companies',
     path: '/companies',
     icon: (
@@ -35,9 +35,9 @@ export const items = [
         <ShoppingBagIcon />
       </SvgIcon>
     )
-  },
+  }, */
   {
-    title: 'Account',
+    title: 'Perfil',
     path: '/account',
     icon: (
       <SvgIcon fontSize="small">
@@ -45,7 +45,7 @@ export const items = [
       </SvgIcon>
     )
   },
-  {
+/*   {
     title: 'Settings',
     path: '/settings',
     icon: (
@@ -53,8 +53,8 @@ export const items = [
         <CogIcon />
       </SvgIcon>
     )
-  },
-  {
+  }, */
+/*   {
     title: 'Login',
     path: '/auth/login',
     icon: (
@@ -62,8 +62,8 @@ export const items = [
         <LockClosedIcon />
       </SvgIcon>
     )
-  },
-  {
+  }, */
+  /* {
     title: 'Register',
     path: '/auth/register',
     icon: (
@@ -71,8 +71,8 @@ export const items = [
         <UserPlusIcon />
       </SvgIcon>
     )
-  },
-  {
+  }, */
+/*   {
     title: 'Error',
     path: '/404',
     icon: (
@@ -80,5 +80,5 @@ export const items = [
         <XCircleIcon />
       </SvgIcon>
     )
-  }
+  } */
 ];

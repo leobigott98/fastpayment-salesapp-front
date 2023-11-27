@@ -56,19 +56,19 @@ export const CustomersTable = (props) => {
                   />
                 </TableCell>
                 <TableCell>
-                  Name
+                  Nombre
                 </TableCell>
                 <TableCell>
                   Email
                 </TableCell>
                 <TableCell>
-                  Location
+                  Ubicación
                 </TableCell>
                 <TableCell>
-                  Phone
+                  Teléfono
                 </TableCell>
                 <TableCell>
-                  Signed Up
+                  Agregado
                 </TableCell>
               </TableRow>
             </TableHead>
@@ -101,9 +101,9 @@ export const CustomersTable = (props) => {
                         direction="row"
                         spacing={2}
                       >
-                        <Avatar src={customer.avatar}>
+                        {/* <Avatar src={customer.avatar}>
                           {getInitials(customer.name)}
-                        </Avatar>
+                        </Avatar> */}
                         <Typography variant="subtitle2">
                           {customer.name}
                         </Typography>

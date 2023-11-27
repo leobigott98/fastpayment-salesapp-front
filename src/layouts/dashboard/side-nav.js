@@ -11,8 +11,9 @@ import {
   Stack,
   SvgIcon,
   Typography,
-  useMediaQuery
+  useMediaQuery, 
 } from '@mui/material';
+import Image from 'next/image'
 import { Logo } from 'src/components/logo';
 import { Scrollbar } from 'src/components/scrollbar';
 import { items } from './config';
@@ -42,19 +43,26 @@ export const SideNav = (props) => {
           height: '100%'
         }}
       >
-        <Box sx={{ p: 3 }}>
+        <Box 
+          sx={{ p: 3}}
+        >
           <Box
             component={NextLink}
             href="/"
             sx={{
               display: 'inline-flex',
               height: 32,
-              width: 32
+              width: 200
             }}
           >
-            <Logo />
+            <Image
+              alt="FastPayment Logo"
+              src="/assets/LogotipoFastPayment-03.png"
+              width={200}
+              height={100}
+            />
           </Box>
-          <Box
+{/*           <Box
             sx={{
               alignItems: 'center',
               backgroundColor: 'rgba(255, 255, 255, 0.04)',
@@ -86,7 +94,7 @@ export const SideNav = (props) => {
             >
               <ChevronUpDownIcon />
             </SvgIcon>
-          </Box>
+          </Box> */}
         </Box>
         <Divider sx={{ borderColor: 'neutral.700' }} />
         <Box
@@ -123,7 +131,7 @@ export const SideNav = (props) => {
             })}
           </Stack>
         </Box>
-        <Divider sx={{ borderColor: 'neutral.700' }} />
+        {/* <Divider sx={{ borderColor: 'neutral.700' }} />
         <Box
           sx={{
             px: 2,
@@ -173,7 +181,7 @@ export const SideNav = (props) => {
           >
             Pro Live Preview
           </Button>
-        </Box>
+        </Box> */}
       </Box>
     </Scrollbar>
   );

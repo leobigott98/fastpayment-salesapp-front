@@ -8,7 +8,7 @@ const Page = () => (
   <>
     <Head>
       <title>
-        Account | Devias Kit
+        Perfil | Ventas FP
       </title>
     </Head>
     <Box

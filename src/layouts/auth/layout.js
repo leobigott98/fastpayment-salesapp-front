@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import NextLink from 'next/link';
 import { Box, Typography, Unstable_Grid2 as Grid } from '@mui/material';
 import { Logo } from 'src/components/logo';
+import Image from 'next/image'
 
 // TODO: Change subtitle text
 
@@ -45,11 +46,18 @@ export const Layout = (props) => {
               href="/"
               sx={{
                 display: 'inline-flex',
+                alignItems: 'center',
+                justifyContent: 'center',                
                 height: 32,
-                width: 32
+                width: '50%'
               }}
             >
-              <Logo />
+              <Image
+              alt="FastPayment Logo"
+              src="/assets/LogotipoFastPayment-03.png"
+              width={200}
+              height={100}
+            />
             </Box>
           </Box>
           {children}
@@ -79,13 +87,13 @@ export const Layout = (props) => {
               }}
               variant="h1"
             >
-              Welcome to{' '}
+              Bienvenido a {' '}
               <Box
                 component="a"
                 sx={{ color: '#15B79E' }}
                 target="_blank"
               >
-                Devias Kit
+                Ventas FP
               </Box>
             </Typography>
             <Typography
@@ -93,7 +101,7 @@ export const Layout = (props) => {
               sx={{ mb: 3 }}
               variant="subtitle1"
             >
-              A professional kit that comes with ready-to-use MUI components.
+              La plataforma para vendedores de FastPayment.
             </Typography>
             <img
               alt=""
