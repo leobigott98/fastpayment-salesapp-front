@@ -3,10 +3,11 @@ import NextLink from 'next/link';
 import { Box, Typography, Unstable_Grid2 as Grid } from '@mui/material';
 import { Logo } from 'src/components/logo';
 import Image from 'next/image'
+import { withPublicGuard } from 'src/hocs/with-public-guard';
 
 // TODO: Change subtitle text
 
-export const Layout = (props) => {
+export const Layout = withPublicGuard((props) => {
   const { children } = props;
 
   return (
@@ -112,7 +113,7 @@ export const Layout = (props) => {
       </Grid>
     </Box>
   );
-};
+});
 
 Layout.prototypes = {
   children: PropTypes.node
