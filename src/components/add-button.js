@@ -1,6 +1,7 @@
 import PlusIcon from '@heroicons/react/24/solid/PlusIcon';
 import { Box, Button, Container, Stack, SvgIcon, Typography, Modal } from '@mui/material';
 import { useState } from 'react';
+import FullScreenDialog from './fullscreen-dialog';
 
 const style = {
     position: 'absolute',
@@ -33,7 +34,8 @@ export const AddButton = ()=>{
                     >
                     Agregar
             </Button>
-            <Modal
+            <FullScreenDialog opened={ open } setOpened={setOpen}/>
+            {/* <Modal
                 open={open}
                 onClose={handleClose}
                 aria-labelledby="modal-modal-title"
@@ -47,7 +49,7 @@ export const AddButton = ()=>{
                         Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
                     </Typography>
                 </Box>
-            </Modal>
+            </Modal> */}
         </div>
     );
 };
