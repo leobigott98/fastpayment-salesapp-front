@@ -11,6 +11,7 @@ import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import CloseIcon from '@mui/icons-material/Close';
 import Slide from '@mui/material/Slide';
+import ProgressMobileStepper from './add-customer-stepper'
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -54,14 +55,15 @@ export default function FullScreenDialog( {opened, setOpened} ) {
               <CloseIcon />
             </IconButton>
             <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
-              Sound
+              Agregar Nuevo Cliente
             </Typography>
             <Button autoFocus color="inherit" onClick={handleDialogClose}>
-              save
+              Guardar
             </Button>
           </Toolbar>
         </AppBar>
-        <List>
+        <ProgressMobileStepper/>
+        {/* <List>
           <ListItem button>
             <ListItemText primary="Phone ringtone" secondary="Titania" />
           </ListItem>
@@ -72,7 +74,7 @@ export default function FullScreenDialog( {opened, setOpened} ) {
               secondary="Tethys"
             />
           </ListItem>
-        </List>
+        </List> */}
       </Dialog>
     </>
   );
