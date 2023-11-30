@@ -11,6 +11,8 @@ import { CustomersTable } from 'src/sections/customer/customers-table';
 import { CustomersSearch } from 'src/sections/customer/customers-search';
 import { applyPagination } from 'src/utils/apply-pagination';
 import { AddButton } from 'src/components/add-button';
+import ImportButton from 'src/components/import-button';
+import ExportButton from 'src/components/export-button';
 
 const now = new Date();
 
@@ -226,27 +228,10 @@ const Page = () => {
                   direction="row"
                   spacing={1}
                 >
-                  <Button
-                    color="inherit"
-                    startIcon={(
-                      <SvgIcon fontSize="small">
-                        <ArrowDownOnSquareIcon />
-                      </SvgIcon>
-                    )}
-                  >
-                    Importar
-                  </Button>
-                  <Button
-                    disabled
-                    color="inherit"
-                    startIcon={(
-                      <SvgIcon fontSize="small">
-                        <ArrowUpOnSquareIcon /> 
-                      </SvgIcon>
-                    )}
-                  >
-                    Exportar
-                  </Button>
+
+                  <ImportButton/>
+                  
+                  <ExportButton/>
                 </Stack>
               </Stack>
               <div>
