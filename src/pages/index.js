@@ -231,7 +231,7 @@ const Page = () => {
 
                   <ImportButton/>
                   
-                  <ExportButton/>
+                  <ExportButton selected={customersSelection}/>
                 </Stack>
               </Stack>
               <div>

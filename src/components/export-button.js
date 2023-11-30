@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
 import { Button, SvgIcon, Modal, Box, Typography } from "@mui/material";
 import ArrowUpOnSquareIcon from '@heroicons/react/24/solid/ArrowUpOnSquareIcon';
 
@@ -14,15 +14,20 @@ const style = {
     p: 4,
   };
 
-const ExportButton = ()=>{
+const ExportButton = ({selected})=>{
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
+    const [select, setSelect] = useState(['']);
+
+    useEffect(()=>{
+        setSelect(selected.selected)
+    }, [selected])
 
     return(
         <>
         <Button
-            disabled
+            disabled={select.length === 0? true : false }
             color="inherit"
             onClick={handleOpen}
             startIcon={(
