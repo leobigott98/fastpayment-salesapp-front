@@ -4,7 +4,8 @@ import { subDays, subHours } from 'date-fns';
 import ArrowDownOnSquareIcon from '@heroicons/react/24/solid/ArrowDownOnSquareIcon';
 import ArrowUpOnSquareIcon from '@heroicons/react/24/solid/ArrowUpOnSquareIcon';
 import PlusIcon from '@heroicons/react/24/solid/PlusIcon';
-import { Box, Button, Container, Stack, SvgIcon, Typography } from '@mui/material';
+import { Box, Button, Container, Stack, SvgIcon, Typography, Tab, Tabs, Card } from '@mui/material';
+import { Scrollbar } from 'src/components/scrollbar';
 import { useSelection } from 'src/hooks/use-selection';
 import { Layout as DashboardLayout } from 'src/layouts/dashboard/layout';
 import { CustomersTable } from 'src/sections/customer/customers-table';
@@ -13,6 +14,7 @@ import { applyPagination } from 'src/utils/apply-pagination';
 import { AddButton } from 'src/components/add-button';
 import ImportButton from 'src/components/import-button';
 import ExportButton from 'src/components/export-button';
+import NotAvailable from 'src/components/not-available-message';
 
 const now = new Date();
 
@@ -183,6 +185,7 @@ const Page = () => {
   const customers = useCustomers(page, rowsPerPage);
   const customersIds = useCustomerIds(customers);
   const customersSelection = useSelection(customersIds);
+  const [customerType, setCustomerType] = useState('available');
 
   const handlePageChange = useCallback(
     (event, value) => {
@@ -194,6 +197,13 @@ const Page = () => {
   const handleRowsPerPageChange = useCallback(
     (event) => {
       setRowsPerPage(event.target.value);
+    },
+    []
+  );
+
+  const handleCustomerTypeChange = useCallback(
+    (event, value) => {
+      setCustomerType(value);
     },
     []
   );
@@ -249,6 +259,21 @@ const Page = () => {
               </div>
             </Stack>
             <CustomersSearch />
+            <Tabs
+              onChange={handleCustomerTypeChange}
+              sx={{ mb: 3 }}
+              value={customerType}
+            >
+              <Tab
+                label="Disponibles"
+                value="available"
+              />
+              <Tab
+                label="Incompletos"
+                value="incomplete"
+              />
+            </Tabs>
+            {customerType === 'available' && (
             <CustomersTable
               count={data.length}
               items={customers}
@@ -262,6 +287,10 @@ const Page = () => {
               rowsPerPage={rowsPerPage}
               selected={customersSelection.selected}
             />
+            )}
+            {customerType === 'incomplete' && (
+              <NotAvailable/>
+            )}
           </Stack>
         </Container>
       </Box>

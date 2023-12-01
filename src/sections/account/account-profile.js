@@ -11,11 +11,11 @@ import {
 
 const user = {
   avatar: '/assets/avatars/avatar-anika-visser.png',
-  city: 'Los Angeles',
-  country: 'USA',
-  jobTitle: 'Senior Developer',
-  name: 'Anika Visser',
-  timezone: 'GTM-7'
+  city: 'Caracas',
+  country: 'Venezuela',
+  jobTitle: 'Developer',
+  name: 'Leonardo Bigott',
+  timezone: 'GTM-4'
 };
 
 export const AccountProfile = () => (
@@ -29,7 +29,7 @@ export const AccountProfile = () => (
         }}
       >
         <Avatar
-          src={user.avatar}
+          //src={user.avatar}
           sx={{
             height: 80,
             mb: 2,

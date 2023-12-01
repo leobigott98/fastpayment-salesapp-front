@@ -55,6 +55,7 @@ const Page = () => {
   const handleMethodChange = useCallback(
     (event, value) => {
       setMethod(value);
+      console.log(method);
     },
     []
   );
@@ -97,13 +98,13 @@ const Page = () => {
               sx={{ mb: 3 }}
             >
               <Typography variant="h4">
-                Login
+                Inicio de Sesión
               </Typography>
               <Typography
                 color="text.secondary"
                 variant="body2"
               >
-                Don&apos;t have an account?
+                ¿No tienes cuenta?
                 &nbsp;
                 <Link
                   component={NextLink}
@@ -111,7 +112,7 @@ const Page = () => {
                   underline="hover"
                   variant="subtitle2"
                 >
-                  Register
+                  Regístrate
                 </Link>
               </Typography>
             </Stack>
@@ -158,9 +159,9 @@ const Page = () => {
                     value={formik.values.password}
                   />
                 </Stack>
-                <FormHelperText sx={{ mt: 1 }}>
+                {/* <FormHelperText sx={{ mt: 1 }}>
                   Optionally you can skip.
-                </FormHelperText>
+                </FormHelperText> */}
                 {formik.errors.submit && (
                   <Typography
                     color="error"
@@ -177,16 +178,16 @@ const Page = () => {
                   type="submit"
                   variant="contained"
                 >
-                  Continue
+                  Continuar
                 </Button>
-                <Button
+                {/* <Button
                   fullWidth
                   size="large"
                   sx={{ mt: 3 }}
                   onClick={handleSkip}
                 >
                   Skip authentication
-                </Button>
+                </Button> */}
                 {/* <Alert
                   color="primary"
                   severity="info"

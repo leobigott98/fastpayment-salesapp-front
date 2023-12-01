@@ -13,8 +13,8 @@ import {
 
 const states = [
   {
-    value: 'alabama',
-    label: 'Alabama'
+    value: 'caracas',
+    label: 'Caracas'
   },
   {
     value: 'new-york',
