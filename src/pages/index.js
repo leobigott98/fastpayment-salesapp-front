@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import Head from 'next/head';
 import { subDays, subHours } from 'date-fns';
 import ArrowDownOnSquareIcon from '@heroicons/react/24/solid/ArrowDownOnSquareIcon';
@@ -18,7 +18,7 @@ import NotAvailable from 'src/components/not-available-message';
 
 const now = new Date();
 
-const data = [
+const OldData = [
   {
     id: '5e887ac47eed253091be10cb',
     address: {
@@ -161,12 +161,12 @@ const data = [
   }
 ];
 
-const useCustomers = (page, rowsPerPage) => {
+const useCustomers = (data, page, rowsPerPage) => {
   return useMemo(
     () => {
       return applyPagination(data, page, rowsPerPage);
     },
-    [page, rowsPerPage]
+    [page, rowsPerPage, data]
   );
 };
 
@@ -180,12 +180,31 @@ const useCustomerIds = (customers) => {
 };
 
 const Page = () => {
+  const [data, setData] = useState([]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
-  const customers = useCustomers(page, rowsPerPage);
+  const customers = useCustomers(data, page, rowsPerPage);
   const customersIds = useCustomerIds(customers);
   const customersSelection = useSelection(customersIds);
   const [customerType, setCustomerType] = useState('available');
+
+  const getData = async ()=>{
+    try{
+      const response = await fetch('http://localhost:3001/api/v1/customers', {
+      headers: {
+        "X-Auth-Token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTUsInJvbGUiOiJlZGl0b3IiLCJpYXQiOjE3MDE3MTk4NjYsImV4cCI6MTcwMTc0ODY2Nn0.7eVt57Ss3eHzkdFxOcc5ovyvz8bapMarYSNoRgH8vc8"
+      }
+    })
+      const jsonData = await response.json();
+      setData(jsonData.result);
+    }catch(err){
+      console.log(err)
+    }  
+  }
+
+  useEffect(()=>{
+    getData();
+  },[]);
 
   const handlePageChange = useCallback(
     (event, value) => {

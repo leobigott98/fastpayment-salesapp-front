@@ -13,7 +13,16 @@ import { applyPagination } from 'src/utils/apply-pagination';
 
 const now = new Date();
 
-const data = [
+const data = async ()=>{
+  const response = await fetch('http://localhost:3001/api/v1/customers', {
+    headers: {
+      "X-Auth-Token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTUsInJvbGUiOiJlZGl0b3IiLCJpYXQiOjE3MDE2MDQ0NzEsImV4cCI6MTcwMTYwNTM3MX0.GA8mMQtn0Qc_DQ1DdwJudTemLJT-lj0TDwD4tvzAt5g"
+    }
+  })
+  return response.result
+}
+
+/* const data = [
   {
     id: '5e887ac47eed253091be10cb',
     address: {
@@ -154,7 +163,7 @@ const data = [
     name: 'Nasimiyu Danai',
     phone: '801-301-7894'
   }
-];
+]; */
 
 const useCustomers = (page, rowsPerPage) => {
   return useMemo(

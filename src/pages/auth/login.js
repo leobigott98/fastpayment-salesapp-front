@@ -22,7 +22,7 @@ import { Layout as AuthLayout } from 'src/layouts/auth/layout';
 const Page = () => {
   const router = useRouter();
   const auth = useAuth();
-  const [method, setMethod] = useState('email');
+  //const [method, setMethod] = useState('email');
   const formik = useFormik({
     initialValues: {
       email: 'demo@devias.io',
@@ -52,13 +52,13 @@ const Page = () => {
     }
   });
 
-  const handleMethodChange = useCallback(
+  /* const handleMethodChange = useCallback(
     (event, value) => {
       setMethod(value);
       console.log(method);
     },
     []
-  );
+  ); */
 
   const handleSkip = useCallback(
     () => {
@@ -116,7 +116,7 @@ const Page = () => {
                 </Link>
               </Typography>
             </Stack>
-            <Tabs
+            {/* <Tabs
               onChange={handleMethodChange}
               sx={{ mb: 3 }}
               value={method}
@@ -129,8 +129,8 @@ const Page = () => {
                 label="Phone Number"
                 value="phoneNumber"
               />
-            </Tabs>
-            {method === 'email' && (
+            </Tabs> */}
+            {/* {method === 'email' && ( */}
               <form
                 noValidate
                 onSubmit={formik.handleSubmit}
@@ -198,9 +198,9 @@ const Page = () => {
                   </div>
                 </Alert> */}
               </form>
-            )}
-            {method === 'phoneNumber' && (
-              <div>
+            {/* )}
+            {method === 'phoneNumber' && ( */}
+              {/* <div>
                 <Typography
                   sx={{ mb: 1 }}
                   variant="h6"
@@ -210,8 +210,8 @@ const Page = () => {
                 <Typography color="text.secondary">
                   To prevent unnecessary costs we disabled this feature in the demo.
                 </Typography>
-              </div>
-            )}
+              </div> */}
+            {/* )} */}
           </div>
         </Box>
       </Box>

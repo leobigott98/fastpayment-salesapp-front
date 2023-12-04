@@ -61,21 +61,21 @@ export const CustomersTable = (props) => {
                 <TableCell>
                   Email
                 </TableCell>
-                <TableCell>
+                {/* <TableCell>
                   Ubicación
-                </TableCell>
+                </TableCell> */}
                 <TableCell>
                   Teléfono
                 </TableCell>
-                <TableCell>
+                {/* <TableCell>
                   Agregado
-                </TableCell>
+                </TableCell> */}
               </TableRow>
             </TableHead>
             <TableBody>
               {items.map((customer) => {
                 const isSelected = selected.includes(customer.id);
-                const createdAt = format(customer.createdAt, 'dd/MM/yyyy');
+                {/* const createdAt = format(customer.createdAt, 'dd/MM/yyyy'); */}
 
                 return (
                   <TableRow
@@ -105,22 +105,22 @@ export const CustomersTable = (props) => {
                           {getInitials(customer.name)}
                         </Avatar> */}
                         <Typography variant="subtitle2">
-                          {customer.name}
+                          {customer.razon_social}
                         </Typography>
                       </Stack>
                     </TableCell>
                     <TableCell>
-                      {customer.email}
+                      {customer.correo}
                     </TableCell>
-                    <TableCell>
+                    {/* <TableCell>
                       {customer.address.city}, {customer.address.state}, {customer.address.country}
-                    </TableCell>
+                    </TableCell> */}
                     <TableCell>
-                      {customer.phone}
+                      {customer.telefono_fijo}
                     </TableCell>
-                    <TableCell>
+                    {/* <TableCell>
                       {createdAt}
-                    </TableCell>
+                    </TableCell> */}
                   </TableRow>
                 );
               })}
