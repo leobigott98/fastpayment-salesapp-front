@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useReducer, useRef } from 'react';
 import PropTypes from 'prop-types';
+import { request } from 'https';
 
 const HANDLERS = {
   INITIALIZE: 'INITIALIZE',
@@ -128,7 +129,43 @@ export const AuthProvider = (props) => {
   };
 
   const signIn = async (email, password) => {
-    if (email !== 'demo@devias.io' || password !== 'Password123!') {
+    try {
+      const data = {
+        "email": email,
+        "password": password
+      }
+      const response = await fetch('http://localhost:3001/api/v1/auth/sign-in', {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(data)
+      });
+      const jsonResponse = await response.json();
+      if (jsonResponse.success){
+        window.sessionStorage.setItem('authenticated', true);
+        window.sessionStorage.setItem('token', jsonResponse.token);
+
+        const user = {
+          id: '5e86809283e28b96d2d38537',
+          avatar: '/assets/avatars/avatar-anika-visser.png',
+          name: 'Anika Visser',
+          email: 'anika.visser@devias.io'
+        };
+    
+        dispatch({
+          type: HANDLERS.SIGN_IN,
+          payload: user
+        });
+        return jsonResponse.token;
+      }
+
+    } catch (error) {
+      console.log(error)
+      return false
+
+    }
+    /* if (email !== 'demo@devias.io' || password !== 'Password123!') {
       throw new Error('Please check your email and password');
     }
 
@@ -136,19 +173,7 @@ export const AuthProvider = (props) => {
       window.sessionStorage.setItem('authenticated', 'true');
     } catch (err) {
       console.error(err);
-    }
-
-    const user = {
-      id: '5e86809283e28b96d2d38537',
-      avatar: '/assets/avatars/avatar-anika-visser.png',
-      name: 'Anika Visser',
-      email: 'anika.visser@devias.io'
-    };
-
-    dispatch({
-      type: HANDLERS.SIGN_IN,
-      payload: user
-    });
+    } */ 
   };
 
   const signUp = async (email, name, password) => {
