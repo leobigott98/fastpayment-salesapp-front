@@ -14,12 +14,19 @@ import { applyPagination } from 'src/utils/apply-pagination';
 const now = new Date();
 
 const data = async ()=>{
-  const response = await fetch('http://localhost:3001/api/v1/customers', {
-    headers: {
-      "X-Auth-Token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTUsInJvbGUiOiJlZGl0b3IiLCJpYXQiOjE3MDE2MDQ0NzEsImV4cCI6MTcwMTYwNTM3MX0.GA8mMQtn0Qc_DQ1DdwJudTemLJT-lj0TDwD4tvzAt5g"
-    }
-  })
-  return response.result
+  try{
+    const response = await fetch('http://localhost:3001/api/v1/customers', {
+      headers: {
+        "X-Auth-Token": 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTUsInJvbGUiOiJlZGl0b3IiLCJpYXQiOjE3MDE4Mzg0NzEsImV4cCI6MTcwMTg2NzI3MX0.KnT3x_Ur0stYB3oKgYqgeVhGeQNfKMvNE9sVt7L7yv8'
+        //"X-Auth-Token": window.sessionStorage.getItem('token')
+      }
+    })
+    const jsonResponse = response.json();
+    return jsonResponse;
+  }catch(err){
+    console.log(err);
+  }
+  
 }
 
 /* const data = [

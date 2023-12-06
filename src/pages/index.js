@@ -192,7 +192,7 @@ const Page = () => {
     try{
       const response = await fetch('http://localhost:3001/api/v1/customers', {
       headers: {
-        "X-Auth-Token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTUsInJvbGUiOiJlZGl0b3IiLCJpYXQiOjE3MDE3MTk4NjYsImV4cCI6MTcwMTc0ODY2Nn0.7eVt57Ss3eHzkdFxOcc5ovyvz8bapMarYSNoRgH8vc8"
+        "X-Auth-Token": window.sessionStorage.getItem('token')
       }
     })
       const jsonData = await response.json();
