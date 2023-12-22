@@ -12,6 +12,7 @@ import Typography from '@mui/material/Typography';
 import CloseIcon from '@mui/icons-material/Close';
 import Slide from '@mui/material/Slide';
 import ProgressMobileStepper from './add-customer-stepper'
+import { useRouter } from 'next/navigation';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -20,6 +21,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 export default function FullScreenDialog( {opened, setOpened} ) {
 
   const [open, setOpen] = React.useState(false);
+  const router = useRouter();
   
   React.useEffect(()=>{
     setOpen(opened)
@@ -31,6 +33,7 @@ export default function FullScreenDialog( {opened, setOpened} ) {
 
   const handleDialogClose = () => {
     setOpened(false)
+    //router.refresh();
   };
 
   return (
@@ -58,7 +61,7 @@ export default function FullScreenDialog( {opened, setOpened} ) {
               Agregar Nuevo Cliente
             </Typography>
             <Button autoFocus color="inherit" onClick={handleDialogClose}>
-              Guardar
+              Cerrar
             </Button>
           </Toolbar>
         </AppBar>

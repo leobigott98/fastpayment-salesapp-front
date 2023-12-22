@@ -5,29 +5,66 @@ import { request } from 'https';
 const HANDLERS = {
   INITIALIZE: 'INITIALIZE',
   SIGN_IN: 'SIGN_IN',
-  SIGN_OUT: 'SIGN_OUT'
+  SIGN_OUT: 'SIGN_OUT',
+  SIGN_UP: 'SIGN_UP',
+  VALIDATE_EMAIL: 'VALIDATE_EMAIL',
+  ADMIN_CHECK: 'ADMIN_CHECK'
 };
 
 const initialState = {
   isAuthenticated: false,
+  isEmailValidated: false,
+  isAdminChecked: false,
   isLoading: true,
   user: null
 };
 
 const handlers = {
   [HANDLERS.INITIALIZE]: (state, action) => {
-    const user = action.payload;
+    const {user, role, token} = action.payload;
 
     return {
       ...state,
       ...(
         // if payload (user) is provided, then is authenticated
-        user
-          ? ({
+        user? (
+            // if payload (role) is provided, then is admin checked
+            role? (
+              token? {
+                isAuthenticated: true,
+                isEmailValidated: true,
+                isAdminChecked: true,
+                isLoading: false,
+                role,
+                token
+            }: {
+              isAuthenticated: true,
+              isAdminChecked: true,
+              isLoading: false,
+              role
+            }) :
+            //if payload (token) is provided, then email is validated
+            token? (
+              role? {
+                isAuthenticated: true,
+                isEmailValidated: true,
+                iAdminChecked: true,
+                isLoading: false,
+                token,
+                role
+            }: {
+              isAuthenticated: true,
+              isEmailValidated: true,
+              isLoading: false,
+              token,
+            }): 
+            {
             isAuthenticated: true,
             isLoading: false,
             user
-          })
+          }
+          
+          )
           : ({
             isLoading: false
           })
@@ -35,7 +72,7 @@ const handlers = {
     };
   },
   [HANDLERS.SIGN_IN]: (state, action) => {
-    const user = action.payload;
+    const {user, role, token} = action.payload;
 
     return {
       ...state,
@@ -48,6 +85,13 @@ const handlers = {
       ...state,
       isAuthenticated: false,
       user: null
+    };
+  },
+  [HANDLERS.SIGN_UP]: (state) => {
+    return {
+      ...state,
+      isAuthenticated: true,
+      user
     };
   }
 };
@@ -176,7 +220,29 @@ export const AuthProvider = (props) => {
     } */ 
   };
 
-  const signUp = async (email, name, password) => {
+  const signUp = async (email, name, password, lastname) => {
+    try{
+      const data = {
+        "email": email,
+        "name": name,
+        "password": password,
+        "lastname": lastname
+      }
+
+      const response = await fetch('http://localhost:3001/api/v1/auth/sign-up', {
+        method: "POST",
+        body: JSON.stringify(data)
+      })
+
+      const jsonResponse = await response.json();
+      if(jsonResponse.success){
+
+      }
+    }catch(err){
+
+    }
+
+
     throw new Error('Sign up is not implemented');
   };
 

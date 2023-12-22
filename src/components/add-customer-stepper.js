@@ -11,43 +11,24 @@ import CustomerForm from './add-customer-form';
 import LocationForm from './add-location-form';
 import RepresentativeForm from './add-representative-form';
 
-const steps = [
-        <CustomerForm/>,
-        <LocationForm/>,
-        <RepresentativeForm/>
-    
-    /* {
-      label: 'Select campaign settings',
-      description: `For each ad campaign that you create, you can control how much
-                you're willing to spend on clicks and conversions, which networks
-                and geographical locations you want your ads to show on, and more.`,
-    },
-    {
-      label: 'Create an ad group',
-      description:
-        'An ad group contains one or more ads which target a shared set of keywords.',
-    },
-    {
-      label: 'Create an ad',
-      description: `Try out different ad text to see what brings in the most customers,
-                and learn how to enhance your ads using features like ad extensions.
-                If you run into any problems with your ads, find out how to tell if
-                they're running and how to resolve approval issues.`,
-    }, */
-  ];
-
 export default function ProgressMobileStepper() {
   const theme = useTheme();
   const [activeStep, setActiveStep] = React.useState(0);
-  const maxSteps = steps.length;
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    console.log('called!')
   };
 
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
+
+  const steps = [
+    <CustomerForm handleStep={handleNext}/>,
+    <LocationForm handleStep={handleNext}/>,
+    <RepresentativeForm handleStep={handleNext}/>
+];
 
   return (
     <Box sx={{  flexGrow: 1, m: 'auto'}}>
@@ -68,14 +49,14 @@ export default function ProgressMobileStepper() {
       {steps[activeStep]}
       </Box>
     <MobileStepper
-      variant="progress"
+      variant="dots"
       steps={steps.length}
       position="static"
       activeStep={activeStep}
-      sx={{ maxWidth: '100%', flexGrow: 1 }}
+      sx={{ width: '100%', flexGrow: 1 }}
       nextButton={
-        <Button size="small" onClick={handleNext} disabled={activeStep === steps.length -1}>
-          Siguiente
+        <Button size="small" onClick={handleNext} disabled={activeStep === 5}>
+          Next
           {theme.direction === 'rtl' ? (
             <KeyboardArrowLeft />
           ) : (
@@ -90,9 +71,10 @@ export default function ProgressMobileStepper() {
           ) : (
             <KeyboardArrowLeft />
           )}
-          Anterior
+          Back
         </Button>
       }
+      
     />
     </Box>
   );

@@ -25,8 +25,8 @@ const Page = () => {
   //const [method, setMethod] = useState('email');
   const formik = useFormik({
     initialValues: {
-      email: 'demo@devias.io',
-      password: 'Password123!',
+      email: '',
+      password: '',
       submit: null
     },
     validationSchema: Yup.object({
@@ -145,7 +145,7 @@ const Page = () => {
                     onBlur={formik.handleBlur}
                     onChange={formik.handleChange}
                     type="email"
-                    value={formik.values.email}
+                    //value={formik.values.email}
                   />
                   <TextField
                     error={!!(formik.touched.password && formik.errors.password)}
@@ -156,7 +156,7 @@ const Page = () => {
                     onBlur={formik.handleBlur}
                     onChange={formik.handleChange}
                     type="password"
-                    value={formik.values.password}
+                    //value={formik.values.password}
                   />
                 </Stack>
                 {/* <FormHelperText sx={{ mt: 1 }}>

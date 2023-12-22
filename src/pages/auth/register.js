@@ -14,6 +14,7 @@ const Page = () => {
     initialValues: {
       email: '',
       name: '',
+      lastname: '',
       password: '',
       submit: null
     },
@@ -27,6 +28,10 @@ const Page = () => {
         .string()
         .max(255)
         .required('Name is required'),
+      lastname: Yup
+      .string()
+      .max(255)
+      .required('Lastname is required'),
       password: Yup
         .string()
         .max(255)
@@ -34,8 +39,8 @@ const Page = () => {
     }),
     onSubmit: async (values, helpers) => {
       try {
-        await auth.signUp(values.email, values.name, values.password);
-        router.push('/');
+        const response = await auth.signUp(values.email, values.name, values.password, values.lastname);
+        if(response) router.push('/');
       } catch (err) {
         helpers.setStatus({ success: false });
         helpers.setErrors({ submit: err.message });
@@ -104,7 +109,17 @@ const Page = () => {
                   name="name"
                   onBlur={formik.handleBlur}
                   onChange={formik.handleChange}
-                  value={formik.values.name}
+                  //value={formik.values.name}
+                />
+                <TextField
+                  error={!!(formik.touched.lastname && formik.errors.lastname)}
+                  fullWidth
+                  helperText={formik.touched.name && formik.errors.name}
+                  label="Lastname"
+                  name="lastname"
+                  onBlur={formik.handleBlur}
+                  onChange={formik.handleChange}
+                  //value={formik.values.lastname}
                 />
                 <TextField
                   error={!!(formik.touched.email && formik.errors.email)}
@@ -115,7 +130,7 @@ const Page = () => {
                   onBlur={formik.handleBlur}
                   onChange={formik.handleChange}
                   type="email"
-                  value={formik.values.email}
+                  //value={formik.values.email}
                 />
                 <TextField
                   error={!!(formik.touched.password && formik.errors.password)}
@@ -126,7 +141,7 @@ const Page = () => {
                   onBlur={formik.handleBlur}
                   onChange={formik.handleChange}
                   type="password"
-                  value={formik.values.password}
+                  //value={formik.values.password}
                 />
               </Stack>
               {formik.errors.submit && (
