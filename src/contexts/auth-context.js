@@ -7,63 +7,28 @@ const HANDLERS = {
   SIGN_IN: 'SIGN_IN',
   SIGN_OUT: 'SIGN_OUT',
   SIGN_UP: 'SIGN_UP',
-  VALIDATE_EMAIL: 'VALIDATE_EMAIL',
-  ADMIN_CHECK: 'ADMIN_CHECK'
 };
 
 const initialState = {
   isAuthenticated: false,
-  isEmailValidated: false,
-  isAdminChecked: false,
   isLoading: true,
   user: null
 };
 
 const handlers = {
   [HANDLERS.INITIALIZE]: (state, action) => {
-    const {user, role, token} = action.payload;
+    const user = action.payload;
 
     return {
       ...state,
       ...(
         // if payload (user) is provided, then is authenticated
-        user? (
-            // if payload (role) is provided, then is admin checked
-            role? (
-              token? {
-                isAuthenticated: true,
-                isEmailValidated: true,
-                isAdminChecked: true,
-                isLoading: false,
-                role,
-                token
-            }: {
-              isAuthenticated: true,
-              isAdminChecked: true,
-              isLoading: false,
-              role
-            }) :
-            //if payload (token) is provided, then email is validated
-            token? (
-              role? {
-                isAuthenticated: true,
-                isEmailValidated: true,
-                iAdminChecked: true,
-                isLoading: false,
-                token,
-                role
-            }: {
-              isAuthenticated: true,
-              isEmailValidated: true,
-              isLoading: false,
-              token,
-            }): 
+        user? ( 
             {
             isAuthenticated: true,
             isLoading: false,
             user
           }
-          
           )
           : ({
             isLoading: false
@@ -72,7 +37,7 @@ const handlers = {
     };
   },
   [HANDLERS.SIGN_IN]: (state, action) => {
-    const {user, role, token} = action.payload;
+    const {user} = action.payload;
 
     return {
       ...state,
@@ -236,14 +201,16 @@ export const AuthProvider = (props) => {
 
       const jsonResponse = await response.json();
       if(jsonResponse.success){
-
+        dispatch({
+          type: HANDLERS.SIGN_IN,
+          payload: user
+        });
+        return jsonResponse.token;
       }
     }catch(err){
+      throw new Error(err.message);
 
     }
-
-
-    throw new Error('Sign up is not implemented');
   };
 
   const signOut = () => {

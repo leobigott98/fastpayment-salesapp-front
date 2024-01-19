@@ -10,9 +10,9 @@ import { AddButton } from 'src/components/add-button';
 import ImportButton from 'src/components/import-button';
 import ExportButton from 'src/components/export-button';
 import NotAvailable from 'src/components/not-available-message';
-import { CategoriesTable } from 'src/sections/categories/categories-table';
+import { useRouter } from 'next/router';
 
-const useCategories = (data, page, rowsPerPage) => {
+const useItems = (data, page, rowsPerPage) => {
   return useMemo(
     () => {
       return applyPagination(data, page, rowsPerPage);
@@ -21,12 +21,12 @@ const useCategories = (data, page, rowsPerPage) => {
   );
 };
 
-const useCategoryIds = (categories) => {
+const useItemIds = (items) => {
   return useMemo(
     () => {
-      return categories.map((category) => category.id);
+      return items.map((item) => item.id);
     },
-    [categories]
+    [items]
   );
 };
 
@@ -34,14 +34,17 @@ const Page = () => {
   const [data, setData] = useState([]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
-  const categories = useCategories(data, page, rowsPerPage);
-  const categoriesIds = useCategoryIds(categories);
-  const categoriesSelection = useSelection(categoriesIds);
-  const [categoryType, setCategoryType] = useState('available');
+  const items = useItems(data, page, rowsPerPage);
+  const itemsIds = useItemIds(items);
+  const itemsSelection = useSelection(itemsIds);
+  const [itemType, setItemType] = useState('available');
 
-  const getData = async ()=>{
+  const router = useRouter();
+  const {cid} = router.query;
+
+  const getData = async (id)=>{
     try{
-      const response = await fetch('http://localhost:3001/api/v1/inventory', {
+      const response = await fetch(`http://localhost:3001/api/v1/inventory/${id}/items`, {
       headers: {
         "X-Auth-Token": window.sessionStorage.getItem('token')
       }
@@ -54,7 +57,7 @@ const Page = () => {
   }
 
   useEffect(()=>{
-    getData();
+    getData(cid);
   },[]);
 
   const handlePageChange = useCallback(
@@ -71,9 +74,9 @@ const Page = () => {
     []
   );
 
-  const handleCategoryTypeChange = useCallback(
+  const handleItemTypeChange = useCallback(
     (event, value) => {
-      setCategoryType(value);
+      setItemType(value);
     },
     []
   );
@@ -111,7 +114,7 @@ const Page = () => {
 
                   <ImportButton/>
                   
-                  <ExportButton selected={categoriesSelection}/>
+                  <ExportButton selected={itemsSelection}/>
                 </Stack>
               </Stack>
               <div>
@@ -130,9 +133,9 @@ const Page = () => {
             </Stack>
             <CustomersSearch />
             <Tabs
-              onChange={handleCategoryTypeChange}
+              onChange={handleItemTypeChange}
               sx={{ mb: 3 }}
-              value={categoryType}
+              value={itemType}
             >
               <Tab
                 label="Disponibles"
@@ -143,22 +146,22 @@ const Page = () => {
                 value="incomplete"
               />
             </Tabs>
-            {categoryType === 'available' && (
-            <CategoriesTable
+            {itemType === 'available' && (
+            <ItemsTable
               count={data.length}
-              items={categories}
-              onDeselectAll={categoriesSelection.handleDeselectAll}
-              onDeselectOne={categoriesSelection.handleDeselectOne}
+              items={items}
+              onDeselectAll={itemsSelection.handleDeselectAll}
+              onDeselectOne={itemsSelection.handleDeselectOne}
               onPageChange={handlePageChange}
               onRowsPerPageChange={handleRowsPerPageChange}
-              onSelectAll={categoriesSelection.handleSelectAll}
-              onSelectOne={categoriesSelection.handleSelectOne}
+              onSelectAll={itemsSelection.handleSelectAll}
+              onSelectOne={itemsSelection.handleSelectOne}
               page={page}
               rowsPerPage={rowsPerPage}
-              selected={categoriesSelection.selected}
+              selected={itemsSelection.selected}
             />
             )}
-            {categoryType === 'incomplete' && (
+            {itemType === 'incomplete' && (
               <NotAvailable/>
             )}
           </Stack>

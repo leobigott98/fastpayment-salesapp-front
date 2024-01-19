@@ -14,8 +14,9 @@ import {
   Typography
 } from '@mui/material';
 import { Scrollbar } from 'src/components/scrollbar';
+import { useRouter } from 'next/router';
 
-export const CustomersTable = (props) => {
+export const CategoriesTable = (props) => {
   const {
     count = 0,
     items = [],
@@ -32,6 +33,12 @@ export const CustomersTable = (props) => {
 
   const selectedSome = (selected.length > 0) && (selected.length < items.length);
   const selectedAll = (items.length > 0) && (selected.length === items.length);
+
+  const router = useRouter();
+
+  const handleClick = (categoryId)=>{
+    router.push(`/inventory/${categoryId}`)
+  }
 
   return (
     <Card>
@@ -57,38 +64,39 @@ export const CustomersTable = (props) => {
                   Nombre
                 </TableCell>
                 <TableCell>
-                  Email
+                  Descripción
                 </TableCell>
                 {/* <TableCell>
                   Ubicación
                 </TableCell> */}
-                <TableCell>
+                {/* <TableCell>
                   Teléfono
-                </TableCell>
+                </TableCell> */}
                 {/* <TableCell>
                   Agregado
                 </TableCell> */}
               </TableRow>
             </TableHead>
             <TableBody>
-              {items.map((customer) => {
-                const isSelected = selected.includes(customer.id);
+              {items.map((category) => {
+                const isSelected = selected.includes(category.id);
                 {/* const createdAt = format(customer.createdAt, 'dd/MM/yyyy'); */}
 
                 return (
                   <TableRow
                     hover
-                    key={customer.id}
+                    key={category.id}
                     selected={isSelected}
+                    onClick={(e) => handleClick(category.id)}
                   >
                     <TableCell padding="checkbox">
                       <Checkbox
                         checked={isSelected}
                         onChange={(event) => {
                           if (event.target.checked) {
-                            onSelectOne?.(customer.id);
+                            onSelectOne?.(category.id);
                           } else {
-                            onDeselectOne?.(customer.id);
+                            onDeselectOne?.(category.id);
                           }
                         }}
                       />
@@ -103,19 +111,19 @@ export const CustomersTable = (props) => {
                           {getInitials(customer.name)}
                         </Avatar> */}
                         <Typography variant="subtitle2">
-                          {customer.razon_social? customer.razon_social : customer.name}
+                          {category.name}
                         </Typography>
                       </Stack>
                     </TableCell>
                     <TableCell>
-                      {customer.correo? customer.correo : customer.serial_number}
+                      {category.description}
                     </TableCell>
                     {/* <TableCell>
                       {customer.address.city}, {customer.address.state}, {customer.address.country}
                     </TableCell> */}
-                    <TableCell>
+                    {/* <TableCell>
                       {customer.telefono_fijo? customer.telefono_fijo : customer.description}
-                    </TableCell>
+                    </TableCell> */}
                     {/* <TableCell>
                       {createdAt}
                     </TableCell> */}
@@ -139,7 +147,7 @@ export const CustomersTable = (props) => {
   );
 };
 
-CustomersTable.propTypes = {
+CategoriesTable.propTypes = {
   count: PropTypes.number,
   items: PropTypes.array,
   onDeselectAll: PropTypes.func,

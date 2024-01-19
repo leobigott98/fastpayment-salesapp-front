@@ -15,7 +15,7 @@ import {
 } from '@mui/material';
 import { Scrollbar } from 'src/components/scrollbar';
 
-export const CustomersTable = (props) => {
+export const ItemsTable = (props) => {
   const {
     count = 0,
     items = [],
@@ -54,31 +54,31 @@ export const CustomersTable = (props) => {
                   />
                 </TableCell>
                 <TableCell>
-                  Nombre
+                  Número de Serial
                 </TableCell>
                 <TableCell>
-                  Email
+                  Estatus
+                </TableCell>
+                <TableCell>
+                  Categoría
                 </TableCell>
                 {/* <TableCell>
-                  Ubicación
-                </TableCell> */}
-                <TableCell>
                   Teléfono
-                </TableCell>
+                </TableCell> */}
                 {/* <TableCell>
                   Agregado
                 </TableCell> */}
               </TableRow>
             </TableHead>
             <TableBody>
-              {items.map((customer) => {
-                const isSelected = selected.includes(customer.id);
+              {items.map((item) => {
+                const isSelected = selected.includes(item.id);
                 {/* const createdAt = format(customer.createdAt, 'dd/MM/yyyy'); */}
 
                 return (
                   <TableRow
                     hover
-                    key={customer.id}
+                    key={item.id}
                     selected={isSelected}
                   >
                     <TableCell padding="checkbox">
@@ -86,9 +86,9 @@ export const CustomersTable = (props) => {
                         checked={isSelected}
                         onChange={(event) => {
                           if (event.target.checked) {
-                            onSelectOne?.(customer.id);
+                            onSelectOne?.(item.id);
                           } else {
-                            onDeselectOne?.(customer.id);
+                            onDeselectOne?.(item.id);
                           }
                         }}
                       />
@@ -103,19 +103,22 @@ export const CustomersTable = (props) => {
                           {getInitials(customer.name)}
                         </Avatar> */}
                         <Typography variant="subtitle2">
-                          {customer.razon_social? customer.razon_social : customer.name}
+                          {item.serial_number}
                         </Typography>
                       </Stack>
                     </TableCell>
                     <TableCell>
-                      {customer.correo? customer.correo : customer.serial_number}
+                      {item.status}
+                    </TableCell>
+                    <TableCell>
+                      {item.category_id}
                     </TableCell>
                     {/* <TableCell>
                       {customer.address.city}, {customer.address.state}, {customer.address.country}
                     </TableCell> */}
-                    <TableCell>
+                    {/* <TableCell>
                       {customer.telefono_fijo? customer.telefono_fijo : customer.description}
-                    </TableCell>
+                    </TableCell> */}
                     {/* <TableCell>
                       {createdAt}
                     </TableCell> */}
@@ -139,7 +142,7 @@ export const CustomersTable = (props) => {
   );
 };
 
-CustomersTable.propTypes = {
+ItemsTable.propTypes = {
   count: PropTypes.number,
   items: PropTypes.array,
   onDeselectAll: PropTypes.func,
