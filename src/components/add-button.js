@@ -1,7 +1,8 @@
 import PlusIcon from '@heroicons/react/24/solid/PlusIcon';
 import { Box, Button, Container, Stack, SvgIcon, Typography, Modal } from '@mui/material';
 import { useState } from 'react';
-import FullScreenDialog from './fullscreen-dialog';
+import {FullScreenDialog} from './fullscreen-dialog';
+import { OpenDialogContext } from 'src/contexts/openDialog-context';
 
 const style = {
     position: 'absolute',
@@ -15,10 +16,11 @@ const style = {
     p: 4,
   };
 
-export const AddButton = ()=>{
-    const [open, setOpen] = useState(false);
-    const handleOpen = () => setOpen(true);
-    const handleClose = () => setOpen(false);
+export const AddButton = ({products})=>{
+    const [openDialog, setOpenDialog] = useState(false);
+    const handleOpen = () => setOpenDialog(true);
+    const handleClose = () => setOpenDialog(false);
+    const value = {openDialog, setOpenDialog};
 
 
     return(
@@ -34,7 +36,12 @@ export const AddButton = ()=>{
                     >
                     Agregar
             </Button>
-            <FullScreenDialog opened={ open } setOpened={setOpen}/>
+            <OpenDialogContext.Provider value={value}>
+                        {products? 
+                        <FullScreenDialog products/>
+                        : <FullScreenDialog />}      
+            </OpenDialogContext.Provider>
+            
             {/* <Modal
                 open={open}
                 onClose={handleClose}

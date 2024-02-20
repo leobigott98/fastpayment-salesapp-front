@@ -8,16 +8,21 @@ import Button from '@mui/material/Button';
 import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 import CustomerForm from './add-customer-form';
-import LocationForm from './add-location-form';
+import AddLocationForm from './add-location-form';
 import RepresentativeForm from './add-representative-form';
+import { useState } from 'react';
+import { useCustomer } from './fullscreen-dialog';
+
 
 export default function ProgressMobileStepper() {
   const theme = useTheme();
-  const [activeStep, setActiveStep] = React.useState(0);
+  const [activeStep, setActiveStep] = useState(0);
+  const [data, setData] = useState(useCustomer);
 
   const handleNext = () => {
+    //  console.log(data)
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
-    console.log('called!')
+    //console.log('called!')
   };
 
   const handleBack = () => {
@@ -25,57 +30,39 @@ export default function ProgressMobileStepper() {
   };
 
   const steps = [
-    <CustomerForm handleStep={handleNext}/>,
-    <LocationForm handleStep={handleNext}/>,
-    <RepresentativeForm handleStep={handleNext}/>
+    <CustomerForm handleStep={handleNext} handleStepBack={handleBack} activeStep={activeStep}/>,
+    <RepresentativeForm handleStep={handleNext} handleStepBack={handleBack} activeStep={activeStep}/>,
+    <AddLocationForm handleStep={handleNext} handleStepBack={handleBack} activeStep={activeStep}s/>
 ];
 
   return (
-    <Box sx={{  flexGrow: 1, m: 'auto'}}>
-      {/* <Paper
-        square
-        elevation={0}
-        sx={{
-          display: 'flex',
-          alignItems: 'center',
-          height: 50,
-          pl: 2,
-          bgcolor: 'background.default',
-        }}
-      >
-        {steps[activeStep]}
-      </Paper> */}
-      <Box sx={{  width: '100%', p: 2}}>
-      {steps[activeStep]}
+    
+      <Box sx={{  flexGrow: 1, m: 'auto'}}>
+        {/* <Paper
+          square
+          elevation={0}
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            height: 50,
+            pl: 2,
+            bgcolor: 'background.default',
+          }}
+        >
+          {steps[activeStep]}
+        </Paper> */}
+        <Box sx={{  width: '100%', p: 2}}>
+          {steps[activeStep]}
+        </Box>
+      <MobileStepper
+        variant="dots"
+        steps={steps.length}
+        position="static"
+        activeStep={activeStep}
+        sx={{ width: '5%', flexGrow: 1, m: 'auto' }}
+       
+        
+      />
       </Box>
-    <MobileStepper
-      variant="dots"
-      steps={steps.length}
-      position="static"
-      activeStep={activeStep}
-      sx={{ width: '100%', flexGrow: 1 }}
-      nextButton={
-        <Button size="small" onClick={handleNext} disabled={activeStep === 5}>
-          Next
-          {theme.direction === 'rtl' ? (
-            <KeyboardArrowLeft />
-          ) : (
-            <KeyboardArrowRight />
-          )}
-        </Button>
-      }
-      backButton={
-        <Button size="small" onClick={handleBack} disabled={activeStep === 0}>
-          {theme.direction === 'rtl' ? (
-            <KeyboardArrowRight />
-          ) : (
-            <KeyboardArrowLeft />
-          )}
-          Back
-        </Button>
-      }
-      
-    />
-    </Box>
   );
 }

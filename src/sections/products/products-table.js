@@ -14,8 +14,9 @@ import {
   Typography
 } from '@mui/material';
 import { Scrollbar } from 'src/components/scrollbar';
+import { useRouter } from 'next/router';
 
-export const CustomersTable = (props) => {
+export const ProductsTable = (props) => {
   const {
     count = 0,
     items = [],
@@ -32,6 +33,12 @@ export const CustomersTable = (props) => {
 
   const selectedSome = (selected.length > 0) && (selected.length < items.length);
   const selectedAll = (items.length > 0) && (selected.length === items.length);
+
+  const router = useRouter();
+
+/*   const handleClick = (categoryId)=>{
+    router.push(`/inventory/${categoryId}`)
+  } */
 
   return (
     <Card>
@@ -54,16 +61,16 @@ export const CustomersTable = (props) => {
                   />
                 </TableCell>
                 <TableCell>
-                  RIF/Cédula
+                  Marca
                 </TableCell>
                 <TableCell>
-                  Nombre de Empresa
+                  Modelo
                 </TableCell>
                 <TableCell>
-                  Tipo de Persona
+                  Especificaciones
                 </TableCell>
                 <TableCell>
-                  Actividad Comercial
+                  Precio
                 </TableCell>
                 {/* <TableCell>
                   Agregado
@@ -71,24 +78,25 @@ export const CustomersTable = (props) => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {items.map((customer) => {
-                const isSelected = selected.includes(customer.cusm_id);
+              {items.map((product) => {
+                const isSelected = selected.includes(product.id);
                 {/* const createdAt = format(customer.createdAt, 'dd/MM/yyyy'); */}
 
                 return (
                   <TableRow
                     hover
-                    key={customer.cusm_id}
+                    key={product.id}
                     selected={isSelected}
+                    //onClick={(e) => handleClick(product.id)}
                   >
                     <TableCell padding="checkbox">
                       <Checkbox
                         checked={isSelected}
                         onChange={(event) => {
                           if (event.target.checked) {
-                            onSelectOne?.(customer.cusm_id);
+                            onSelectOne?.(product.id);
                           } else {
-                            onDeselectOne?.(customer.cusm_id);
+                            onDeselectOne?.(product.id);
                           }
                         }}
                       />
@@ -103,18 +111,18 @@ export const CustomersTable = (props) => {
                           {getInitials(customer.name)}
                         </Avatar> */}
                         <Typography variant="subtitle2">
-                        {customer.doc_value}-{customer.cusm_ndoc}
+                          {product.marca}
                         </Typography>
                       </Stack>
                     </TableCell>
                     <TableCell>
-                      {customer.cusm_namec}
+                      {product.modelo}
                     </TableCell>
                     <TableCell>
-                      {customer.person_desc}
+                      {product.especificacion}
                     </TableCell>
                     <TableCell>
-                      {customer.actv_desc}
+                      {product.precio}
                     </TableCell>
                     {/* <TableCell>
                       {createdAt}
@@ -139,7 +147,7 @@ export const CustomersTable = (props) => {
   );
 };
 
-CustomersTable.propTypes = {
+ProductsTable.propTypes = {
   count: PropTypes.number,
   items: PropTypes.array,
   onDeselectAll: PropTypes.func,

@@ -39,8 +39,9 @@ const Page = () => {
     }),
     onSubmit: async (values, helpers) => {
       try {
-        const response = await auth.signUp(values.email, values.name, values.password, values.lastname);
-        if(response) router.push('/');
+        const response = await auth.signUp(values.name, values.lastname, values.email, values.password)
+          alert('Usuario registrado exitosamente');
+          router.push('/auth/login');
       } catch (err) {
         helpers.setStatus({ success: false });
         helpers.setErrors({ submit: err.message });
@@ -114,7 +115,7 @@ const Page = () => {
                 <TextField
                   error={!!(formik.touched.lastname && formik.errors.lastname)}
                   fullWidth
-                  helperText={formik.touched.name && formik.errors.name}
+                  helperText={formik.touched.lastname && formik.errors.lastname}
                   label="Lastname"
                   name="lastname"
                   onBlur={formik.handleBlur}

@@ -10,9 +10,9 @@ import { AddButton } from 'src/components/add-button';
 import ImportButton from 'src/components/import-button';
 import ExportButton from 'src/components/export-button';
 import NotAvailable from 'src/components/not-available-message';
-import { CategoriesTable } from 'src/sections/categories/categories-table';
+import { ProductsTable } from 'src/sections/products/products-table'; 
 
-const useCategories = (data, page, rowsPerPage) => {
+const useProducts = (data, page, rowsPerPage) => {
   return useMemo(
     () => {
       return applyPagination(data, page, rowsPerPage);
@@ -21,12 +21,12 @@ const useCategories = (data, page, rowsPerPage) => {
   );
 };
 
-const useCategoryIds = (categories) => {
+const useProductIds = (products) => {
   return useMemo(
     () => {
-      return categories.map((category) => category.id);
+      return products.map((product) => product.id);
     },
-    [categories]
+    [products]
   );
 };
 
@@ -34,14 +34,14 @@ const Page = () => {
   const [data, setData] = useState([]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
-  const categories = useCategories(data, page, rowsPerPage);
-  const categoriesIds = useCategoryIds(categories);
-  const categoriesSelection = useSelection(categoriesIds);
-  const [categoryType, setCategoryType] = useState('available');
+  const products = useProducts(data, page, rowsPerPage);
+  const productsIds = useProductIds(products);
+  const productsSelection = useSelection(productsIds);
+  const [productType, setProductType] = useState('available');
 
   const getData = async ()=>{
     try{
-      const response = await fetch('http://localhost:3001/api/v1/inventory', {
+      const response = await fetch('http://localhost:3001/api/v1/products', {
       headers: {
         "X-Auth-Token": window.sessionStorage.getItem('token')
       }
@@ -71,7 +71,7 @@ const Page = () => {
     []
   );
 
-  const handleCategoryTypeChange = useCallback(
+  const handleProductTypeChange = useCallback(
     (event, value) => {
       setCategoryType(value);
     },
@@ -101,7 +101,7 @@ const Page = () => {
             >
               <Stack spacing={1}>
                 <Typography variant="h4">
-                  Artículos
+                  Products
                 </Typography>
                 <Stack
                   alignItems="center"
@@ -111,11 +111,11 @@ const Page = () => {
 
                   <ImportButton/>
                   
-                  <ExportButton selected={categoriesSelection}/>
+                  <ExportButton selected={productsSelection}/>
                 </Stack>
               </Stack>
               <div>
-              <AddButton/>
+              <AddButton products/>
                 {/* <Button
                   startIcon={(
                     <SvgIcon fontSize="small">
@@ -130,9 +130,9 @@ const Page = () => {
             </Stack>
             <CustomersSearch />
             <Tabs
-              onChange={handleCategoryTypeChange}
+              onChange={handleProductTypeChange}
               sx={{ mb: 3 }}
-              value={categoryType}
+              value={productType}
             >
               <Tab
                 label="Disponibles"
@@ -143,22 +143,22 @@ const Page = () => {
                 value="incomplete"
               />
             </Tabs>
-            {categoryType === 'available' && (
-            <CategoriesTable
+            {productType === 'available' && (
+            <ProductsTable
               count={data.length}
-              items={categories}
-              onDeselectAll={categoriesSelection.handleDeselectAll}
-              onDeselectOne={categoriesSelection.handleDeselectOne}
+              items={products}
+              onDeselectAll={productsSelection.handleDeselectAll}
+              onDeselectOne={productsSelection.handleDeselectOne}
               onPageChange={handlePageChange}
               onRowsPerPageChange={handleRowsPerPageChange}
-              onSelectAll={categoriesSelection.handleSelectAll}
-              onSelectOne={categoriesSelection.handleSelectOne}
+              onSelectAll={productsSelection.handleSelectAll}
+              onSelectOne={productsSelection.handleSelectOne}
               page={page}
               rowsPerPage={rowsPerPage}
-              selected={categoriesSelection.selected}
+              selected={productsSelection.selected}
             />
             )}
-            {categoryType === 'incomplete' && (
+            {productType === 'incomplete' && (
               <NotAvailable/>
             )}
           </Stack>

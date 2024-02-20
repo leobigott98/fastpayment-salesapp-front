@@ -152,7 +152,7 @@ export const AuthProvider = (props) => {
       });
       const jsonResponse = await response.json();
       if (jsonResponse.success){
-        window.sessionStorage.setItem('authenticated', true);
+        window.sessionStorage.setItem('authenticated', 'true');
         window.sessionStorage.setItem('token', jsonResponse.token);
 
         const user = {
@@ -185,27 +185,39 @@ export const AuthProvider = (props) => {
     } */ 
   };
 
-  const signUp = async (email, name, password, lastname) => {
+  const signUp = async (name, lastname, email, password) => {
     try{
       const data = {
-        "email": email,
         "name": name,
-        "password": password,
-        "lastname": lastname
+        "lastname": lastname,
+        "email": email,
+        "password": password
       }
 
       const response = await fetch('http://localhost:3001/api/v1/auth/sign-up', {
         method: "POST",
+        headers: {'Content-Type': 'application/json'},
         body: JSON.stringify(data)
       })
 
+      /* const user = {
+        id: '5e86809283e28b96d2d38537',
+        avatar: '/assets/avatars/avatar-anika-visser.png',
+        name: 'Anika Visser',
+        email: 'anika.visser@devias.io'
+      }; */
+
       const jsonResponse = await response.json();
       if(jsonResponse.success){
-        dispatch({
-          type: HANDLERS.SIGN_IN,
-          payload: user
-        });
-        return jsonResponse.token;
+        if(jsonResponse.result[0].error_num >= 0) {
+          throw new Error(jsonResponse.result[0].message);
+        } else{
+          dispatch({
+            type: HANDLERS.SIGN_IN,
+            payload: data
+          });
+          return jsonResponse.token;
+        }    
       }
     }catch(err){
       throw new Error(err.message);

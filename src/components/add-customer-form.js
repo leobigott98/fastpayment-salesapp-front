@@ -1,77 +1,121 @@
-import { useFormik } from 'formik';
-import * as Yup from 'yup';
-import { Box, Button, Link, Stack, TextField, Typography, MenuItem } from '@mui/material';
-import Grid from '@mui/material/Unstable_Grid2';
-import ProgressMobileStepper from './add-customer-stepper';
-import { useEffect } from 'react';
+import { useFormik } from "formik";
+import * as Yup from "yup";
+import { Box, Button, Link, Stack, TextField, Typography, MenuItem } from "@mui/material";
+import Grid from "@mui/material/Unstable_Grid2";
+import ProgressMobileStepper from "./add-customer-stepper";
+import { useEffect, useState } from "react";
+import { useTheme } from "@mui/material/styles";
+import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft";
+import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
+import  AsyncAutocomplete  from "./async-autocomplete";
+import { useContext } from 'react';
+import { CustomerContext } from 'src/contexts/customer-context';
 
 const tipos_doc = [
   {
     value: 1,
-    label: 'J',
+    label: "V",
   },
   {
     value: 2,
-    label: 'V',
+    label: "E",
   },
   {
     value: 3,
-    label: 'E',
-  }
+    label: "P",
+  },
+  {
+    value: 4,
+    label: "J",
+  },
+  {
+    value: 5,
+    label: "G",
+  },
 ];
 
-const CustomerForm = ({handleStep}) => {
+const tipos_persona = [
+  {
+    value: 1,
+    label: "Natural",
+  },
+  {
+    value: 2,
+    label: "Jurídico",
+  },
+];
+
+const bancos = [
+  {
+    value: 1,
+    label: "Banesco",
+  },
+  {
+    value: 2,
+    label: "Mercantil",
+  },
+];
+
+const actividades = [
+  {
+    value: 2000,
+    label: "Alimentación",
+  },
+  {
+    value: 2001,
+    label: "Turismo",
+  },
+];
+
+const CustomerForm = ({ handleStep, handleStepBack, activeStep }) => {
+  const theme = useTheme();
+  const { v_person_id, 
+          setPersonId, 
+          v_doc_typeid, 
+          setDocTypeId, 
+          v_cusm_ndoc, 
+          setCusmNdOC, 
+          v_actv_id, 
+          setActvId, 
+          v_cusm_namec, 
+          setCusmNameC, 
+          v_bank_id, 
+          setBankId, 
+          v_acct_number, 
+          setAcctNumber} = useContext(CustomerContext);
+
   const formik = useFormik({
     initialValues: {
-      correo: '',
-      r_social: '',
-      n_comercial: '',
-      tlf_fijo: '',
-      tlf_movil: '',
-      tipo_doc: 1,
-      doc: ''
+      v_person_id: v_person_id,
+      v_doc_typeid: v_doc_typeid,
+      v_cusm_ndoc: v_cusm_ndoc,
+      v_actv_id: v_actv_id,
+      v_cusm_namec: v_cusm_namec,
+      v_bank_id: v_bank_id,
+      v_acct_number: v_acct_number,
     },
     validationSchema: Yup.object({
-      r_social: Yup
-        .string()
-        .matches(/([A-Za-zÀ-ÿ&']+(\s{0,1}))+/g, 'Debe ser un nombre válido')
-        .max(255)
-        .required('Razón Social es obligatorio'),
-      n_comercial: Yup
-        .string()
-        .matches(/([A-Za-zÀ-ÿ&']+(\s{0,1}))+/g, 'Debe ser un nombre válido')
-        .max(255)
-        .required('Nombre Comercial es obligatorio'),
-      tlf_fijo: Yup
-        .string()
-        .matches(/([0-9])/, 'Debe ser un teléfono válido')
-        .length(11)
-        .required('Teléfono Fijo es obligatorio'),
-      tlf_movil: Yup
-        .string()
-        .matches(/([0-9])/, 'Debe ser un teléfono válido')
-        .length(11)
-        .required('Teléfono Móvil es obligatorio'),
-      correo: Yup
-        .string()
-        .email('Debe ser un correo válido')
-        .max(255)
-        .required('Correo es obligatorio'),
-      tipo_doc: Yup
-        .number()
-        .moreThan(0)
-        .lessThan(4)
-        .required('Obligatorio'),
-      doc: Yup
-        .string()
+      v_person_id: Yup.number().moreThan(0).lessThan(3).required("Obligatorio"),
+      v_doc_typeid: Yup.number().moreThan(0).lessThan(6).required("Obligatorio"),
+      v_cusm_ndoc: Yup.string()
         .matches(/([0-9])/)
-        .length(9)
-        .required('El RIF es obligatorio'),
+        .max(10)
+        .min(7)
+        .required("Debe ingresar un RIF/Cédula válido"),
+     // v_actv_id: Yup.number().required("Obligatorio"),
+      v_cusm_namec: Yup.string()
+        .matches(/([A-Za-zÀ-ÿ&']+(\s{0,1}))+/g, "Debe ser un nombre válido")
+        .max(255)
+        .required("Debe ingresar un nombre válido"),
+      //v_bank_id: Yup.number().required("Obligatorio"),
+      v_acct_number: Yup.string()
+        .matches(/([0-9])/)
+        .length(20)
+        .required("Debe ingresar un número de cuenta válido"),
     }),
     onSubmit: async (values, helpers) => {
       try {
-        console.log('clicked')
-        const response = await fetch('http://localhost:3001/api/v1/customers', {
+        /* const response = await fetch('http://localhost:3001/api/v1/customers', {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -81,24 +125,36 @@ const CustomerForm = ({handleStep}) => {
         })
         const jsonResponse = await response.json()
         //console.log(jsonResponse);
-        alert(`El cliente ${jsonResponse.result[0].razon_social} ha sido agregado exitosamente`)
+        alert(`El cliente ${jsonResponse.result[0].v_cusm_namec} ha sido agregado exitosamente`) */
         handleStep();
+        //setPersonId(values.v_person_id)
+        //alert(`current context ${v_cusm_namec}`);
       } catch (err) {
         helpers.setStatus({ success: false });
         helpers.setErrors({ submit: err.message });
         helpers.setSubmitting(false);
       }
-    }
+    },
   });
+
+    useEffect(()=>{
+      setPersonId(formik.values.v_person_id)
+      setDocTypeId(formik.values.v_doc_typeid) 
+      setCusmNdOC(formik.values.v_cusm_ndoc) 
+      //setActvId(formik.values.v_actv_id) 
+      setCusmNameC(formik.values.v_cusm_namec) 
+      //setBankId(formik.values.v_bank_id) 
+      setAcctNumber(formik.values.v_acct_number)  
+  }, [formik.values.v_person_id, formik.values.v_doc_typeid, formik.values.v_cusm_ndoc, formik.values.v_actv_id, formik.values.v_cusm_namec, formik.values.v_bank_id, formik.values.v_acct_number])
 
   return (
     <>
       <Box
         sx={{
-          flex: '1 1 auto',
-          alignItems: 'center',
-          display: 'flex',
-          justifyContent: 'center',
+          flex: "1 1 auto",
+          alignItems: "center",
+          display: "flex",
+          justifyContent: "center",
           //width: '100%'
         }}
       >
@@ -106,189 +162,150 @@ const CustomerForm = ({handleStep}) => {
           sx={{
             //maxWidth: 750,
             px: 3,
-            pt: '5%',
+            pt: "5%",
             //width: '100%'
           }}
         >
           <div>
-            <Stack
-              spacing={1}
-              sx={{ mb: 3 }}
-            >
-              <Typography variant="h4">
-                Información del Cliente
-              </Typography>
+            <Stack spacing={1} sx={{ mb: 3 }}>
+              <Typography variant="h4">Información del Cliente</Typography>
             </Stack>
-            <form
-              noValidate
-              onSubmit={formik.handleSubmit}
-            >
+            <form noValidate onSubmit={formik.handleSubmit}>
               <Stack spacing={3}>
-              <div>
-                <Grid
-                container
-                spacing={3}
-                >
-                <Grid
-                    xs={12}
-                    md={6}
-                    lg={4}
-                >
-                    <TextField
-                  error={!!(formik.touched.r_social && formik.errors.r_social)}
-                  fullWidth
-                  helperText={formik.touched.r_social && formik.errors.r_social}
-                  label="Razón Social"
-                  name="r_social"
-                  onBlur={formik.handleBlur}
-                  onChange={formik.handleChange}
-                  value={formik.values.r_social}
-                />
-                </Grid>
-                <Grid
-                    xs={12}
-                    md={6}
-                    lg={4}
-                >
-                    <TextField
-                  error={!!(formik.touched.n_comercial && formik.errors.n_comercial)}
-                  fullWidth
-                  helperText={formik.touched.n_comercial && formik.errors.n_comercial}
-                  label="Nombre Comercial"
-                  name="n_comercial"
-                  onBlur={formik.handleBlur}
-                  onChange={formik.handleChange}
-                  value={formik.values.n_comercial}
-                />
-                </Grid>
-                <Grid
-                    xs={12}
-                    md={6}
-                    lg={4}
-                >
-                    <TextField
-                  error={!!(formik.touched.tlf_fijo && formik.errors.tlf_fijo)}
-                  fullWidth
-                  helperText={formik.touched.tlf_fijo && formik.errors.tlf_fijo}
-                  label="Teléfono Fijo"
-                  name="tlf_fijo"
-                  onBlur={formik.handleBlur}
-                  onChange={formik.handleChange}
-                  value={formik.values.tlf_fijo}
-                />
-                </Grid>
-                <Grid
-                    xs={12}
-                    md={6}
-                    lg={4}
-                >
-                    <TextField
-                  error={!!(formik.touched.tlf_movil && formik.errors.tlf_movil)}
-                  fullWidth
-                  helperText={formik.touched.tlf_movil && formik.errors.tlf_movil}
-                  label="Teléfono Móvil"
-                  name="tlf_movil"
-                  onBlur={formik.handleBlur}
-                  onChange={formik.handleChange}
-                  value={formik.values.tlf_movil}
-                />
-                </Grid>
-                <Grid
-                    xs={12}
-                    md={6}
-                    lg={4}
-                >
-                    <TextField
-                  error={!!(formik.touched.correo && formik.errors.correo)}
-                  fullWidth
-                  helperText={formik.touched.correo && formik.errors.correo}
-                  label="Correo Electrónico"
-                  name="correo"
-                  onBlur={formik.handleBlur}
-                  onChange={formik.handleChange}
-                  type="email"
-                  value={formik.values.correo}
-                />
-                </Grid>
-                <Grid
-                    xs={12}
-                    md={6}
-                    lg={4}
-                    container
-                    columnSpacing={1}
-                >
-                <Grid
-                  xs={3}
-                  md={3}
-                  lg={3}  
-                >
-                  <TextField
-                  error={!!(formik.touched.tipo_doc && formik.errors.tipo_doc)}
-                  helperText={formik.touched.tipo_doc && formik.errors.tipo_doc}
-                  fullWidth
-                  select
-                  defaultValue="J"
-                  label="Tipo"
-                  name="tipo_doc"
-                  onBlur={formik.handleBlur}
-                  onChange={formik.handleChange}
-                  value={formik.values.tipo_doc}
-                >
-                  {tipos_doc.map((option) => (
-                    <MenuItem key={option.value} value={option.value} defaultValue="J">
-                      {option.label}
-                    </MenuItem>
-                  ))}
-                </TextField>
-                </Grid>
-                <Grid
-                  xs
-                >
-                  <TextField
-                  error={!!(formik.touched.doc && formik.errors.doc)}
-                  helperText={formik.touched.doc && formik.errors.doc}
-                  fullWidth
-                  label="RIF"
-                  name="doc"
-                  onBlur={formik.handleBlur}
-                  onChange={formik.handleChange}
-                  value={formik.values.doc}
-                />
-               </Grid>
-              </Grid>
-            </Grid>
-            </div>
-                
-                {/* <TextField
-                  error={!!(formik.touched.name && formik.errors.name)}
-                  fullWidth
-                  helperText={formik.touched.name && formik.errors.name}
-                  label="RIF"
-                  name="name"
-                  onBlur={formik.handleBlur}
-                  onChange={formik.handleChange}
-                  value={formik.values.name}
-                /> */}
-                
+                <div>
+                  <Grid container spacing={3}>
+                    <Grid xs={12} container columnSpacing={1}>
+                      <Grid xs={3}>
+                        <TextField
+                          error={!!(formik.touched.v_person_id && formik.errors.v_person_id)}
+                          fullWidth
+                          helperText={formik.touched.v_person_id && formik.errors.v_person_id}
+                          select
+                          label="Tipo de Persona"
+                          name="v_person_id"
+                          onBlur={formik.handleBlur}
+                          onChange={formik.handleChange}
+                          value={formik.values.v_person_id}
+                        >
+                          {tipos_persona.map((option) => (
+                            <MenuItem key={option.value} value={option.value}>
+                              {option.label}
+                            </MenuItem>
+                          ))}
+                        </TextField>
+                      </Grid>
+                      <Grid xs={3}>
+                        <TextField
+                          error={!!(formik.touched.v_doc_typeid && formik.errors.v_doc_typeid)}
+                          fullWidth
+                          helperText={formik.touched.v_doc_typeid && formik.errors.v_doc_typeid}
+                          select
+                          label="Tipo de Documento"
+                          name="v_doc_typeid"
+                          onBlur={formik.handleBlur}
+                          onChange={formik.handleChange}
+                          value={formik.values.v_doc_typeid}
+                        >
+                          {tipos_doc.map((option) => (
+                            <MenuItem key={option.value} value={option.value}>
+                              {option.label}
+                            </MenuItem>
+                          ))}
+                        </TextField>
+                      </Grid>
+                      <Grid xs={6}>
+                        <TextField
+                          error={!!(formik.touched.v_cusm_ndoc && formik.errors.v_cusm_ndoc)}
+                          fullWidth
+                          helperText={formik.touched.v_cusm_ndoc && formik.errors.v_cusm_ndoc}
+                          label="Número de Documento"
+                          name="v_cusm_ndoc"
+                          onBlur={formik.handleBlur}
+                          onChange={formik.handleChange}
+                          value={formik.values.v_cusm_ndoc}
+                        />
+                      </Grid>
+                    </Grid>
+                    <Grid xs={12} container columnSpacing={1}>
+                      <Grid xs={12} md={6} lg={4}>
+                      <AsyncAutocomplete 
+                        activity 
+                        name="Actividad de la Empresa" 
+                        url={"http://localhost:3001/api/v1/listar-actividades"} 
+                        update={{v_actv_id, setActvId}} 
+                        /> 
+                      </Grid>
+                      <Grid xs={8}>
+                        <TextField
+                          error={!!(formik.touched.v_cusm_namec && formik.errors.v_cusm_namec)}
+                          fullWidth
+                          helperText={formik.touched.v_cusm_namec && formik.errors.v_cusm_namec}
+                          label="Nombre de la Empresa"
+                          name="v_cusm_namec"
+                          onBlur={formik.handleBlur}
+                          onChange={formik.handleChange}
+                          type="email"
+                          value={formik.values.v_cusm_namec}
+                        />
+                      </Grid>
+                    </Grid>
+                    <Typography variant="h6" sx={{ marginLeft: "1%" }}>
+                      Datos Bancarios del Cliente
+                    </Typography>
+                    <Grid xs={12} container columnSpacing={1}>
+                      <Grid xs={12} md={6} lg={4}>
+                      <AsyncAutocomplete 
+                        bank 
+                        name="Banco" 
+                        url={"http://localhost:3001/api/v1/listar-bancos"} 
+                        update={{v_bank_id, setBankId}} 
+                        /> 
+                      </Grid>
+                      <Grid xs>
+                        <TextField
+                          error={!!(formik.touched.v_acct_number && formik.errors.v_acct_number)}
+                          helperText={formik.touched.v_acct_number && formik.errors.v_acct_number}
+                          fullWidth
+                          label="Número de Cuenta"
+                          name="v_acct_number"
+                          onBlur={formik.handleBlur}
+                          onChange={formik.handleChange}
+                          value={formik.values.v_acct_number}
+                        />
+                      </Grid>
+                    </Grid>
+                  </Grid>
+                </div>
               </Stack>
               {formik.errors.submit && (
-                <Typography
-                  color="error"
-                  sx={{ mt: 3 }}
-                  variant="body2"
-                >
+                <Typography color="error" sx={{ mt: 3 }} variant="body2">
                   {formik.errors.submit}
                 </Typography>
               )}
-              <Button
+
+              <Grid xs={12} container columnSpacing={1}>
+
+              <Button size="small" onClick={handleStepBack} disabled={activeStep === 0} >
+                {theme.direction === "rtl" ? <KeyboardArrowRight /> : <KeyboardArrowLeft />}
+                Anterior
+              </Button>
+
+              <Button size="small" type="submit" disabled={activeStep === 5} sx={{marginLeft: 'auto'}}>
+                Siguiente
+                {theme.direction === "rtl" ? <KeyboardArrowLeft /> : <KeyboardArrowRight />}
+              </Button>
+
+              </Grid>
+
+              {/* <Button
                 fullWidth
                 size="medium"
                 sx={{ mt: 3 }}
                 type="submit"
                 variant="contained"
               >
-                Guardar
-              </Button>
+                Siguiente
+              </Button> */}
             </form>
           </div>
         </Box>
