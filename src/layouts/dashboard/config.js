@@ -42,7 +42,7 @@ export const items = [
     )
   }, */
   {
-    title: 'Inventario',
+    title: 'Productos',
     path: '/inventory',
     icon: (
       <SvgIcon fontSize="small">

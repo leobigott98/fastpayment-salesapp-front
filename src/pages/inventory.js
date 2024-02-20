@@ -73,7 +73,7 @@ const Page = () => {
 
   const handleProductTypeChange = useCallback(
     (event, value) => {
-      setCategoryType(value);
+      setProductType(value);
     },
     []
   );
@@ -101,7 +101,7 @@ const Page = () => {
             >
               <Stack spacing={1}>
                 <Typography variant="h4">
-                  Products
+                  Productos
                 </Typography>
                 <Stack
                   alignItems="center"

@@ -33,7 +33,7 @@ const ProductForm = () => {
     }),
     onSubmit: async (values, helpers) => {
       try {
-        const response = await fetch('http://localhost:3001/api/v1/product', {
+        const response = await fetch('http://localhost:3001/api/v1/products', {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -42,7 +42,7 @@ const ProductForm = () => {
           body: JSON.stringify(values)
         })
         const jsonResponse = await response.json()
-        console.log(jsonResponse);
+        alert(jsonResponse.result[0].messge);
       } catch (err) {
         helpers.setStatus({ success: false });
         helpers.setErrors({ submit: err.message });
@@ -145,7 +145,6 @@ const ProductForm = () => {
                         name="v_prod_serial"
                         onBlur={formik.handleBlur}
                         onChange={formik.handleChange}
-                        type="email"
                         value={formik.values.v_prod_serial}
                       />
                       </Grid>
