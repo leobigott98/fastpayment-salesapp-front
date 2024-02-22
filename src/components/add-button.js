@@ -18,9 +18,10 @@ const style = {
 
 export const AddButton = ({products})=>{
     const [openDialog, setOpenDialog] = useState(false);
+    const [openSuccessModal, setOpenSuccessModal] = useState(false);
     const handleOpen = () => setOpenDialog(true);
     const handleClose = () => setOpenDialog(false);
-    const value = {openDialog, setOpenDialog};
+    const value = {openDialog, setOpenDialog, openSuccessModal, setOpenSuccessModal};
 
 
     return(

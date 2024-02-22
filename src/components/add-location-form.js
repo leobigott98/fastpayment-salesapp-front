@@ -8,6 +8,7 @@ import Grid from "@mui/material/Unstable_Grid2";
 import LocationForm from "./location-form";
 import { useContext, useEffect, useState } from "react";
 import { CustomerContext } from "src/contexts/customer-context";
+import { OpenDialogContext } from "src/contexts/openDialog-context";
 
 const AddLocationForm = ({ handleStep, handleStepBack, activeStep, setOpenedDialog, context}) => {
   const theme = useTheme();
@@ -87,6 +88,8 @@ const AddLocationForm = ({ handleStep, handleStepBack, activeStep, setOpenedDial
     v_bank_id,  
     v_acct_number, 
   } = useContext(CustomerContext);
+
+  const {openSuccessModal, setOpenSuccessModal} = useContext(OpenDialogContext);
 
   const handleSubmit = async ()=>{
     try {
@@ -192,7 +195,7 @@ const AddLocationForm = ({ handleStep, handleStepBack, activeStep, setOpenedDial
           body: JSON.stringify(RepAddress)
         }) 
 
-    })
+    }).then(setOpenSuccessModal(true));
       
       
         

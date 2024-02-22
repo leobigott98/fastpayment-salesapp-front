@@ -19,6 +19,7 @@ import { OpenDialogContext } from "src/contexts/openDialog-context";
 import { useContext } from "react";
 import AlertModal from "./alert-modal";
 import ProductForm from "./add-product-form";
+import SuccessModal from "./success-modal";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -175,10 +176,12 @@ export function FullScreenDialog({products}) {
     setParrishData
   };
   const [open, setOpen] = useState(false);
-  const [openModal, setOpenModal] = useState(false);
-  const {
+  const [openAlertModal, setOpenAlertModal] = useState(false);
+   const {
     openDialog,
-    setOpenDialog
+    setOpenDialog,
+    openSuccessModal,
+    setOpenSuccessModal
   } = useContext(OpenDialogContext);
   const router = useRouter();
 
@@ -204,7 +207,7 @@ export function FullScreenDialog({products}) {
   }; */
 
   const handleDialogClose = () => {
-    setOpenModal(true);
+    setOpenAlertModal(true);
     //setOpened(false)
     //router.refresh();
   };
@@ -226,9 +229,10 @@ export function FullScreenDialog({products}) {
       </AppBar>
       <CustomerContext.Provider value={value}>
       <AlertModal
-        opened={openModal}
-        setOpened={setOpenModal}
+        opened={openAlertModal}
+        setOpened={setOpenAlertModal}
       />
+      <SuccessModal object="Cliente"/>
       {
         products? 
         <ProductForm/> : 
