@@ -39,8 +39,8 @@ export const AddButton = ({products})=>{
             </Button>
             <OpenDialogContext.Provider value={value}>
                         {products? 
-                        <FullScreenDialog products/>
-                        : <FullScreenDialog />}      
+                        <FullScreenDialog products title={"Producto"}/>
+                        : <FullScreenDialog title={"Cliente"}/>}      
             </OpenDialogContext.Provider>
             
             {/* <Modal

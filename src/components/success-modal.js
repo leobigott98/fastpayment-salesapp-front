@@ -26,7 +26,7 @@ const style = {
   textAlign: 'center'
 };
 
-export default function SuccessModal({object}) {
+export default function SuccessModal({title}) {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const {
@@ -61,7 +61,7 @@ export default function SuccessModal({object}) {
         <Box sx={style}>
         <CheckCircleOutlineIcon fontSize='large' color='success'/>
           <Typography id="modal-modal-title" variant="h6" component="h2">
-            {object} creado con éxito
+            {title} creado con éxito
           </Typography>
           <Box sx={{display: 'flex', justifyContent: 'space-between', mt: '2%'}}>
           <Button onClick={handleClose} variant='outlined' sx={{width: '100%'}}>Aceptar</Button>

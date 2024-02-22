@@ -10,11 +10,13 @@ import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
 import  AsyncAutocomplete  from "./async-autocomplete";
 import { useContext } from 'react';
 import { CustomerContext } from 'src/contexts/customer-context';
+import { OpenDialogContext } from "src/contexts/openDialog-context";
 import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
 
 const ProductForm = () => {
   const theme = useTheme();
+  const {openSuccessModal, setOpenSuccessModal} = useContext(OpenDialogContext);
 
   const formik = useFormik({
     initialValues: {
@@ -33,16 +35,14 @@ const ProductForm = () => {
     }),
     onSubmit: async (values, helpers) => {
       try {
-        const response = await fetch('http://localhost:3001/api/v1/products', {
+        await fetch('http://localhost:3001/api/v1/products', {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
             "X-Auth-Token": window.sessionStorage.getItem('token')
           },
           body: JSON.stringify(values)
-        })
-        const jsonResponse = await response.json()
-        alert(jsonResponse.result[0].messge);
+        }).then(setOpenSuccessModal(true))
       } catch (err) {
         helpers.setStatus({ success: false });
         helpers.setErrors({ submit: err.message });

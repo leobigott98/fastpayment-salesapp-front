@@ -25,7 +25,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-export function FullScreenDialog({products}) {
+export function FullScreenDialog({products, title}) {
   const [v_person_id, setPersonId] = useState("");
   const [v_doc_typeid, setDocTypeId] = useState("");
   const [v_cusm_ndoc, setCusmNdOC] = useState("");
@@ -232,7 +232,7 @@ export function FullScreenDialog({products}) {
         opened={openAlertModal}
         setOpened={setOpenAlertModal}
       />
-      <SuccessModal object="Cliente"/>
+      <SuccessModal title={title}/>
       {
         products? 
         <ProductForm/> : 
