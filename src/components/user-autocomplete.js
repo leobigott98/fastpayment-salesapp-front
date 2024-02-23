@@ -3,6 +3,17 @@ import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import CircularProgress from '@mui/material/CircularProgress';
 
+const locations = [
+    {id:1,
+    label: "Región Capital"},
+    {id:2,
+    label: "Región Central"},
+    {id:3,
+    label: "Región Occidental"},
+    {id:4,
+    label: "Región Oriental"}
+]
+
 const fetchData = async(url)=> {
     //if (true) {
       try{
@@ -22,11 +33,14 @@ const fetchData = async(url)=> {
           
       }
 
-export default function UserAutocomplete({url}) {
+export default function UserAutocomplete({url, roles, role, setRole}) {
   const [open, setOpen] = React.useState(false);
   const [options, setOptions] = React.useState([]);
   const loading = open && options.length === 0;
   const [user, setUser] = React.useState(null);
+  React.useEffect(()=>{
+    if(roles) {setRole(user)}
+  },[user])
 
   React.useEffect(() => {
     let active = true;
@@ -58,7 +72,7 @@ export default function UserAutocomplete({url}) {
   return (
     <Autocomplete
       id="asynchronous-demo"
-      sx={{ width: '40%', paddingTop:0 }}
+      sx={{ width: '50%', paddingTop:0 }}
       open={open}
       onOpen={() => {
         setOpen(true);
@@ -71,9 +85,11 @@ export default function UserAutocomplete({url}) {
         setUser(value);
       }}
       isOptionEqualToValue={
-        (option, value) => option.usuarios === value.usuarios}
+        roles? (option, value) => option.rol_desc === value.rol_desc :
+         (option, value) => option.usuario === value.usuario}
       getOptionLabel={
-        (option) => option.usuarios}
+        roles? (option) => option.rol_desc:
+         (option) => option.usuario}
       options={options}
       loading={loading}
       renderInput={(params) => (
