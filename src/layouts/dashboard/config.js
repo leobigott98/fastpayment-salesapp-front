@@ -60,8 +60,8 @@ export const items = [
     )
   },
   {
-    title: 'Facturación',
-    path: '/billing',
+    title: 'Ventas',
+    path: '/sales',
     icon: (
       <SvgIcon fontSize="small">
         <RequestQuoteIcon />

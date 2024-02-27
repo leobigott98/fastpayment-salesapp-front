@@ -22,7 +22,7 @@ const fetchData = async(url)=> {
           
       }
 
-export default function UserAutocomplete({url, roles, data, setData}) {
+export default function UserAutocomplete({name, url, roles, customers, products, data, setData}) {
   const [open, setOpen] = React.useState(false);
   const [options, setOptions] = React.useState([]);
   const loading = open && options.length === 0;
@@ -75,9 +75,13 @@ export default function UserAutocomplete({url, roles, data, setData}) {
       }}
       isOptionEqualToValue={
         roles? (option, value) => option.rol_desc === value.rol_desc :
+        customers? (option, value) => option.cliente === value.cliente :
+        products? (option, value) => option.modelo === value.modelo :
          (option, value) => option.usuario === value.usuario}
       getOptionLabel={
         roles? (option) => option.rol_desc:
+        customers? (option) => option.cliente:
+        products? (option) => option.modelo:
          (option) => option.usuario}
       options={options}
       loading={loading}
