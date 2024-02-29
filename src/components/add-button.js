@@ -16,7 +16,7 @@ const style = {
     p: 4,
   };
 
-export const AddButton = ({products})=>{
+export const AddButton = ({products, sales})=>{
     const [openDialog, setOpenDialog] = useState(false);
     const [openSuccessModal, setOpenSuccessModal] = useState(false);
     const handleOpen = () => setOpenDialog(true);
@@ -40,7 +40,8 @@ export const AddButton = ({products})=>{
             <OpenDialogContext.Provider value={value}>
                         {products? 
                         <FullScreenDialog products title={"Producto"}/>
-                        : <FullScreenDialog title={"Cliente"}/>}      
+                        : sales? <FullScreenDialog sales title={"Cotización"}/>:
+                        <FullScreenDialog title={"Cliente"}/>}      
             </OpenDialogContext.Provider>
             
             {/* <Modal

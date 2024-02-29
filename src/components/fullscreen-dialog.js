@@ -20,12 +20,13 @@ import { useContext } from "react";
 import AlertModal from "./alert-modal";
 import ProductForm from "./add-product-form";
 import SuccessModal from "./success-modal";
+import AddSaleForm from "./add-sale-form";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-export function FullScreenDialog({products, title}) {
+export function FullScreenDialog({products, title, sales}) {
   const [v_person_id, setPersonId] = useState("");
   const [v_doc_typeid, setDocTypeId] = useState("");
   const [v_cusm_ndoc, setCusmNdOC] = useState("");
@@ -236,6 +237,7 @@ export function FullScreenDialog({products, title}) {
       {
         products? 
         <ProductForm/> : 
+        sales? <AddSaleForm/>:
         <ProgressMobileStepper />
       }  
       </CustomerContext.Provider>

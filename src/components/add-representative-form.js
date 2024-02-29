@@ -91,6 +91,11 @@ const RepresentativeForm = ({ handleStep, handleStepBack, activeStep }) => {
     },
   });
 
+  const handleChange = (value)=>{
+    setCodLocalId(value)
+    formik.handleChange
+  }
+
   useEffect(() => {
     setPerconName(formik.values.v_percon_name),
       setPerconLast(formik.values.v_percon_last),
@@ -207,50 +212,14 @@ const RepresentativeForm = ({ handleStep, handleStepBack, activeStep }) => {
                         />
                       </Grid>
                       <Grid xs={2}>
-                      {/* <TextField
-                          error={!!(formik.touched.v_cod_localid && formik.errors.v_cod_localid)}
-                          fullWidth
-                          select
-                          helperText={formik.touched.v_cod_localid && formik.errors.v_cod_localid}
-                          label="Código Local"
-                          name="v_cod_localid"
-                          onBlur={formik.handleBlur}
-                          onChange={formik.handleChange}
-                          value={formik.values.v_cod_localid}
-                        >
-                          {cod_localid_data.map((option) => (
-                            <MenuItem key={option.cod_localid} value={option.cod_localid}>
-                              {option.cod_value}
-                            </MenuItem>
-                          ))}
-                        </TextField> */}
                         <Autocomplete
-                          //disablePortal
-                          //value={formik.values.v_cod_localid}
-                          //autoSelect
-                          //inputValue={formik.values.v_cod_localid}
-                          //helperText={formik.touched.v_cod_localid && formik.errors.v_cod_localid}
-                          //onBlur={formik.handleBlur}
-                          //error={!!(formik.touched.v_cod_localid && formik.errors.v_cod_localid)}
-                          //inputValue={v_cod_localid}
-                          value={v_cod_localid === ''? null : v_cod_localid}
-                          //onChange={(event, newValue) => {
-                          //  setCodLocalId(newValue)}}
-                          //isOptionEqualToValue={(option, value)=> option.cod_localid === value.cod_localid}
-                          //onInputChange={(event, newInputValue) => {
-                            //formik.handleChange
-                            //setCodLocalId(newInputValue) 
-                            //console.log('changed!')}}
+                          value={v_cod_localid}
                           id="variable_cod_localid"
                           onChange={(event, value)=>
-                          {setCodLocalId(value)
-                            formik.handleChange}}
+                          { handleChange(value)}}
                           options={cod_localid_data}
                           autoHighlight
-                          //id= "v_cod_localid"
-                          //onInputChange={formik.handleChange}
                           getOptionLabel={(option) => option.cod_value}
-                          //getOptionKey={(option) => option.cod_localid}
                           renderOption={(props, option)=>(
                             <Box component="li" {...props}>
                               {option.cod_value}
@@ -261,16 +230,15 @@ const RepresentativeForm = ({ handleStep, handleStepBack, activeStep }) => {
                             {...params}
                             label="Código"
                             id="variable_cod_localid"
-                            //value={v_cod_localid}
-                            //name="v_cod_localid"
                             error={!!(formik.touched.variable_cod_localid && formik.errors.variable_cod_localid)}
                             helperText={formik.touched.variable_cod_localid && formik.errors.variable_cod_localid}
-                            //onChange={formik.handleChange}
                             onBlur={formik.handleBlur}
-                            
+                            value={v_cod_localid}
+                            onChange={(event, value)=>
+                          { handleChange(value)}}
                             inputProps={{
                               ...params.inputProps,
-                              //autocomplete: 'new-password'
+                              autocomplete: 'new-password'
                             }}
                             />
                           )}
