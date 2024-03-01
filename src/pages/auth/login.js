@@ -18,11 +18,13 @@ import {
 } from '@mui/material';
 import { useAuth } from 'src/hooks/use-auth';
 import { Layout as AuthLayout } from 'src/layouts/auth/layout';
+import GeneralErrorModal from 'src/components/general-error-modal';
 
 const Page = () => {
   const router = useRouter();
   const auth = useAuth();
   //const [method, setMethod] = useState('email');
+  const [error, setError] = useState(false);
   const formik = useFormik({
     initialValues: {
       email: '',
@@ -43,7 +45,10 @@ const Page = () => {
     onSubmit: async (values, helpers) => {
       try {
         const response = await auth.signIn(values.email, values.password);
-        if(response) router.push('/');
+        if(response) {router.push('/');}
+        else{
+          setError(true);
+        }
       } catch (err) {
         helpers.setStatus({ success: false });
         helpers.setErrors({ submit: err.message });
@@ -84,6 +89,7 @@ const Page = () => {
           justifyContent: 'center'
         }}
       >
+      <GeneralErrorModal opened={error} setOpened={setError}/>
         <Box
           sx={{
             maxWidth: 550,

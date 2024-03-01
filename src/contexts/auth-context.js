@@ -49,7 +49,8 @@ const handlers = {
     return {
       ...state,
       isAuthenticated: false,
-      user: null
+      user: null,
+
     };
   },
   [HANDLERS.SIGN_UP]: (state) => {
@@ -226,6 +227,14 @@ export const AuthProvider = (props) => {
   };
 
   const signOut = () => {
+
+    try{
+      window.sessionStorage.setItem('authenticated', 'false');
+      window.sessionStorage.setItem('token', '');
+    }catch(err){
+      console.log(err);
+    }
+
     dispatch({
       type: HANDLERS.SIGN_OUT
     });

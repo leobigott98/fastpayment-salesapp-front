@@ -9,6 +9,7 @@ import LocationForm from "./location-form";
 import { useContext, useEffect, useState } from "react";
 import { CustomerContext } from "src/contexts/customer-context";
 import { OpenDialogContext } from "src/contexts/openDialog-context";
+import GeneralErrorModal from "./general-error-modal";
 
 const AddLocationForm = ({ handleStep, handleStepBack, activeStep, setOpenedDialog, context}) => {
   const theme = useTheme();
@@ -90,6 +91,8 @@ const AddLocationForm = ({ handleStep, handleStepBack, activeStep, setOpenedDial
   } = useContext(CustomerContext);
 
   const {openSuccessModal, setOpenSuccessModal} = useContext(OpenDialogContext);
+  const [error, setError] = useState(false);
+
 
   const handleSubmit = async ()=>{
     try {
@@ -122,85 +125,91 @@ const AddLocationForm = ({ handleStep, handleStepBack, activeStep, setOpenedDial
       }).then(async(customerResponse)=>{
         const jsonCustomerResponse = await customerResponse.json()
         console.log(jsonCustomerResponse);
+
+        if(jsonCustomerResponse.result[0].error_num){
+          setError(true);
+          throw new Error('Error al crear el cliente')
+        } else{
+
+          const ComAddress = {
+            v_add_typeid: 1,
+            v_cusm_id: jsonCustomerResponse.result[0].v_cusm_id,
+            v_pais_id: v_com_pais_id.pais_id,
+            v_estad_id: v_com_estad_id.estad_id,
+            v_ciud_id: v_com_ciud_id.ciud_id,
+            v_municp_id: v_com_municp_id.municp_id,
+            v_parr_id: v_com_parr_id.parr_id,
+            v_add_street: v_com_add_street,
+            v_add_level: v_com_add_level,
+            v_add_ofic: v_com_add_ofic
+          }
+  
+          console.log(ComAddress);
+  
+          const ComAddResponse = await fetch('http://localhost:3001/api/v1/new-address', {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "X-Auth-Token": window.sessionStorage.getItem('token')
+            },
+            body: JSON.stringify(ComAddress)
+          })
+  
+          const POSAddress = {
+            v_add_typeid: 2,
+            v_cusm_id: jsonCustomerResponse.result[0].v_cusm_id,
+            v_pais_id: v_pos_pais_id.pais_id,
+            v_estad_id: v_pos_estad_id.estad_id,
+            v_ciud_id: v_pos_ciud_id.ciud_id,
+            v_municp_id: v_pos_municp_id.municp_id,
+            v_parr_id: v_pos_parr_id.parr_id,
+            v_add_street: v_pos_add_street,
+            v_add_level: v_pos_add_level,
+            v_add_ofic: v_pos_add_ofic
+          }
+  
+          console.log(POSAddress);
+  
+          const POSAddResponse = await fetch('http://localhost:3001/api/v1/new-address', {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "X-Auth-Token": window.sessionStorage.getItem('token')
+            },
+            body: JSON.stringify(POSAddress)
+          })
+  
+          const RepAddress = {
+            v_add_typeid: 3,
+            v_cusm_id: jsonCustomerResponse.result[0].v_cusm_id,
+            v_pais_id: v_rep_pais_id.pais_id,
+            v_estad_id: v_rep_estad_id.estad_id,
+            v_ciud_id: v_rep_ciud_id.ciud_id,
+            v_municp_id: v_rep_municp_id.municp_id,
+            v_parr_id: v_rep_parr_id.parr_id,
+            v_add_street: v_rep_add_street,
+            v_add_level: v_rep_add_level,
+            v_add_ofic: v_rep_add_ofic
+          }
+  
+          console.log(RepAddress);
+  
+          const RepAddResponse = await fetch('http://localhost:3001/api/v1/new-address', {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "X-Auth-Token": window.sessionStorage.getItem('token')
+            },
+            body: JSON.stringify(RepAddress)
+          }) 
+          
+        }
          
-         const ComAddress = {
-          v_add_typeid: 1,
-          v_cusm_id: jsonCustomerResponse.result[0].v_cusm_id,
-          v_pais_id: v_com_pais_id.pais_id,
-          v_estad_id: v_com_estad_id.estad_id,
-          v_ciud_id: v_com_ciud_id.ciud_id,
-          v_municp_id: v_com_municp_id.municp_id,
-          v_parr_id: v_com_parr_id.parr_id,
-          v_add_street: v_com_add_street,
-          v_add_level: v_com_add_level,
-          v_add_ofic: v_com_add_ofic
-        }
-
-        console.log(ComAddress);
-
-        const ComAddResponse = await fetch('http://localhost:3001/api/v1/new-address', {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "X-Auth-Token": window.sessionStorage.getItem('token')
-          },
-          body: JSON.stringify(ComAddress)
-        })
-
-        const POSAddress = {
-          v_add_typeid: 2,
-          v_cusm_id: jsonCustomerResponse.result[0].v_cusm_id,
-          v_pais_id: v_pos_pais_id.pais_id,
-          v_estad_id: v_pos_estad_id.estad_id,
-          v_ciud_id: v_pos_ciud_id.ciud_id,
-          v_municp_id: v_pos_municp_id.municp_id,
-          v_parr_id: v_pos_parr_id.parr_id,
-          v_add_street: v_pos_add_street,
-          v_add_level: v_pos_add_level,
-          v_add_ofic: v_pos_add_ofic
-        }
-
-        console.log(POSAddress);
-
-        const POSAddResponse = await fetch('http://localhost:3001/api/v1/new-address', {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "X-Auth-Token": window.sessionStorage.getItem('token')
-          },
-          body: JSON.stringify(POSAddress)
-        })
-
-        const RepAddress = {
-          v_add_typeid: 3,
-          v_cusm_id: jsonCustomerResponse.result[0].v_cusm_id,
-          v_pais_id: v_rep_pais_id.pais_id,
-          v_estad_id: v_rep_estad_id.estad_id,
-          v_ciud_id: v_rep_ciud_id.ciud_id,
-          v_municp_id: v_rep_municp_id.municp_id,
-          v_parr_id: v_rep_parr_id.parr_id,
-          v_add_street: v_rep_add_street,
-          v_add_level: v_rep_add_level,
-          v_add_ofic: v_rep_add_ofic
-        }
-
-        console.log(RepAddress);
-
-        const RepAddResponse = await fetch('http://localhost:3001/api/v1/new-address', {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "X-Auth-Token": window.sessionStorage.getItem('token')
-          },
-          body: JSON.stringify(RepAddress)
-        }) 
-
-    }).then(setOpenSuccessModal(true));
-      
-      
+    }).then(()=>{if(!error) setOpenSuccessModal(true)});
         
     } catch (err) {
       console.log(err.message)
+      setError(true);
       /* helpers.setStatus({ success: false });
       helpers.setErrors({ submit: err.message });
       helpers.setSubmitting(false); */ 
@@ -218,6 +227,7 @@ const AddLocationForm = ({ handleStep, handleStepBack, activeStep, setOpenedDial
           justifyContent: "center",
         }}
       >
+      <GeneralErrorModal opened={error} setOpened={setError}/>
         <Box
           sx={{
             //maxWidth: 550,

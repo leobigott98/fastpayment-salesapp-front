@@ -15,7 +15,7 @@ import {
 } from '@mui/material';
 import { Scrollbar } from 'src/components/scrollbar';
 import { useRouter } from 'next/router';
-import DotsMenu from 'src/components/menu';
+import DotsMenu from 'src/components/dots-menu';
 
 export const ProductsTable = (props) => {
   const {
@@ -76,16 +76,12 @@ export const ProductsTable = (props) => {
                 <TableCell>
                   
                 </TableCell>
-                {/* <TableCell>
-                  Agregado
-                </TableCell> */}
+                
               </TableRow>
             </TableHead>
             <TableBody>
               {items.map((product) => {
                 const isSelected = selected.includes(product.id);
-                {/* const createdAt = format(customer.createdAt, 'dd/MM/yyyy'); */}
-
                 return (
                   <TableRow
                     hover
@@ -111,9 +107,6 @@ export const ProductsTable = (props) => {
                         direction="row"
                         spacing={2}
                       >
-                        {/* <Avatar src={customer.avatar}>
-                          {getInitials(customer.name)}
-                        </Avatar> */}
                         <Typography variant="subtitle2">
                           {product.marca}
                         </Typography>
@@ -129,11 +122,8 @@ export const ProductsTable = (props) => {
                       {product.precio}
                     </TableCell>
                     <TableCell>
-                      <DotsMenu/>
+                      <DotsMenu id={product.id}/>
                     </TableCell>
-                    {/* <TableCell>
-                      {createdAt}
-                    </TableCell> */}
                   </TableRow>
                 );
               })}

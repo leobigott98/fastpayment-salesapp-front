@@ -21,6 +21,7 @@ import AlertModal from "./alert-modal";
 import ProductForm from "./add-product-form";
 import SuccessModal from "./success-modal";
 import AddSaleForm from "./add-sale-form";
+import GeneralErrorModal from "./general-error-modal";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -221,7 +222,7 @@ export function FullScreenDialog({products, title, sales}) {
             <CloseIcon />
           </IconButton>
           <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
-            {products? "Agregar Nuevo Producto" : "Agregar Nuevo Cliente"}
+            {products? "Agregar Nuevo Producto" : sales? "Agregar Nueva Cotización" : "Agregar Nuevo Cliente" }
           </Typography>
           <Button autoFocus color="inherit" onClick={handleDialogClose}>
             Cerrar

@@ -9,6 +9,7 @@ import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
 import { useContext } from "react";
 import { CustomerContext } from "src/contexts/customer-context";
 import Autocomplete from "@mui/material/Autocomplete";
+import UserAutocomplete from "./user-autocomplete";
 
 const codMovilId = [
   {
@@ -53,7 +54,7 @@ const RepresentativeForm = ({ handleStep, handleStepBack, activeStep }) => {
     cod_localid_data
   } = useContext(CustomerContext);
 
-  const [codLocalId, setCodLocalIdHook] = useState([]);
+  //const [codLocalId, setCodLocalIdHook] = useState(null);
 
   const formik = useFormik({
     initialValues: {
@@ -61,7 +62,7 @@ const RepresentativeForm = ({ handleStep, handleStepBack, activeStep }) => {
       v_percon_last: v_percon_last,
       v_cod_movilid: v_cod_movilid,
       v_percon_movil: v_percon_movil,
-      variable_cod_localid: v_cod_localid,
+      //variable_cod_localid: v_cod_localid,
       v_percon_local: v_percon_local,
       v_percon_email: v_percon_email,
     },
@@ -73,7 +74,7 @@ const RepresentativeForm = ({ handleStep, handleStepBack, activeStep }) => {
         .matches(/([0-9])/, "Debe ingresar un número de teléfono válido")
         .length(7)
         .required("Obligatorio"),
-      variable_cod_localid: Yup.object().required(),
+      //variable_cod_localid: Yup.object().required(),
       v_percon_local: Yup.string()
         .matches(/([0-9])/)
         .length(7)
@@ -101,18 +102,21 @@ const RepresentativeForm = ({ handleStep, handleStepBack, activeStep }) => {
       setPerconLast(formik.values.v_percon_last),
       setCodMovilId(formik.values.v_cod_movilid),
       setPerconMovil(formik.values.v_percon_movil),
-      //setCodLocalId(formik.values.v_cod_localid),
-      console.log(`${formik.values.variable_cod_localid} formik value`),
+      //setCodLocalId(formik.values.variable_cod_localid);
+      setCodLocalId(v_cod_localid),
+      console.log(v_cod_localid)
+      //console.log(`${formik.values.variable_cod_localid} formik value`),
       setPerconLocal(formik.values.v_percon_local),
       setPerconEmail(formik.values.v_percon_email);
-      console.log(`${v_cod_localid} context value`)
+      //console.log(`${v_cod_localid} context value`)
   }, [
     formik.values.v_percon_name,
     formik.values.v_percon_last,
     formik.values.v_cod_movilid,
     formik.values.v_percon_movil,
-    formik.values.variable_cod_localid,
+    //formik.values.variable_cod_localid,
     v_cod_localid,
+    //codLocalId,
     formik.values.v_percon_local,
     formik.values.v_percon_email,
   ]);
@@ -211,8 +215,9 @@ const RepresentativeForm = ({ handleStep, handleStepBack, activeStep }) => {
                           value={formik.values.v_percon_movil}
                         />
                       </Grid>
-                      <Grid xs={2}>
-                        <Autocomplete
+                      <Grid xs={3}>
+                      <UserAutocomplete name={'Código'} url={'http://localhost:3001/api/v1/get-codlocalid'} data={v_cod_localid} setData={setCodLocalId} codlocalid/>
+                        {/* <Autocomplete
                           value={v_cod_localid}
                           id="variable_cod_localid"
                           onChange={(event, value)=>
@@ -246,9 +251,9 @@ const RepresentativeForm = ({ handleStep, handleStepBack, activeStep }) => {
                           //value={formik.values.v_cod_localid}
                           //isOptionEqualToValue={(option) => option.title === option.cod_localid}
                           //sx={{ width: 300 }}
-                          />
+                          /> */}
                       </Grid>
-                      <Grid xs={4}>
+                      <Grid xs={3}>
                         <TextField
                           error={!!(formik.touched.v_percon_local && formik.errors.v_percon_local)}
                           fullWidth

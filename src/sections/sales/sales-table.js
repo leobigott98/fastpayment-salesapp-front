@@ -15,7 +15,7 @@ import {
 } from "@mui/material";
 import { Scrollbar } from "src/components/scrollbar";
 import { useRouter } from "next/router";
-import DotsMenu from "src/components/menu";
+import DotsMenu from "src/components/dots-menu";
 
 export const SalesTable = (props) => {
   const {
@@ -108,7 +108,7 @@ export const SalesTable = (props) => {
                     <TableCell>{sale.total}</TableCell>
                     <TableCell>{sale.status}</TableCell>
                     <TableCell>
-                      <DotsMenu />
+                      <DotsMenu sales id={sale.serie}/>
                     </TableCell>
                     {/* <TableCell>
                       {createdAt}

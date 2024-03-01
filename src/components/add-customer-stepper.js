@@ -30,9 +30,9 @@ export default function ProgressMobileStepper() {
   };
 
   const steps = [
-   // <CustomerForm handleStep={handleNext} handleStepBack={handleBack} activeStep={activeStep}/>,
+    <CustomerForm handleStep={handleNext} handleStepBack={handleBack} activeStep={activeStep}/>,
     <RepresentativeForm handleStep={handleNext} handleStepBack={handleBack} activeStep={activeStep}/>,
-   // <AddLocationForm handleStep={handleNext} handleStepBack={handleBack} activeStep={activeStep}s/>
+    <AddLocationForm handleStep={handleNext} handleStepBack={handleBack} activeStep={activeStep}s/>
 ];
 
   return (

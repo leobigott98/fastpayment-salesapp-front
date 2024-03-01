@@ -22,7 +22,7 @@ const fetchData = async(url)=> {
           
       }
 
-export default function UserAutocomplete({name, url, roles, customers, products, data, setData}) {
+export default function UserAutocomplete({name, url, roles, customers, products, data, setData, payOptions, banks, codlocalid}) {
   const [open, setOpen] = React.useState(false);
   const [options, setOptions] = React.useState([]);
   const loading = open && options.length === 0;
@@ -69,7 +69,7 @@ export default function UserAutocomplete({name, url, roles, customers, products,
       onClose={() => {
         setOpen(false);
       }}
-      value={input}
+      value={data!=''?data:input}
       onChange={(event, value)=>{
         setInput(value);
       }}
@@ -77,11 +77,17 @@ export default function UserAutocomplete({name, url, roles, customers, products,
         roles? (option, value) => option.rol_desc === value.rol_desc :
         customers? (option, value) => option.cliente === value.cliente :
         products? (option, value) => option.modelo === value.modelo :
+        payOptions? (option, value) => option.ops_desc === value.ops_desc :
+        banks? (option, value) => option.bank_desc === value.bank_desc :
+        codlocalid? (option, value) => option.cod_value === value.cod_value :
          (option, value) => option.usuario === value.usuario}
       getOptionLabel={
         roles? (option) => option.rol_desc:
         customers? (option) => option.cliente:
         products? (option) => option.modelo:
+        payOptions? (option) => option.ops_desc :
+        banks? (option) => option.bank_desc :
+        codlocalid? (option) => option.cod_value :
          (option) => option.usuario}
       options={options}
       loading={loading}
