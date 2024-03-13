@@ -65,13 +65,15 @@ export const SalesTable = (props) => {
                 {items[0]?.vendedor ? <TableCell>Vendedor</TableCell> : <></>}
                 <TableCell>Cliente</TableCell>
                 <TableCell>Total</TableCell>
+                <TableCell>Pagado</TableCell>
+                <TableCell>Balance</TableCell>
                 <TableCell>Estatus</TableCell>
                 <TableCell></TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {items.map((sale) => {
-                const isSelected = selected.includes(sale.serie);
+                const isSelected = selected.includes(sale.id);
                 {
                   /* const createdAt = format(customer.createdAt, 'dd/MM/yyyy'); */
                 }
@@ -79,7 +81,7 @@ export const SalesTable = (props) => {
                 return (
                   <TableRow
                     hover
-                    key={sale.serie}
+                    key={sale.id}
                     selected={isSelected}
                     //onClick={(e) => handleClick(product.id)}
                   >
@@ -88,9 +90,9 @@ export const SalesTable = (props) => {
                         checked={isSelected}
                         onChange={(event) => {
                           if (event.target.checked) {
-                            onSelectOne?.(sale.serie);
+                            onSelectOne?.(sale.id);
                           } else {
-                            onDeselectOne?.(sale.serie);
+                            onDeselectOne?.(sale.id);
                           }
                         }}
                       />
@@ -106,9 +108,11 @@ export const SalesTable = (props) => {
                     {sale?.vendedor ? <TableCell>{sale.vendedor}</TableCell> : <></>}
                     <TableCell>{sale.cliente}</TableCell>
                     <TableCell>{sale.total}</TableCell>
+                    <TableCell>{sale.pagado}</TableCell>
+                    <TableCell>{sale.balance}</TableCell>
                     <TableCell>{sale.status}</TableCell>
                     <TableCell>
-                      <DotsMenu sales id={sale.serie}/>
+                      <DotsMenu sales id={sale.id} balance={sale.balance}/>
                     </TableCell>
                     {/* <TableCell>
                       {createdAt}

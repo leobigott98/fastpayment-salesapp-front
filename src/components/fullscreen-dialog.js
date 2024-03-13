@@ -191,7 +191,7 @@ export function FullScreenDialog({products, title, sales}) {
     setOpen(openDialog);
   });
 
-  useEffect(() => {
+/*   useEffect(() => {
     async function fetchData() {
       const result = await fetch("http://localhost:3001/api/v1/get-codlocalid", {
         headers: {
@@ -202,7 +202,7 @@ export function FullScreenDialog({products, title, sales}) {
       setCodLocalIdData(jsonData.result);
     }
     fetchData();
-  }, []);
+  }, []); */
 
   /* const handleClickOpen = () => {
     setOpen(true);

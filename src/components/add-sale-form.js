@@ -138,7 +138,7 @@ const AddSaleForm = () => {
                 //size="large"
                 fullWidth
                 //margin="normal"
-                //sx={{textAlign: 'center'}}
+                sx={{mb: 1}}
                 id="serie"
                 label="Serie"
                 inputProps={{style:{textAlign: 'center'}}}

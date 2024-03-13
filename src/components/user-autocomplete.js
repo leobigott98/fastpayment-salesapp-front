@@ -22,7 +22,7 @@ const fetchData = async(url)=> {
           
       }
 
-export default function UserAutocomplete({name, url, roles, customers, products, data, setData, payOptions, banks, codlocalid}) {
+export default function UserAutocomplete({name, url, roles, customers, products, data, setData, payOptions, banks, codlocalid, serials}) {
   const [open, setOpen] = React.useState(false);
   const [options, setOptions] = React.useState([]);
   const loading = open && options.length === 0;
@@ -61,7 +61,7 @@ export default function UserAutocomplete({name, url, roles, customers, products,
   return (
     <Autocomplete
       id="asynchronous-demo"
-      sx={{ width: '50%', paddingTop:0 }}
+      sx={{ width: '100%', paddingTop:0 }}
       open={open}
       onOpen={() => {
         setOpen(true);
@@ -80,6 +80,7 @@ export default function UserAutocomplete({name, url, roles, customers, products,
         payOptions? (option, value) => option.ops_desc === value.ops_desc :
         banks? (option, value) => option.bank_desc === value.bank_desc :
         codlocalid? (option, value) => option.cod_value === value.cod_value :
+        serials? (option, value) => option.serial_num === value.serial_num :
          (option, value) => option.usuario === value.usuario}
       getOptionLabel={
         roles? (option) => option.rol_desc:
@@ -88,6 +89,7 @@ export default function UserAutocomplete({name, url, roles, customers, products,
         payOptions? (option) => option.ops_desc :
         banks? (option) => option.bank_desc :
         codlocalid? (option) => option.cod_value :
+        serials? (option) => option.serial_num :
          (option) => option.usuario}
       options={options}
       loading={loading}

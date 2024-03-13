@@ -11,19 +11,29 @@ import { useState } from "react";
 import InventoryModal from "./load-inventory-modal";
 import PaymentModal from "./load-payment-modal";
 
-export default function DotsMenu({ sales, id }) {
+export default function DotsMenu({ sales, id, balance }) {
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const [modalOpen, setModalOpen] = useState(false);
   const [serialModalOpen, setSerialModalOpen] = useState(false);
+  const [assignModalOpen, setAssignModalOpen] = useState(false);
   const handleModalOpen = () => setModalOpen(true);
   const handleSerialModalOpen = () => setSerialModalOpen(true);
+  const handleAssignModalOpen = () => setAssignModalOpen(true);
   const handleSerialModalClose = () => setSerialModalOpen(false);
   const handleModalClose = () => setModalOpen(false);
   const handleOptionClick = ()=>{
     handleClose();
   }
   const handleInventoryOptionClick = () => {
+    handleClose();
+    handleModalOpen();
+  };
+  const handleAssignmentOptionClick = () => {
+    handleClose();
+    handleAssignModalOpen();
+  };
+  const handlePaymentOptionClick = () => {
     handleClose();
     handleModalOpen();
   };
@@ -64,7 +74,10 @@ export default function DotsMenu({ sales, id }) {
           <>
             <MenuItem onClick={handleOptionClick}>Modificar</MenuItem>
             <MenuItem onClick={handleOptionClick}>Eliminar</MenuItem>
-            <MenuItem onClick={handleInventoryOptionClick}>Registrar Pago</MenuItem>
+            {balance==0? 
+            <MenuItem onClick={handleAssignmentOptionClick}>Asignar Serial</MenuItem> : 
+            <MenuItem onClick={handlePaymentOptionClick}>Registrar Pago</MenuItem>}
+
           </>
         ) : (
           <>
@@ -76,7 +89,10 @@ export default function DotsMenu({ sales, id }) {
         )}
       </Menu>
       {sales ? (
+        <>
         <PaymentModal open={modalOpen} setOpen={setModalOpen} id={id} />
+        <InventoryModal open={assignModalOpen} setOpen={setAssignModalOpen} id={id} assign/>
+        </>
       ) :  (
         <>
         <InventoryModal open={modalOpen} setOpen={setModalOpen} id={id} />

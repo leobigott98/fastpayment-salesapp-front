@@ -13,7 +13,7 @@ const style = {
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: 400,
+  width: 500,
   bgcolor: "background.paper",
   border: "2px solid #000",
   boxShadow: 24,
@@ -39,18 +39,15 @@ export default function PaymentModal({ open, setOpen, id }) {
   };
   const formik = useFormik({
     initialValues: {
-      //v_ops_id: '',
-      //v_bank: '',
       v_pay_ref: "",
-      v_pay_amount: "",
+      v_pay_amount: '',
     },
-    validationSchema: Yup.object({
-      //v_ops_id: Yup.object().required("Obligatorio"),
-      //v_bank: Yup.object().required("Obligatorio"),
+/*     validationSchema: Yup.object({
       v_reference: Yup.string().required("Obligatorio"),
       v_amount: Yup.number().required("Obligatorio"),
-    }),
+    }), */
     onSubmit: async (values, helpers) => {
+      console.log('submitted')
       try {
         const body = {
           v_sale_id: id,
@@ -59,6 +56,7 @@ export default function PaymentModal({ open, setOpen, id }) {
           v_pay_ref: formik.values.v_pay_ref,
           v_pay_amount: formik.values.v_pay_amount,
         };
+        console.log(body)
 
         await fetch("http://localhost:3001/api/v1/payments", {
           method: "POST",
@@ -67,8 +65,16 @@ export default function PaymentModal({ open, setOpen, id }) {
             "X-Auth-Token": window.sessionStorage.getItem("token"),
           },
           body: JSON.stringify(body),
-        }).then(()=>{
-            setSuccess(true);
+        }).then(async(response)=>{
+          await response.json().then((result)=>{
+            if(result.result[0].error_num> 0){
+              setError(true);
+              console.log(result)
+            }else{
+              setSuccess(true)
+            }
+          })
+            
         });
       } catch (err) {
         helpers.setStatus({ success: false });
@@ -88,9 +94,10 @@ export default function PaymentModal({ open, setOpen, id }) {
       onClose={handleModalClose}
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
+      
     >
       <Box sx={style}>
-        <Typography id="modal-modal-title" variant="h6" component="h2">
+        <Typography id="modal-modal-title" variant="h6" component="h2" sx={{mb: 3}}>
           Registrar Pago
         </Typography>
         <form noValidate onSubmit={formik.handleSubmit}>
@@ -98,7 +105,7 @@ export default function PaymentModal({ open, setOpen, id }) {
             <div>
               <Grid container spacing={3}>
                 <Grid xs={12} container columnSpacing={1}>
-                  <Grid xs={6}>
+                  
                     <UserAutocomplete
                       name={"Tipo de Operación"}
                       url={"http://localhost:3001/api/v1/payments/options"}
@@ -106,8 +113,7 @@ export default function PaymentModal({ open, setOpen, id }) {
                       data={v_ops_id}
                       setData={set_v_ops_id}
                     />
-                  </Grid>
-                  <Grid xs={6}>
+                  
                     <UserAutocomplete
                       name={"Banco"}
                       url={"http://localhost:3001/api/v1/listar-bancos"}
@@ -115,7 +121,7 @@ export default function PaymentModal({ open, setOpen, id }) {
                       data={v_bank_id}
                       setData={set_v_bank_id}
                     />
-                  </Grid>
+                  
                 </Grid>
                 <Grid xs={12} container columnSpacing={1}>
                   <Grid xs={6}>
@@ -146,7 +152,7 @@ export default function PaymentModal({ open, setOpen, id }) {
                 <Button
                   size="small"
                   type="submit"
-                  // onClick={handleSubmit}
+                  //onClick={()=>{console.log('clicked!')}}
                   //disabled={activeStep === 4}
                   variant="contained"
                   sx={{ marginLeft: "auto" }}
