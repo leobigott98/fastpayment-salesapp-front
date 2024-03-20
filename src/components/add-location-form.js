@@ -115,12 +115,13 @@ const AddLocationForm = ({ handleStep, handleStepBack, activeStep, setOpenedDial
 
       console.log(customerBody);
 
-      await fetch('http://localhost:3001/api/v1/customers', {
+      await fetch(`${process.env.NEXT_PUBLIC_APIURL}/api/v1/customers`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           "X-Auth-Token": window.sessionStorage.getItem('token')
         },
+        credentials: "include",
         body: JSON.stringify(customerBody)
       }).then(async(customerResponse)=>{
         const jsonCustomerResponse = await customerResponse.json()
@@ -146,7 +147,7 @@ const AddLocationForm = ({ handleStep, handleStepBack, activeStep, setOpenedDial
   
           console.log(ComAddress);
   
-          const ComAddResponse = await fetch('http://localhost:3001/api/v1/new-address', {
+          const ComAddResponse = await fetch(`${process.env.NEXT_PUBLIC_APIURL}/api/v1/new-address`, {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
@@ -170,7 +171,7 @@ const AddLocationForm = ({ handleStep, handleStepBack, activeStep, setOpenedDial
   
           console.log(POSAddress);
   
-          const POSAddResponse = await fetch('http://localhost:3001/api/v1/new-address', {
+          const POSAddResponse = await fetch(`${process.env.NEXT_PUBLIC_APIURL}/api/v1/new-address`, {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
@@ -194,7 +195,7 @@ const AddLocationForm = ({ handleStep, handleStepBack, activeStep, setOpenedDial
   
           console.log(RepAddress);
   
-          const RepAddResponse = await fetch('http://localhost:3001/api/v1/new-address', {
+          const RepAddResponse = await fetch(`${process.env.NEXT_PUBLIC_APIURL}/api/v1/new-address`, {
             method: "POST",
             headers: {
               "Content-Type": "application/json",

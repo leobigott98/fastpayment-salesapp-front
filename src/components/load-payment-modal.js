@@ -58,7 +58,7 @@ export default function PaymentModal({ open, setOpen, id }) {
         };
         console.log(body)
 
-        await fetch("http://localhost:3001/api/v1/payments", {
+        await fetch(`${process.env.NEXT_PUBLIC_APIURL}/api/v1/payments`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -108,7 +108,7 @@ export default function PaymentModal({ open, setOpen, id }) {
                   
                     <UserAutocomplete
                       name={"Tipo de Operación"}
-                      url={"http://localhost:3001/api/v1/payments/options"}
+                      url={`${process.env.NEXT_PUBLIC_APIURL}/api/v1/payments/options`}
                       payOptions
                       data={v_ops_id}
                       setData={set_v_ops_id}
@@ -116,7 +116,7 @@ export default function PaymentModal({ open, setOpen, id }) {
                   
                     <UserAutocomplete
                       name={"Banco"}
-                      url={"http://localhost:3001/api/v1/listar-bancos"}
+                      url={`${process.env.NEXT_PUBLIC_APIURL}/api/v1/listar-bancos`}
                       banks
                       data={v_bank_id}
                       setData={set_v_bank_id}

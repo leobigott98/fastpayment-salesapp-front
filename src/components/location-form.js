@@ -178,21 +178,21 @@ const LocationForm = ({ handleStep, handleStepBack, activeStep, context, name })
             <Grid container spacing={3}>
               <Grid xs={12} container columnSpacing={1}>
                 <Grid xs={4}>
-                <LocationAutocomplete country name="País" url={"http://localhost:3001/api/v1/listar-paises"} data={{pais_id: 232}} update={{country, setCountry}} children={{setState, setMunicipality, setCity, setParrish}} enabled={true} erase={false}/> 
+                <LocationAutocomplete country name="País" url={`${process.env.NEXT_PUBLIC_APIURL}/api/v1/listar-paises`} data={{pais_id: 232}} update={{country, setCountry}} children={{setState, setMunicipality, setCity, setParrish}} enabled={true} erase={false}/> 
                 </Grid>
                 <Grid xs={4}>
-                <LocationAutocomplete state name="Estado" url={"http://localhost:3001/api/v1/listar-estados"} data={{pais_id: 232}} update={{state, setState}} children={{setMunicipality, setCity, setParrish}} enabled={{country}} erase={country}/>
+                <LocationAutocomplete state name="Estado" url={`${process.env.NEXT_PUBLIC_APIURL}/api/v1/listar-estados`} data={{pais_id: 232}} update={{state, setState}} children={{setMunicipality, setCity, setParrish}} enabled={{country}} erase={country}/>
                 </Grid>
                 <Grid xs={4}>
-                <LocationAutocomplete city name="Ciudad" url={"http://localhost:3001/api/v1/listar-ciudades"} data={{pais_id: 232, estado_id: state.estad_id}} update={{city, setCity}} enabled={{state}} erase={state}/> 
+                <LocationAutocomplete city name="Ciudad" url={`${process.env.NEXT_PUBLIC_APIURL}/api/v1/listar-ciudades`} data={{pais_id: 232, estado_id: state.estad_id}} update={{city, setCity}} enabled={{state}} erase={state}/> 
                 </Grid>
               </Grid>
               <Grid xs={12} container columnSpacing={1}>
                 <Grid xs={4}>
-                <LocationAutocomplete municipality name="Municipio" url={"http://localhost:3001/api/v1/listar-municipios"} data={{pais_id: 232, estado_id: state.estad_id}} update={{municipality, setMunicipality}} children={{setParrish}} enabled={{state}} erase={state}/>
+                <LocationAutocomplete municipality name="Municipio" url={`${process.env.NEXT_PUBLIC_APIURL}/api/v1/listar-municipios`} data={{pais_id: 232, estado_id: state.estad_id}} update={{municipality, setMunicipality}} children={{setParrish}} enabled={{state}} erase={state}/>
                 </Grid>
                 <Grid xs={4}>
-                <LocationAutocomplete parrish name="Parroquia" url={"http://localhost:3001/api/v1/listar-parroquias"} data={{pais_id: 232, estado_id: state.estad_id, municipio_id: municipality.municp_id}} update={{parrish, setParrish}} enabled={{municipality}} erase={municipality}/>
+                <LocationAutocomplete parrish name="Parroquia" url={`${process.env.NEXT_PUBLIC_APIURL}/api/v1/listar-parroquias`} data={{pais_id: 232, estado_id: state.estad_id, municipio_id: municipality.municp_id}} update={{parrish, setParrish}} enabled={{municipality}} erase={municipality}/>
                 </Grid>
                 <Grid xs={4}>
                   <TextField

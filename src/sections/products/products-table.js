@@ -80,7 +80,7 @@ export const ProductsTable = (props) => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {items.map((product) => {
+              {items.filter((item) => item.status == 1).map((product) => {
                 const isSelected = selected.includes(product.id);
                 return (
                   <TableRow

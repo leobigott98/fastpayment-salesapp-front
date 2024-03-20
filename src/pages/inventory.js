@@ -41,7 +41,7 @@ const Page = () => {
 
   const getData = async ()=>{
     try{
-      const response = await fetch('http://localhost:3001/api/v1/products', {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_APIURL}/api/v1/products`, {
       headers: {
         "X-Auth-Token": window.sessionStorage.getItem('token')
       }

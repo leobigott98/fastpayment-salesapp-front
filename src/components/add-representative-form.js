@@ -216,7 +216,7 @@ const RepresentativeForm = ({ handleStep, handleStepBack, activeStep }) => {
                         />
                       </Grid>
                       <Grid xs={3}>
-                      <UserAutocomplete name={'Código'} url={'http://localhost:3001/api/v1/get-codlocalid'} data={v_cod_localid} setData={setCodLocalId} codlocalid/>
+                      <UserAutocomplete name={'Código'} url={`${process.env.NEXT_PUBLIC_APIURL}/api/v1/get-codlocalid`} data={v_cod_localid} setData={setCodLocalId} codlocalid/>
                         {/* <Autocomplete
                           value={v_cod_localid}
                           id="variable_cod_localid"

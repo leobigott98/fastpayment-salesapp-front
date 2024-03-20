@@ -52,7 +52,7 @@ const Page = () => {
           v_sell_fee: fee,
           v_sell_location: location
         }
-        await fetch('http://localhost:3001/api/v1/roles/update', {
+        await fetch(`${process.env.NEXT_PUBLIC_APIURL}/api/v1/roles/update`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -95,8 +95,8 @@ const Page = () => {
             <form noValidate onSubmit={(e)=>handleSubmit(e)}>
             <Stack spacing={1}>
             <Stack spacing={1} direction="row">
-                <UserAutocomplete url={'http://localhost:3001/api/v1/users'} data={user} setData={setUser} name={"Usuario"}/>
-                <UserAutocomplete url={'http://localhost:3001/api/v1/roles'} roles data={role} setData={setRole} name={"Rol"}/>
+                <UserAutocomplete url={`${process.env.NEXT_PUBLIC_APIURL}/api/v1/users`} data={user} setData={setUser} name={"Usuario"}/>
+                <UserAutocomplete url={`${process.env.NEXT_PUBLIC_APIURL}/api/v1/roles`} roles data={role} setData={setRole} name={"Rol"}/>
             </Stack>
             <Stack spacing={1} direction="row">
                 {role?.rol_desc === "Ventas"? 

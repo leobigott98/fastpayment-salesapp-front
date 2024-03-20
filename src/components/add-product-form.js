@@ -35,7 +35,7 @@ const ProductForm = () => {
     }),
     onSubmit: async (values, helpers) => {
       try {
-        await fetch('http://localhost:3001/api/v1/products', {
+        await fetch(`${process.env.NEXT_PUBLIC_APIURL}/api/v1/products`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

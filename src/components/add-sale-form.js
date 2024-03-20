@@ -69,7 +69,7 @@ const AddSaleForm = () => {
             v_sale_serie: serie,
             "v_sale_total": total 
         }
-        await fetch('http://localhost:3001/api/v1/sales',{
+        await fetch(`${process.env.NEXT_PUBLIC_APIURL}/api/v1/sales`,{
             method: "POST",
             headers: {
             "Content-Type": "application/json",
@@ -87,7 +87,7 @@ const AddSaleForm = () => {
                 v_salesdt_qty: item.qty,
                 v_prod_price: item.product.precio
             }
-            await fetch('http://localhost:3001/api/v1/sales/detail',{
+            await fetch(`${process.env.NEXT_PUBLIC_APIURL}/api/v1/sales/detail`,{
                 method: "POST",
                 headers: {
                 "Content-Type": "application/json",
@@ -151,7 +151,7 @@ const AddSaleForm = () => {
             <Stack spacing={1}>
               <Stack spacing={2}>
                 <UserAutocomplete
-                  url={"http://localhost:3001/api/v1/customers/all"}
+                  url={`${process.env.NEXT_PUBLIC_APIURL}/api/v1/customers/all`}
                   customers
                   data={customer}
                   setData={setCustomer}
@@ -177,7 +177,7 @@ const AddSaleForm = () => {
                 <Typography variant="h6">Datos del Producto</Typography>
                 <Stack spacing={2} direction="row" >
                   <UserAutocomplete
-                    url={"http://localhost:3001/api/v1/products"}
+                    url={`${process.env.NEXT_PUBLIC_APIURL}/api/v1/products`}
                     products
                     data={product}
                     setData={setProduct}

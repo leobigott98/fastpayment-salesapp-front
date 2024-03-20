@@ -6,7 +6,7 @@ const HANDLERS = {
   INITIALIZE: 'INITIALIZE',
   SIGN_IN: 'SIGN_IN',
   SIGN_OUT: 'SIGN_OUT',
-  SIGN_UP: 'SIGN_UP',
+  SIGN_UP: 'SIGN_UP'
 };
 
 const initialState = {
@@ -56,7 +56,7 @@ const handlers = {
   [HANDLERS.SIGN_UP]: (state) => {
     return {
       ...state,
-      isAuthenticated: true,
+      isAuthenticated: false,
       user
     };
   }
@@ -144,17 +144,19 @@ export const AuthProvider = (props) => {
         "email": email,
         "password": password
       }
-      const response = await fetch('http://localhost:3001/api/v1/auth/sign-in', {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_APIURL}/api/v1/auth/sign-in`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
         },
-        body: JSON.stringify(data)
+        body: JSON.stringify(data),
+        credentials: 'include'
       });
       const jsonResponse = await response.json();
       if (jsonResponse.success){
         window.sessionStorage.setItem('authenticated', 'true');
         window.sessionStorage.setItem('token', jsonResponse.token);
+
 
         const user = {
           id: '5e86809283e28b96d2d38537',
@@ -195,7 +197,7 @@ export const AuthProvider = (props) => {
         "password": password
       }
 
-      const response = await fetch('http://localhost:3001/api/v1/auth/sign-up', {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_APIURL}/api/v1/auth/sign-up`, {
         method: "POST",
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify(data)
@@ -226,11 +228,15 @@ export const AuthProvider = (props) => {
     }
   };
 
-  const signOut = () => {
+  const signOut = async () => {
 
     try{
       window.sessionStorage.setItem('authenticated', 'false');
       window.sessionStorage.setItem('token', '');
+      await fetch(`${process.env.NEXT_PUBLIC_APIURL}/api/v1/auth/sign-out`, {
+        method: "POST",
+        headers: {'Content-Type': 'application/json'},
+      })
     }catch(err){
       console.log(err);
     }

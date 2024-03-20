@@ -231,7 +231,7 @@ const CustomerForm = ({ handleStep, handleStepBack, activeStep }) => {
                       <AsyncAutocomplete 
                         activity 
                         name="Actividad de la Empresa" 
-                        url={"http://localhost:3001/api/v1/listar-actividades"} 
+                        url={`${process.env.NEXT_PUBLIC_APIURL}/api/v1/listar-actividades`} 
                         update={{v_actv_id, setActvId}} 
                         /> 
                       </Grid>
@@ -257,7 +257,7 @@ const CustomerForm = ({ handleStep, handleStepBack, activeStep }) => {
                       <AsyncAutocomplete 
                         bank 
                         name="Banco" 
-                        url={"http://localhost:3001/api/v1/listar-bancos"} 
+                        url={`${process.env.NEXT_PUBLIC_APIURL}/api/v1/listar-bancos`} 
                         update={{v_bank_id, setBankId}} 
                         /> 
                       </Grid>

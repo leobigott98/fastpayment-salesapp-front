@@ -1,3 +1,4 @@
+import * as dotenv from 'dotenv';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import Head from 'next/head';
 import { subDays, subHours } from 'date-fns';
@@ -47,12 +48,14 @@ const Page = () => {
 
   const getData = async ()=>{
     try{
-      const response = await fetch('http://localhost:3001/api/v1/customers', {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_APIURL}/api/v1/customers`, {
       headers: {
-        "X-Auth-Token": window.sessionStorage.getItem('token')
-      }
+        "X-Auth-Token": window.sessionStorage.getItem('token'),
+      },
+      credentials: "include"
     })
       const jsonData = await response.json();
+      console.log(jsonData)
       setData(jsonData.result);
     }catch(err){
       console.log(err)

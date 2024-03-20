@@ -51,7 +51,7 @@ export default function InventoryModal({ open, setOpen, id, serial, assign}) {
             v_serial_num: formik.values.v_serial_num,
           };
   
-          await fetch("http://localhost:3001/api/v1/seriales", {
+          await fetch(`${process.env.NEXT_PUBLIC_APIURL}/api/v1/seriales`, {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
@@ -139,7 +139,7 @@ export default function InventoryModal({ open, setOpen, id, serial, assign}) {
             v_serial_num: assignSerial.serial_num,
           };
           console.log(body);
-          await fetch("http://localhost:3001/api/v1/seriales/asignar-serial", {
+          await fetch(`${process.env.NEXT_PUBLIC_APIURL}/api/v1/seriales/asignar-serial`, {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
@@ -189,7 +189,7 @@ export default function InventoryModal({ open, setOpen, id, serial, assign}) {
                   <Grid xs={12} columnSpacing={1} >
                     
                       <UserAutocomplete 
-                        url={"http://localhost:3001/api/v1/seriales"}
+                        url={`${process.env.NEXT_PUBLIC_APIURL}/api/v1/seriales`}
                         serials
                         data={assignSerial}
                         setData={setAssignSerial}
@@ -235,7 +235,7 @@ export default function InventoryModal({ open, setOpen, id, serial, assign}) {
             v_inv_qty: formik.values.v_inv_qty,
           };
   
-          await fetch("http://localhost:3001/api/v1/new-inventory", {
+          await fetch(`${process.env.NEXT_PUBLIC_APIURL}/api/v1/new-inventory`, {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
