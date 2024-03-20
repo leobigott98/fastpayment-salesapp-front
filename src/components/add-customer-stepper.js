@@ -11,13 +11,11 @@ import CustomerForm from './add-customer-form';
 import AddLocationForm from './add-location-form';
 import RepresentativeForm from './add-representative-form';
 import { useState } from 'react';
-import { useCustomer } from './fullscreen-dialog';
 
 
 export default function ProgressMobileStepper() {
   const theme = useTheme();
   const [activeStep, setActiveStep] = useState(0);
-  const [data, setData] = useState(useCustomer);
 
   const handleNext = () => {
     //  console.log(data)
