@@ -11,7 +11,7 @@ import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import CloseIcon from "@mui/icons-material/Close";
 import Slide from "@mui/material/Slide";
-import ProgressMobileStepper from "./add-customer-stepper";
+//import ProgressMobileStepper from "./add-customer-stepper";
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import { CustomerContext } from "src/contexts/customer-context";
