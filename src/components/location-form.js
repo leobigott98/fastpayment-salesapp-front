@@ -189,7 +189,7 @@ const LocationForm = ({ handleStep, handleStepBack, activeStep, context, name })
               </Grid>
               <Grid xs={12} container columnSpacing={1}>
                 <Grid xs={4}>
-                <LocationAutocomplete municipality name="Municipio" url={`${process.env.NEXT_PUBLIC_APIURL}/api/v1/listar-municipios`} data={{pais_id: 232, estado_id: state.estad_id}} update={{municipality, setMunicipality}} children={{setParrish}} enabled={{state}} erase={state}/>
+                <LocationAutocomplete municipality name="Municipio" url={`${process.env.NEXT_PUBLIC_APIURL}/api/v1/listar-municipios`} data={{pais_id: 232, estado_id: state.estad_id}} update={{municipality, setMunicipality}} dependant={{setParrish}} enabled={{state}} erase={state}/>
                 </Grid>
                 <Grid xs={4}>
                 <LocationAutocomplete parrish name="Parroquia" url={`${process.env.NEXT_PUBLIC_APIURL}/api/v1/listar-parroquias`} data={{pais_id: 232, estado_id: state.estad_id, municipio_id: municipality.municp_id}} update={{parrish, setParrish}} enabled={{municipality}} erase={municipality}/>
