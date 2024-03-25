@@ -145,7 +145,7 @@ const CustomerForm = ({ handleStep, handleStepBack, activeStep }) => {
       setCusmNameC(formik.values.v_cusm_namec) 
       //setBankId(formik.values.v_bank_id) 
       setAcctNumber(formik.values.v_acct_number)  
-  }, [formik.values.v_person_id, formik.values.v_doc_typeid, formik.values.v_cusm_ndoc, formik.values.v_actv_id, formik.values.v_cusm_namec, formik.values.v_bank_id, formik.values.v_acct_number])
+  }, [formik.values.v_person_id, formik.values.v_doc_typeid, formik.values.v_cusm_ndoc, formik.values.v_actv_id, formik.values.v_cusm_namec, formik.values.v_bank_id, formik.values.v_acct_number, setAcctNumber, setCusmNameC, setCusmNdOC, setDocTypeId, setPersonId])
 
   return (
     <>
@@ -167,14 +167,23 @@ const CustomerForm = ({ handleStep, handleStepBack, activeStep }) => {
           }}
         >
           <div>
-            <Stack spacing={1} sx={{ mb: 3 }}>
+            <Stack 
+            spacing={1} 
+            sx={{ mb: 3 }}>
               <Typography variant="h4">Información del Cliente</Typography>
             </Stack>
-            <form noValidate onSubmit={formik.handleSubmit}>
+            <form 
+            noValidate 
+            onSubmit={formik.handleSubmit}>
               <Stack spacing={3}>
                 <div>
-                  <Grid container spacing={3}>
-                    <Grid xs={12} container columnSpacing={1}>
+                  <Grid 
+                  container 
+                  spacing={3}>
+                    <Grid 
+                    xs={12} 
+                    container 
+                    columnSpacing={1}>
                       <Grid xs={3}>
                         <TextField
                           error={!!(formik.touched.v_person_id && formik.errors.v_person_id)}
@@ -188,7 +197,9 @@ const CustomerForm = ({ handleStep, handleStepBack, activeStep }) => {
                           value={formik.values.v_person_id}
                         >
                           {tipos_persona.map((option) => (
-                            <MenuItem key={option.value} value={option.value}>
+                            <MenuItem 
+                            key={option.value} 
+                            value={option.value}>
                               {option.label}
                             </MenuItem>
                           ))}
@@ -207,7 +218,9 @@ const CustomerForm = ({ handleStep, handleStepBack, activeStep }) => {
                           value={formik.values.v_doc_typeid}
                         >
                           {tipos_doc.map((option) => (
-                            <MenuItem key={option.value} value={option.value}>
+                            <MenuItem 
+                            key={option.value} 
+                            value={option.value}>
                               {option.label}
                             </MenuItem>
                           ))}
@@ -226,8 +239,14 @@ const CustomerForm = ({ handleStep, handleStepBack, activeStep }) => {
                         />
                       </Grid>
                     </Grid>
-                    <Grid xs={12} container columnSpacing={1}>
-                      <Grid xs={12} md={6} lg={4}>
+                    <Grid 
+                    xs={12} 
+                    container 
+                    columnSpacing={1}>
+                      <Grid 
+                      xs={12} 
+                      md={6} 
+                      lg={4}>
                       <AsyncAutocomplete 
                         activity 
                         name="Actividad de la Empresa" 
@@ -249,11 +268,19 @@ const CustomerForm = ({ handleStep, handleStepBack, activeStep }) => {
                         />
                       </Grid>
                     </Grid>
-                    <Typography variant="h6" sx={{ marginLeft: "1%" }}>
+                    <Typography 
+                    variant="h6" 
+                    sx={{ marginLeft: "1%" }}>
                       Datos Bancarios del Cliente
                     </Typography>
-                    <Grid xs={12} container columnSpacing={1}>
-                      <Grid xs={12} md={6} lg={4}>
+                    <Grid 
+                    xs={12} 
+                    container 
+                    columnSpacing={1}>
+                      <Grid 
+                      xs={12} 
+                      md={6} 
+                      lg={4}>
                       <AsyncAutocomplete 
                         bank 
                         name="Banco" 
@@ -278,7 +305,10 @@ const CustomerForm = ({ handleStep, handleStepBack, activeStep }) => {
                 </div>
               </Stack>
               {formik.errors.submit && (
-                <Typography color="error" sx={{ mt: 3 }} variant="body2">
+                <Typography 
+                color="error" 
+                sx={{ mt: 3 }} 
+                variant="body2">
                   {formik.errors.submit}
                 </Typography>
               )}

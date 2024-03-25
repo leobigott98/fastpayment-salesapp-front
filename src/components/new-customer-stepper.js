@@ -65,7 +65,10 @@ export default function NewCustomerStepper() {
     {
       key: 1,
       component: (
-        <CustomerForm handleStep={handleNext} handleStepBack={handleBack} activeStep={activeStep} />
+        <CustomerForm 
+        handleStep={handleNext} 
+        handleStepBack={handleBack} 
+        activeStep={activeStep} />
       ),
     },
     {
@@ -95,8 +98,12 @@ export default function NewCustomerStepper() {
     <Box sx={{ width: "100%" }}>
       <Stepper  activeStep={activeStep}>
         {steps.map((label, index) => (
-          <Step key={label} completed={completed[index]}>
-            <StepButton color="inherit" onClick={handleStep(index)}>
+          <Step 
+          key={label} 
+          completed={completed[index]}>
+            <StepButton 
+            color="inherit" 
+            onClick={handleStep(index)}>
               {label}
             </StepButton>
           </Step>

@@ -76,8 +76,13 @@ export default function InventoryModal({ open, setOpen, id, serial, assign}) {
   
     return (
       <>
-      <GeneralSuccessModal message={'Inventario Cargado con Éxito'} opened={success} setOpened={setSuccess} />
-      <GeneralErrorModal opened={error} setOpened={setError}/>
+      <GeneralSuccessModal 
+      message={'Inventario Cargado con Éxito'} 
+      opened={success} 
+      setOpened={setSuccess} />
+      <GeneralErrorModal 
+      opened={error} 
+      setOpened={setError}/>
       <Modal
         open={open}
         onClose={handleModalClose}
@@ -85,14 +90,24 @@ export default function InventoryModal({ open, setOpen, id, serial, assign}) {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <Typography id="modal-modal-title" variant="h6" component="h2">
+          <Typography 
+          id="modal-modal-title" 
+          variant="h6" 
+          component="h2">
             Cargar Inventario
           </Typography>
-          <form noValidate onSubmit={formik.handleSubmit}>
+          <form 
+          noValidate 
+          onSubmit={formik.handleSubmit}>
             <Stack spacing={3}>
               <div>
-                <Grid container spacing={3}>
-                  <Grid xs={12} container columnSpacing={1}>
+                <Grid 
+                container 
+                spacing={3}>
+                  <Grid 
+                  xs={12} 
+                  container 
+                  columnSpacing={1}>
                     <Grid xs={6}>
                       <TextField
                         error={!!(formik.touched.v_ubi_id && formik.errors.v_ubi_id)}
@@ -106,7 +121,9 @@ export default function InventoryModal({ open, setOpen, id, serial, assign}) {
                         value={formik.values.v_ubi_id}
                       >
                         {ubicaciones.map((option) => (
-                          <MenuItem key={option.id} value={option.id}>
+                          <MenuItem 
+                          key={option.id} 
+                          value={option.id}>
                             {option.label}
                           </MenuItem>
                         ))}

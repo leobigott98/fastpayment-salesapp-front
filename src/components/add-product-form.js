@@ -72,14 +72,23 @@ const ProductForm = () => {
           }}
         >
           <div>
-            <Stack spacing={1} sx={{ mb: 3 }}>
+            <Stack 
+            spacing={1} 
+            sx={{ mb: 3 }}>
               <Typography variant="h4">Nuevo Producto</Typography>
             </Stack>
-            <form noValidate onSubmit={formik.handleSubmit}>
+            <form 
+            noValidate 
+            onSubmit={formik.handleSubmit}>
               <Stack spacing={3}>
                 <div>
-                  <Grid container spacing={3}>
-                    <Grid xs={12} container columnSpacing={1}>
+                  <Grid 
+                  container 
+                  spacing={3}>
+                    <Grid 
+                    xs={12} 
+                    container 
+                    columnSpacing={1}>
                       <Grid xs={4}>
                         <TextField
                           error={!!(formik.touched.v_prod_brand && formik.errors.v_prod_brand)}
@@ -118,7 +127,10 @@ const ProductForm = () => {
                         />
                       </Grid>
                     </Grid>
-                    <Grid xs={12} container columnSpacing={1}>
+                    <Grid 
+                    xs={12} 
+                    container 
+                    columnSpacing={1}>
                       <Grid xs={12}>
                       <TextField
                           error={!!(formik.touched.v_prod_spec && formik.errors.v_prod_spec)}
@@ -135,9 +147,17 @@ const ProductForm = () => {
                         
                       </Grid>
                       </Grid>
-                      <Grid xs={12} container columnSpacing={1}>
-                      <Grid xs={12} md={6} lg={4}>
-                      <FormControlLabel required control={<Checkbox />} 
+                      <Grid 
+                      xs={12} 
+                      container 
+                      columnSpacing={1}>
+                      <Grid 
+                      xs={12} 
+                      md={6} 
+                      lg={4}>
+                      <FormControlLabel 
+                      required 
+                      control={<Checkbox />} 
                         error={!!(formik.touched.v_prod_serial && formik.errors.v_prod_serial)}
                         fullWidth
                         helperText={formik.touched.v_prod_serial && formik.errors.v_prod_serial}
@@ -153,7 +173,10 @@ const ProductForm = () => {
                 </div>
               </Stack>
               {formik.errors.submit && (
-                <Typography color="error" sx={{ mt: 3 }} variant="body2">
+                <Typography 
+                color="error" 
+                sx={{ mt: 3 }} 
+                variant="body2">
                   {formik.errors.submit}
                 </Typography>
               )}

@@ -216,16 +216,30 @@ export function FullScreenDialog({products, title, sales}) {
   };
 
   return (
-    <Dialog fullScreen open={open} onClose={handleDialogClose} TransitionComponent={Transition}>
+    <Dialog 
+    fullScreen 
+    open={open} 
+    onClose={handleDialogClose} 
+    TransitionComponent={Transition}>
       <AppBar sx={{ position: "relative" }}>
         <Toolbar>
-          <IconButton edge="start" color="inherit" onClick={handleDialogClose} aria-label="close">
+          <IconButton 
+          edge="start" 
+          color="inherit" 
+          onClick={handleDialogClose} 
+          aria-label="close">
             <CloseIcon />
           </IconButton>
-          <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
+          <Typography 
+          sx={{ ml: 2, flex: 1 }} 
+          variant="h6" 
+          component="div">
             {products? "Agregar Nuevo Producto" : sales? "Agregar Nueva Cotización" : "Agregar Nuevo Cliente" }
           </Typography>
-          <Button autoFocus color="inherit" onClick={handleDialogClose}>
+          <Button 
+          autoFocus 
+          color="inherit" 
+          onClick={handleDialogClose}>
             Cerrar
           </Button>
         </Toolbar>

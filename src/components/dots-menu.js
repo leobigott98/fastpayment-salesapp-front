@@ -92,13 +92,27 @@ export default function DotsMenu({ sales, id, balance }) {
       </Menu>
       {sales ? (
         <>
-        <PaymentModal open={modalOpen} setOpen={setModalOpen} id={id} />
-        <AssignSerialModal open={assignModalOpen} setOpen={setAssignModalOpen} id={id} assign/>
+        <PaymentModal 
+        open={modalOpen} 
+        setOpen={setModalOpen} 
+        id={id} />
+        <AssignSerialModal 
+        open={assignModalOpen} 
+        setOpen={setAssignModalOpen} 
+        id={id} 
+        assign/>
         </>
       ) :  (
         <>
-        <InventoryModal open={modalOpen} setOpen={setModalOpen} id={id} />
-        <SerialModal open={serialModalOpen} setOpen={setSerialModalOpen} id={id} serial/>
+        <InventoryModal 
+        open={modalOpen} 
+        setOpen={setModalOpen} 
+        id={id} />
+        <SerialModal 
+        open={serialModalOpen} 
+        setOpen={setSerialModalOpen} 
+        id={id} 
+        serial/>
         </>
       )}
     </div>

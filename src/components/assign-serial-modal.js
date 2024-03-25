@@ -82,8 +82,13 @@ export default function AssignSerialModal({ open, setOpen, id}) {
   
     return (
       <>
-      <GeneralSuccessModal message={'Serial Cargado con Éxito'} opened={success} setOpened={setSuccess} />
-      <GeneralErrorModal opened={error} setOpened={setError}/>
+      <GeneralSuccessModal 
+      message={'Serial Cargado con Éxito'} 
+      opened={success} 
+      setOpened={setSuccess} />
+      <GeneralErrorModal 
+      opened={error} 
+      setOpened={setError}/>
       <Modal
         open={open}
         onClose={handleModalClose}
@@ -91,14 +96,24 @@ export default function AssignSerialModal({ open, setOpen, id}) {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <Typography id="modal-modal-title" variant="h6" component="h2" sx={{mb: 3}}>
+          <Typography 
+          id="modal-modal-title" 
+          variant="h6" 
+          component="h2" 
+          sx={{mb: 3}}>
             Asignar Serial
           </Typography>
-          <form noValidate onSubmit={formik.handleSubmit}>
+          <form 
+          noValidate 
+          onSubmit={formik.handleSubmit}>
             
               <div>
-                <Grid container spacing={3}>
-                  <Grid xs={12} columnSpacing={1} >
+                <Grid 
+                container 
+                spacing={3}>
+                  <Grid 
+                  xs={12} 
+                  columnSpacing={1} >
                     
                       <UserAutocomplete 
                         url={`${process.env.NEXT_PUBLIC_APIURL}/api/v1/seriales`}

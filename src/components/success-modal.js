@@ -59,12 +59,22 @@ export default function SuccessModal({title}) {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-        <CheckCircleOutlineIcon fontSize='large' color='success'/>
-          <Typography id="modal-modal-title" variant="h6" component="h2">
+        <CheckCircleOutlineIcon 
+        fontSize='large' 
+        color='success'/>
+          <Typography 
+          id="modal-modal-title" 
+          variant="h6" 
+          component="h2">
             {title} creado con éxito
           </Typography>
           <Box sx={{display: 'flex', justifyContent: 'space-between', mt: '2%'}}>
-          <Button onClick={handleClose} variant='outlined' sx={{width: '100%'}}>Aceptar</Button>
+          <Button 
+          onClick={handleClose} 
+          variant='outlined' 
+          sx={{width: '100%'}}>
+          Aceptar
+          </Button>
           </Box>
           
         </Box>

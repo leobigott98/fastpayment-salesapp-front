@@ -138,14 +138,23 @@ const RepresentativeForm = ({ handleStep, handleStepBack, activeStep }) => {
           }}
         >
           <div>
-            <Stack spacing={1} sx={{ mb: 3 }}>
+            <Stack 
+            spacing={1} 
+            sx={{ mb: 3 }}>
               <Typography variant="h4">Representante Legal</Typography>
             </Stack>
-            <form noValidate onSubmit={formik.handleSubmit}>
+            <form 
+            noValidate 
+            onSubmit={formik.handleSubmit}>
               <Stack spacing={3}>
                 <div>
-                  <Grid container spacing={3}>
-                    <Grid xs={12} container columnSpacing={1}>
+                  <Grid 
+                  container 
+                  spacing={3}>
+                    <Grid 
+                    xs={12} 
+                    container 
+                    columnSpacing={1}>
                       <Grid xs={4}>
                         <TextField
                           error={!!(formik.touched.v_percon_name && formik.errors.v_percon_name)}
@@ -183,7 +192,10 @@ const RepresentativeForm = ({ handleStep, handleStepBack, activeStep }) => {
                         />
                       </Grid>
                     </Grid>
-                    <Grid xs={12} container columnSpacing={1}>
+                    <Grid 
+                    xs={12} 
+                    container 
+                    columnSpacing={1}>
                       <Grid xs={2}>
                         <TextField
                           error={!!(formik.touched.v_cod_movilid && formik.errors.v_cod_movilid)}
@@ -216,7 +228,12 @@ const RepresentativeForm = ({ handleStep, handleStepBack, activeStep }) => {
                         />
                       </Grid>
                       <Grid xs={3}>
-                      <UserAutocomplete name={'Código'} url={`${process.env.NEXT_PUBLIC_APIURL}/api/v1/get-codlocalid`} data={v_cod_localid} setData={setCodLocalId} codlocalid/>
+                      <UserAutocomplete 
+                      name={'Código'} 
+                      url={`${process.env.NEXT_PUBLIC_APIURL}/api/v1/get-codlocalid`} 
+                      data={v_cod_localid} 
+                      setData={setCodLocalId} 
+                      codlocalid/>
                         {/* <Autocomplete
                           value={v_cod_localid}
                           id="variable_cod_localid"
@@ -270,7 +287,10 @@ const RepresentativeForm = ({ handleStep, handleStepBack, activeStep }) => {
                 </div>
               </Stack>
               {formik.errors.submit && (
-                <Typography color="error" sx={{ mt: 3 }} variant="body2">
+                <Typography 
+                color="error" 
+                sx={{ mt: 3 }} 
+                variant="body2">
                   {formik.errors.submit}
                 </Typography>
               )}

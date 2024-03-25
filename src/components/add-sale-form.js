@@ -118,13 +118,23 @@ const AddSaleForm = () => {
         }}
       >
         <Container maxWidth="xl">
-        <GeneralSuccessModal message={`Cotización creada con éxito`} opened={success} setOpened={setSuccess}/>
-        <GeneralErrorModal opened={error} setOpened={setError}/>
-          <Stack direction="row" justifyContent="space-between" spacing={4}>
+        <GeneralSuccessModal 
+        message={`Cotización creada con éxito`} 
+        opened={success} 
+        setOpened={setSuccess}/>
+        <GeneralErrorModal 
+        opened={error} 
+        setOpened={setError}/>
+          <Stack 
+          direction="row" 
+          justifyContent="space-between" 
+          spacing={4}>
             <Stack spacing={1}>
               <Typography variant="h4">Cotización</Typography>
             </Stack>
-            <Stack spacing={1} sx={{ width: "30%" }}>
+            <Stack 
+            spacing={1} 
+            sx={{ width: "30%" }}>
               {/* <Card  sx={{minWidth:275}}>
                 <CardContent>
                     <Typography variant="h5" component="div" sx={{textAlign: 'center'}}>
@@ -160,12 +170,18 @@ const AddSaleForm = () => {
                 {customer?.cliente ? (
                   <Stack spacing={2}>
                     <Typography variant="h6">Datos del Cliente</Typography>
-                    <Stack spacing={5} direction="row">
-                      <Stack spacing={1} direction="row">
+                    <Stack 
+                    spacing={5} 
+                    direction="row">
+                      <Stack 
+                      spacing={1} 
+                      direction="row">
                         <Typography>Tipo de Persona:</Typography>
                         <Typography>{customer.person_desc}</Typography>
                       </Stack>
-                      <Stack spacing={1} direction="row">
+                      <Stack 
+                      spacing={1} 
+                      direction="row">
                         <Typography>Nombre y RIF:</Typography>
                         <Typography>{customer.cliente}</Typography>
                       </Stack>
@@ -175,7 +191,9 @@ const AddSaleForm = () => {
                   ""
                 )}
                 <Typography variant="h6">Datos del Producto</Typography>
-                <Stack spacing={2} direction="row" >
+                <Stack 
+                spacing={2} 
+                direction="row" >
                   <UserAutocomplete
                     url={`${process.env.NEXT_PUBLIC_APIURL}/api/v1/products`}
                     products
@@ -212,8 +230,12 @@ const AddSaleForm = () => {
                 </Stack>
                 {product?.marca ? (
                   <Stack spacing={2}>
-                    <Stack spacing={5} direction="row">
-                      <Stack spacing={1} direction="row">
+                    <Stack 
+                    spacing={5} 
+                    direction="row">
+                      <Stack 
+                      spacing={1} 
+                      direction="row">
                         <Typography>Precio:</Typography>
                         <Typography>{product.precio}</Typography>
                       </Stack>
@@ -237,7 +259,11 @@ const AddSaleForm = () => {
             </Stack>
           </form>
           <Stack spacing={2}>
-          <PriceTable items={items} setItems={setItems} total={total} setTotal={setTotal}/>
+          <PriceTable 
+          items={items} 
+          setItems={setItems} 
+          total={total} 
+          setTotal={setTotal}/>
           <Button
                 //size="large"
                 type="submit"

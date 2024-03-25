@@ -87,8 +87,13 @@ export default function PaymentModal({ open, setOpen, id }) {
 
   return (
     <>
-    <GeneralSuccessModal message={'Pago Registrado con éxito'} opened={success} setOpened={setSuccess} />
-    <GeneralErrorModal opened={error} setOpened={setError}/>
+    <GeneralSuccessModal 
+    message={'Pago Registrado con éxito'} 
+    opened={success} 
+    setOpened={setSuccess} />
+    <GeneralErrorModal 
+    opened={error} 
+    setOpened={setError}/>
     <Modal
       open={open}
       onClose={handleModalClose}
@@ -97,14 +102,25 @@ export default function PaymentModal({ open, setOpen, id }) {
       
     >
       <Box sx={style}>
-        <Typography id="modal-modal-title" variant="h6" component="h2" sx={{mb: 3}}>
+        <Typography 
+        id="modal-modal-title" 
+        variant="h6" 
+        component="h2" 
+        sx={{mb: 3}}>
           Registrar Pago
         </Typography>
-        <form noValidate onSubmit={formik.handleSubmit}>
+        <form 
+        noValidate 
+        onSubmit={formik.handleSubmit}>
           <Stack spacing={3}>
             <div>
-              <Grid container spacing={3}>
-                <Grid xs={12} container columnSpacing={1}>
+              <Grid 
+              container 
+              spacing={3}>
+                <Grid 
+                xs={12} 
+                container 
+                columnSpacing={1}>
                   
                     <UserAutocomplete
                       name={"Tipo de Operación"}
@@ -123,7 +139,10 @@ export default function PaymentModal({ open, setOpen, id }) {
                     />
                   
                 </Grid>
-                <Grid xs={12} container columnSpacing={1}>
+                <Grid 
+                xs={12} 
+                container 
+                columnSpacing={1}>
                   <Grid xs={6}>
                     <TextField
                       error={!!(formik.touched.v_pay_ref && formik.errors.v_pay_ref)}

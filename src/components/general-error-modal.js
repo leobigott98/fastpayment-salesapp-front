@@ -45,12 +45,22 @@ export default function GeneralErrorModal({opened, setOpened}) {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-        <WarningIcon fontSize='large' color='warning'/>
-          <Typography id="modal-modal-title" variant="h6" component="h2">
+        <WarningIcon 
+        fontSize='large' 
+        color='warning'/>
+          <Typography 
+          id="modal-modal-title" 
+          variant="h6" 
+          component="h2">
             Ha ocurrido un problema. Asegúrese de haber suministrado los datos correctamente.
           </Typography>
           <Box sx={{display: 'flex', justifyContent: 'space-between', mt: '2%'}}>
-          <Button onClick={handleClose} variant='outlined' sx={{width: '100%'}}>Aceptar</Button>
+          <Button 
+          onClick={handleClose} 
+          variant='outlined' 
+          sx={{width: '100%'}}>
+          Aceptar
+          </Button>
           </Box>
           
         </Box>
