@@ -23,29 +23,29 @@ const fetchData = async(url, data)=> {
           
       }
 
-export default function Asynchronous({url, data, name, country, state, municipality, city, parrish, update, enabled, erase, children}) {
+export default function Asynchronous({url, data, name, country, state, municipality, city, parrish, update, enabled, erase, dependant}) {
   const [open, setOpen] = React.useState(false);
   const [options, setOptions] = React.useState([]);
   const loading = open && options.length === 0;
 
   const onChangeCountry =(value)=>{
     update.setCountry(value);
-    children.setState('');
-    children.setMunicipality('');
-    children.setCity('');
-    children.setParrish('');
+    dependant.setState('');
+    dependant.setMunicipality('');
+    dependant.setCity('');
+    dependant.setParrish('');
   }
 
   const onChangeState =(value)=>{
     update.setState(value);
-    children.setMunicipality('');
-    children.setCity('');
-    children.setParrish('');
+    dependant.setMunicipality('');
+    dependant.setCity('');
+    dependant.setParrish('');
   }
 
   const onChangeMunicipality =(value)=>{
     update.setMunicipality(value);
-    children.setParrish('');
+    dependant.setParrish('');
   }
 
   React.useEffect(() => {
