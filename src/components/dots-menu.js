@@ -9,7 +9,9 @@ import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
 import { useState } from "react";
 import InventoryModal from "./load-inventory-modal";
+import SerialModal from "./load-serial-modal";
 import PaymentModal from "./load-payment-modal";
+import AssignSerialModal from "./assign-serial-modal";
 
 export default function DotsMenu({ sales, id, balance }) {
   const [anchorEl, setAnchorEl] = useState(null);
@@ -91,12 +93,12 @@ export default function DotsMenu({ sales, id, balance }) {
       {sales ? (
         <>
         <PaymentModal open={modalOpen} setOpen={setModalOpen} id={id} />
-        <InventoryModal open={assignModalOpen} setOpen={setAssignModalOpen} id={id} assign/>
+        <AssignSerialModal open={assignModalOpen} setOpen={setAssignModalOpen} id={id} assign/>
         </>
       ) :  (
         <>
         <InventoryModal open={modalOpen} setOpen={setModalOpen} id={id} />
-        <InventoryModal open={serialModalOpen} setOpen={setSerialModalOpen} id={id} serial/>
+        <SerialModal open={serialModalOpen} setOpen={setSerialModalOpen} id={id} serial/>
         </>
       )}
     </div>
