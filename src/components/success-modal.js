@@ -47,7 +47,7 @@ export default function SuccessModal({title}) {
 
   useEffect(()=>{
     setOpen(openSuccessModal);
-  })
+  }, [openSuccessModal])
 
   return (
     <div>

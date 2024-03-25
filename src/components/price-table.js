@@ -28,7 +28,7 @@ export const PriceTable = ({ items, setItems, total, setTotal }) => {
 
   useEffect(() => {
    setTotal(addItems())
-  }, [items]);
+  }, [items, addItems, setTotal]);
 
   return (
     <Card sx={{ mt: 5 }}>
@@ -54,7 +54,9 @@ export const PriceTable = ({ items, setItems, total, setTotal }) => {
                     <TableCell>{item.qty}</TableCell>
                     <TableCell>${item.product.precio}</TableCell>
                     <TableCell>${item.product.precio * item.qty}</TableCell>
-                    <TableCell size="small" sx={{ width: 0.1 }}>
+                    <TableCell 
+                    size="small" 
+                    sx={{ width: 0.1 }}>
                       <Button
                         size="small"
                         onClick={()=>{

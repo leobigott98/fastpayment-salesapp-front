@@ -67,7 +67,7 @@ export default function Asynchronous({url, data, name, country, state, municipal
     return () => {
       active = false;
     };
-  }, [loading]);
+  }, [loading, data, url]);
 
   React.useEffect(() => {
     if (!open) {
@@ -127,7 +127,11 @@ export default function Asynchronous({url, data, name, country, state, municipal
             ...params.InputProps,
             endAdornment: (
               <React.Fragment>
-                {loading ? <CircularProgress color="inherit" size={20} /> : null}
+                {loading ? 
+                <CircularProgress 
+                color="inherit" 
+                size={20} /> : 
+                null}
                 {params.InputProps.endAdornment}
               </React.Fragment>
             ),

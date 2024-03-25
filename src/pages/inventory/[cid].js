@@ -58,7 +58,7 @@ const Page = () => {
 
   useEffect(()=>{
     getData(cid);
-  },[]);
+  },[cid]);
 
   const handlePageChange = useCallback(
     (event, value) => {

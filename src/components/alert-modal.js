@@ -135,7 +135,7 @@ export default function AlertModal({ opened, setOpened }) {
 
   useEffect(() => {
     setOpen(opened);
-  });
+  }, [opened]);
 
   return (
     <div>

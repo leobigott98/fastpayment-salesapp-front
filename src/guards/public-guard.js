@@ -38,7 +38,7 @@ export const PublicGuard = (props) => {
         setChecked(true);
       }
     },
-    [router.isReady]
+    [router.isReady, isAuthenticated, router]
   );
 
   if (!checked) {

@@ -133,7 +133,9 @@ export default function NewCustomerStepper() {
                 Anterior
               </Button>
               <Box sx={{ flex: "1 1 auto" }} />
-              <Button onClick={handleNext} sx={{ mr: 1 }}>
+              <Button 
+              onClick={handleNext} 
+              sx={{ mr: 1 }}>
                 Siguiente
               </Button>
               {activeStep !== steps.length &&

@@ -9,10 +9,7 @@ export default function OTPInput() {
 
   return (
     <>
-    <Head>
-        <link rel="stylesheet" href="../styles/style.css" />
-    </Head>
-      <div className="container">
+      {/* <div className="container">
       <form noValidate onSubmit={handleSubmit}>
         <div id="inputs" class="inputs">
           <input className="input" type="text" inputmode="numeric" maxlength="1" />
@@ -25,7 +22,7 @@ export default function OTPInput() {
           <input className="input" type="text" inputmode="numeric" maxlength="1" />
         </div>
     </form>
-      </div>
+      </div> */}
     </>
   );
 }

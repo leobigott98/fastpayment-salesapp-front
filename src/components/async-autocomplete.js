@@ -45,7 +45,7 @@ export default function AsyncAutocomplete({url, name, update, activity, bank}) {
     return () => {
       active = false;
     };
-  }, [loading]);
+  }, [loading, url]);
 
   React.useEffect(() => {
     if (!open) {
@@ -86,7 +86,11 @@ export default function AsyncAutocomplete({url, name, update, activity, bank}) {
             ...params.InputProps,
             endAdornment: (
               <React.Fragment>
-                {loading ? <CircularProgress color="inherit" size={20} /> : null}
+                {loading ? 
+                <CircularProgress 
+                color="inherit" 
+                size={20} /> : 
+                null}
                 {params.InputProps.endAdornment}
               </React.Fragment>
             ),

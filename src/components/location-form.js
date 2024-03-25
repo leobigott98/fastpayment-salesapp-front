@@ -92,7 +92,7 @@ const LocationForm = ({ handleStep, handleStepBack, activeStep, context, name })
     setStreet(formik.values.street);
     setFloor(formik.values.floor);
     setOffice(formik.values.office);
-  },[formik.values.floor, formik.values.street, formik.values.office])
+  },[formik.values.floor, formik.values.street, formik.values.office, setFloor, setOffice, setStreet])
 
   useEffect(()=>{
     if(country === ''){
@@ -119,7 +119,7 @@ const LocationForm = ({ handleStep, handleStepBack, activeStep, context, name })
       setParrish('')
     }
     console.log(country, state, municipality, parrish)
-  }, [country, state, municipality, parrish, city])
+  }, [country, state, municipality, parrish, city, setCity, setCountry, setMunicipality, setParrish, setState])
 
 /*   useEffect(() => {
     setCountry(formik.values.country);
@@ -291,7 +291,10 @@ const LocationForm = ({ handleStep, handleStepBack, activeStep, context, name })
           </div>
         </Stack>
         {formik.errors.submit && (
-          <Typography color="error" sx={{ mt: 3 }} variant="body2">
+          <Typography 
+          color="error" 
+          sx={{ mt: 3 }} 
+          variant="body2">
             {formik.errors.submit}
           </Typography>
         )}

@@ -29,7 +29,7 @@ export default function UserAutocomplete({name, url, roles, customers, products,
   const [input, setInput] = React.useState(null);
   React.useEffect(()=>{
     setData(input)
-  },[input])
+  },[input, setData])
 
   React.useEffect(() => {
     let active = true;
@@ -50,7 +50,7 @@ export default function UserAutocomplete({name, url, roles, customers, products,
     return () => {
       active = false;
     };
-  }, [loading]);
+  }, [loading, url]);
 
   React.useEffect(() => {
     if (!open) {
@@ -102,7 +102,11 @@ export default function UserAutocomplete({name, url, roles, customers, products,
             ...params.InputProps,
             endAdornment: (
               <React.Fragment >
-                {loading ? <CircularProgress color="inherit" size={20} /> : null}
+                {loading ? 
+                <CircularProgress 
+                color="inherit" 
+                size={20} /> : 
+                null}
                 {params.InputProps.endAdornment}
               </React.Fragment>
             ),

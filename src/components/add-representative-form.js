@@ -119,6 +119,13 @@ const RepresentativeForm = ({ handleStep, handleStepBack, activeStep }) => {
     //codLocalId,
     formik.values.v_percon_local,
     formik.values.v_percon_email,
+    setCodLocalId, 
+    setCodMovilId,
+    setPerconEmail,
+    setPerconLast,
+    setPerconLocal,
+    setPerconMovil,
+    setPerconName
   ]);
 
   return (
@@ -209,7 +216,9 @@ const RepresentativeForm = ({ handleStep, handleStepBack, activeStep }) => {
                           value={formik.values.v_cod_movilid}
                         >
                           {codMovilId.map((option) => (
-                            <MenuItem key={option.value} value={option.value}>
+                            <MenuItem 
+                            key={option.value} 
+                            value={option.value}>
                               {option.label}
                             </MenuItem>
                           ))}

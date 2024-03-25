@@ -38,7 +38,7 @@ export const VerifyEmailGuard = (props) => {
         setChecked(true);
       }
     },
-    [router.isReady]
+    [router.isReady, isAuthenticated, router]
   );
 
   if (!checked) {

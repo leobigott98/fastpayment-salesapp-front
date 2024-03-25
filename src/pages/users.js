@@ -84,21 +84,45 @@ const Page = () => {
         }}
       >
         <Container maxWidth="xl">
-        <GeneralSuccessModal message={''} data={data} opened={openModal} setOpened={setOpenModal}/>
-        <GeneralErrorModal opened={error} setOpened={setError}/>
+        <GeneralSuccessModal 
+        message={''} 
+        data={data} 
+        opened={openModal} 
+        setOpened={setOpenModal}/>
+        <GeneralErrorModal 
+        opened={error} 
+        setOpened={setError}/>
           <Stack spacing={3}>
-            <Stack direction="row" justifyContent="space-between" spacing={4}>
+            <Stack 
+            direction="row" 
+            justifyContent="space-between" 
+            spacing={4}>
               <Stack spacing={1}>
                 <Typography variant="h4">Gestión de Usuarios</Typography>
               </Stack>
             </Stack>
-            <form noValidate onSubmit={(e)=>handleSubmit(e)}>
+            <form 
+            noValidate 
+            onSubmit={(e)=>handleSubmit(e)}>
             <Stack spacing={1}>
-            <Stack spacing={1} direction="row">
-                <UserAutocomplete url={`${process.env.NEXT_PUBLIC_APIURL}/api/v1/users`} data={user} setData={setUser} name={"Usuario"}/>
-                <UserAutocomplete url={`${process.env.NEXT_PUBLIC_APIURL}/api/v1/roles`} roles data={role} setData={setRole} name={"Rol"}/>
+            <Stack 
+            spacing={1} 
+            direction="row">
+                <UserAutocomplete 
+                url={`${process.env.NEXT_PUBLIC_APIURL}/api/v1/users`} 
+                data={user} 
+                setData={setUser} 
+                name={"Usuario"}/>
+                <UserAutocomplete 
+                url={`${process.env.NEXT_PUBLIC_APIURL}/api/v1/roles`} 
+                roles 
+                data={role} 
+                setData={setRole} 
+                name={"Rol"}/>
             </Stack>
-            <Stack spacing={1} direction="row">
+            <Stack 
+            spacing={1} 
+            direction="row">
                 {role?.rol_desc === "Ventas"? 
                 <>
                     <TextField
@@ -116,7 +140,9 @@ const Page = () => {
                         value={location}
                         onChange={(event)=>setLocation(event.target.value)}
                     >{locations.map((option) => (
-                            <MenuItem key={option.value} value={option.value}>
+                            <MenuItem 
+                            key={option.value} 
+                            value={option.value}>
                               {option.label}
                             </MenuItem>
                           ))}
