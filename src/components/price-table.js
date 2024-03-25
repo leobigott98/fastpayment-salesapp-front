@@ -27,7 +27,7 @@ export const PriceTable = ({ items, setItems, total, setTotal }) => {
       return acumulado;
     };
    setTotal(addItems())
-  }, [items, addItems, setTotal]);
+  }, [items, setTotal]);
 
   return (
     <Card sx={{ mt: 5 }}>
