@@ -212,7 +212,7 @@ export const AuthProvider = (props) => {
 
       const jsonResponse = await response.json();
       if(jsonResponse.success){
-        if(jsonResponse.result[0].error_num >= 0) {
+        if(jsonResponse.result[0].error_num > 0) {
           throw new Error(jsonResponse.result[0].message);
         } else{
           dispatch({
@@ -233,10 +233,10 @@ export const AuthProvider = (props) => {
     try{
       window.sessionStorage.setItem('authenticated', 'false');
       window.sessionStorage.setItem('token', '');
-      await fetch(`${process.env.NEXT_PUBLIC_APIURL}/api/v1/auth/sign-out`, {
+      /* await fetch(`${process.env.NEXT_PUBLIC_APIURL}/api/v1/auth/sign-out`, {
         method: "POST",
         headers: {'Content-Type': 'application/json'},
-      })
+      }) */
     }catch(err){
       console.log(err);
     }
