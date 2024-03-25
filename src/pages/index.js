@@ -50,8 +50,10 @@ const Page = () => {
     try{
       const response = await fetch(`${process.env.NEXT_PUBLIC_APIURL}/api/v1/customers`, {
       headers: {
+        "Access-Control-Request-Headers": ["X-Auth-Token", "Cookie"],
         "X-Auth-Token": window.sessionStorage.getItem('token'),
       },
+      mode: "cors",
       credentials: "include"
     })
       const jsonData = await response.json();

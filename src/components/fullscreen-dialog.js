@@ -22,6 +22,7 @@ import ProductForm from "./add-product-form";
 import SuccessModal from "./success-modal";
 import AddSaleForm from "./add-sale-form";
 import GeneralErrorModal from "./general-error-modal";
+import NewCustomerStepper from "./new-customer-stepper";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -239,7 +240,7 @@ export function FullScreenDialog({products, title, sales}) {
         products? 
         <ProductForm/> : 
         sales? <AddSaleForm/>:
-        <ProgressMobileStepper />
+        <NewCustomerStepper/>
       }  
       </CustomerContext.Provider>
 

@@ -313,7 +313,7 @@ const AddLocationForm = ({ handleStep, handleStepBack, activeStep, setOpenedDial
                 setOffice: set_v_rep_add_ofic,
               }}
             />
-            <Grid xs={12} container columnSpacing={1} sx={{ marginTop: "-1%" }}>
+            {/* <Grid xs={12} container columnSpacing={1} sx={{ marginTop: "-1%" }}>
               <Button size="small" onClick={handleStepBack} disabled={activeStep === 0}>
                 {theme.direction === "rtl" ? <KeyboardArrowRight /> : <KeyboardArrowLeft />}
                 Anterior
@@ -330,7 +330,7 @@ const AddLocationForm = ({ handleStep, handleStepBack, activeStep, setOpenedDial
                 Enviar
                 {theme.direction === "rtl" ? <KeyboardArrowLeft /> : <KeyboardArrowRight />}
               </Button>
-            </Grid>
+            </Grid> */}
           </div>
         </Box>
       </Box>
