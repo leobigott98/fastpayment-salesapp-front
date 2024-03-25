@@ -214,7 +214,7 @@ const LocationForm = ({ handleStep, handleStepBack, activeStep, context, name })
                 name="Ciudad" 
                 url={`${process.env.NEXT_PUBLIC_APIURL}/api/v1/listar-ciudades`} 
                 data={{pais_id: 232, estado_id: state.estad_id}} 
-                dependant={{city, setCity}} 
+                update={{city, setCity}} 
                 enabled={{state}} 
                 erase={state}/> 
                 </Grid>

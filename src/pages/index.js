@@ -54,7 +54,8 @@ const Page = () => {
         "X-Auth-Token": window.sessionStorage.getItem('token'),
       },
       mode: "cors",
-      credentials: "include"
+      credentials: "include",
+      referrerPolicy: 'no-referrer-when-downgrade'
     })
       const jsonData = await response.json();
       console.log(jsonData)
