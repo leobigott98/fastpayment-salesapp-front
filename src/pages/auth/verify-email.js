@@ -89,7 +89,9 @@ const Page = () => {
           justifyContent: 'center'
         }}
       >
-      <GeneralErrorModal opened={error} setOpened={setError}/>
+      <GeneralErrorModal 
+      opened={error} 
+      setOpened={setError}/>
         <Box
           sx={{
             maxWidth: 550,

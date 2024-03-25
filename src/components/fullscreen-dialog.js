@@ -25,7 +25,10 @@ import GeneralErrorModal from "./general-error-modal";
 import NewCustomerStepper from "./new-customer-stepper";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
-  return <Slide direction="up" ref={ref} {...props} />;
+  return <Slide 
+  direction="up" 
+  ref={ref} 
+  {...props} />;
 });
 
 export function FullScreenDialog({products, title, sales}) {
@@ -190,7 +193,7 @@ export function FullScreenDialog({products, title, sales}) {
 
   useEffect(() => {
     setOpen(openDialog);
-  });
+  }, [openDialog]);
 
 /*   useEffect(() => {
     async function fetchData() {

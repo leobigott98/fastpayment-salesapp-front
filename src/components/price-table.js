@@ -18,15 +18,14 @@ import BackspaceIcon from "@mui/icons-material/Backspace";
 
 export const PriceTable = ({ items, setItems, total, setTotal }) => {
 
-  const addItems = () => {
-    let acumulado = 0
-    items.forEach((item) => {
-      acumulado = acumulado + (item.product.precio * item.qty);
-    });
-    return acumulado;
-  };
-
   useEffect(() => {
+    const addItems = () => {
+      let acumulado = 0
+      items.forEach((item) => {
+        acumulado = acumulado + (item.product.precio * item.qty);
+      });
+      return acumulado;
+    };
    setTotal(addItems())
   }, [items, addItems, setTotal]);
 

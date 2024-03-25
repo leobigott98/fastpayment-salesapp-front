@@ -98,7 +98,10 @@ export const SalesTable = (props) => {
                       />
                     </TableCell>
                     <TableCell>
-                      <Stack alignItems="center" direction="row" spacing={2}>
+                      <Stack 
+                      alignItems="center" 
+                      direction="row" 
+                      spacing={2}>
                         {/* <Avatar src={customer.avatar}>
                           {getInitials(customer.name)}
                         </Avatar> */}
@@ -112,7 +115,10 @@ export const SalesTable = (props) => {
                     <TableCell>{sale.balance}</TableCell>
                     <TableCell>{sale.status}</TableCell>
                     <TableCell>
-                      <DotsMenu sales id={sale.id} balance={sale.balance}/>
+                      <DotsMenu 
+                      sales 
+                      id={sale.id} 
+                      balance={sale.balance}/>
                     </TableCell>
                     {/* <TableCell>
                       {createdAt}
