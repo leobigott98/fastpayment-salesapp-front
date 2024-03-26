@@ -157,7 +157,6 @@ export const AuthProvider = (props) => {
         window.sessionStorage.setItem('authenticated', 'true');
         window.sessionStorage.setItem('token', jsonResponse.token);
 
-
         const user = {
           id: '5e86809283e28b96d2d38537',
           avatar: '/assets/avatars/avatar-anika-visser.png',
@@ -189,7 +188,6 @@ export const AuthProvider = (props) => {
   };
 
   const signUp = async (name, lastname, email, password) => {
-    try{
       const data = {
         "name": name,
         "lastname": lastname,
@@ -203,29 +201,19 @@ export const AuthProvider = (props) => {
         body: JSON.stringify(data)
       })
 
-      /* const user = {
-        id: '5e86809283e28b96d2d38537',
-        avatar: '/assets/avatars/avatar-anika-visser.png',
-        name: 'Anika Visser',
-        email: 'anika.visser@devias.io'
-      }; */
-
       const jsonResponse = await response.json();
       if(jsonResponse.success){
-        if(jsonResponse.result[0].error_num > 0) {
-          throw new Error(jsonResponse.result[0].message);
+        if(jsonResponse.result.error_num > 0) {
+          throw new Error(jsonResponse.result.message);
         } else{
+          console.log('done')
           dispatch({
-            type: HANDLERS.SIGN_IN,
-            payload: data
+            type: HANDLERS.SIGN_UP,
+            payload: user
           });
-          return jsonResponse.token;
+          //return jsonResponse.token;
         }    
       }
-    }catch(err){
-      throw new Error(err.message);
-
-    }
   };
 
   const signOut = async () => {
