@@ -118,6 +118,26 @@ export const AuthProvider = (props) => {
     []
   );
 
+  const skip = () => {
+    try {
+      window.sessionStorage.setItem('authenticated', 'true');
+    } catch (err) {
+      console.error(err);
+    }
+
+    const user = {
+      id: '5e86809283e28b96d2d38537',
+      avatar: '/assets/avatars/avatar-anika-visser.png',
+      name: 'Anika Visser',
+      email: 'anika.visser@devias.io'
+    };
+
+    dispatch({
+      type: HANDLERS.SIGN_IN,
+      payload: user
+    });
+  };
+  
   const signIn = async (email, password) => {
     try {
       const data = {
