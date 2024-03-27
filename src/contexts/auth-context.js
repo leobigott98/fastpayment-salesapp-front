@@ -57,7 +57,7 @@ const handlers = {
     return {
       ...state,
       isAuthenticated: false,
-      user
+      user: null
     };
   }
 };
@@ -118,26 +118,6 @@ export const AuthProvider = (props) => {
     []
   );
 
-  const skip = () => {
-    try {
-      window.sessionStorage.setItem('authenticated', 'true');
-    } catch (err) {
-      console.error(err);
-    }
-
-    const user = {
-      id: '5e86809283e28b96d2d38537',
-      avatar: '/assets/avatars/avatar-anika-visser.png',
-      name: 'Anika Visser',
-      email: 'anika.visser@devias.io'
-    };
-
-    dispatch({
-      type: HANDLERS.SIGN_IN,
-      payload: user
-    });
-  };
-
   const signIn = async (email, password) => {
     try {
       const data = {
@@ -146,7 +126,7 @@ export const AuthProvider = (props) => {
       }
       const response = await fetch(`${process.env.NEXT_PUBLIC_APIURL}/api/v1/auth/sign-in`, {
         method: "POST",
-        "Access-Control-Request-Headers": ["X-Auth-Token", "Cookie", "Set-Cookie", "Content-Type"],
+        "Access-Control-Request-Headers": ["X-Auth-Token", "Cookie", "Set-Cookie", "Content-Type", "Access-Control-Allow-Credentials"],
         headers: {
           "Content-Type": "application/json"
         },
@@ -161,10 +141,9 @@ export const AuthProvider = (props) => {
         window.sessionStorage.setItem('token', jsonResponse.token);
 
         const user = {
-          id: '5e86809283e28b96d2d38537',
-          avatar: '/assets/avatars/avatar-anika-visser.png',
-          name: 'Anika Visser',
-          email: 'anika.visser@devias.io'
+          name: jsonResponse.user_name,
+          lastname: jsonResponse.user_last,
+
         };
     
         dispatch({
@@ -197,6 +176,12 @@ export const AuthProvider = (props) => {
         "email": email,
         "password": password
       }
+
+      const user = {
+        name: data.name,
+        lastname: data.lastname,
+        email: data.email
+      };
 
       const response = await fetch(`${process.env.NEXT_PUBLIC_APIURL}/api/v1/auth/sign-up`, {
         method: "POST",
