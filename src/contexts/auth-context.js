@@ -146,11 +146,14 @@ export const AuthProvider = (props) => {
       }
       const response = await fetch(`${process.env.NEXT_PUBLIC_APIURL}/api/v1/auth/sign-in`, {
         method: "POST",
+        "Access-Control-Request-Headers": ["X-Auth-Token", "Cookie", "Content-Type"],
         headers: {
           "Content-Type": "application/json"
         },
         body: JSON.stringify(data),
-        credentials: 'include'
+        mode: "cors",
+        credentials: "include",
+        referrerPolicy: 'no-referrer-when-downgrade'
       });
       const jsonResponse = await response.json();
       if (jsonResponse.success){
