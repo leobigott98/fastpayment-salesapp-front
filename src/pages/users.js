@@ -20,8 +20,8 @@ const locations = [
 const Page = () => {
     const [role, setRole] = useState('');
     const [user, setUser] = useState('');
-    const [location, setLocation] = useState('');
-    const [fee, setFee] = useState('');
+    const [location, setLocation] = useState(null);
+    const [fee, setFee] = useState(null);
     const [openModal, setOpenModal] = useState(false);
     const [data, setData] = useState(null);
     const [error, setError] = useState(false);
@@ -52,6 +52,7 @@ const Page = () => {
           v_sell_fee: fee,
           v_sell_location: location
         }
+        console.log(body)
         await fetch(`${process.env.NEXT_PUBLIC_APIURL}/api/v1/roles/update`, {
           method: "POST",
           headers: {
@@ -64,7 +65,9 @@ const Page = () => {
           setData(jsonResult);
           if(jsonResult.result[0].usuario){
             setOpenModal(true);
-          } else setError(true)  
+          } else {
+            setError(true)
+            console.log(jsonResult)}  
         })
       }catch(err){
         console.log(err.message);

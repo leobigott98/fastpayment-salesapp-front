@@ -106,7 +106,7 @@ export const Layout = withPublicGuard((props) => {
             </Typography>
             <img
               alt=""
-              src="/assets/auth-fp-illustration.jpg"
+              src="/assets/t1-pro.png"
             />
           </Box>
         </Grid>

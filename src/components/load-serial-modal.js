@@ -57,8 +57,14 @@ export default function SerialModal({ open, setOpen, id, serial, assign}) {
               "X-Auth-Token": window.sessionStorage.getItem("token"),
             },
             body: JSON.stringify(body),
-          }).then(() => {
-            setSuccess(true);
+          }).then(async(result) => {
+            const json = await result.json();
+            if (json.error){
+              setError(true);
+            }
+            else if (json.result[0].error_num> 0){
+              setError(true);
+            } else setSuccess(true);
           });
         } catch (err) {
           helpers.setStatus({ success: false });

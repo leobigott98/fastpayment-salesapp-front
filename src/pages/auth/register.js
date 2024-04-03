@@ -1,13 +1,22 @@
 import Head from 'next/head';
+import { useState } from 'react';
 import NextLink from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { Box, Button, Link, Stack, TextField, Typography } from '@mui/material';
+import { Box, Button, Link, Stack, TextField, Typography, FormHelperText } from '@mui/material';
 import { useAuth } from 'src/hooks/use-auth';
 import { Layout as AuthLayout } from 'src/layouts/auth/layout';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import OutlinedInput from '@mui/material/OutlinedInput';
+import InputLabel from '@mui/material/InputLabel';
+import InputAdornment from '@mui/material/InputAdornment';
+import FormControl from '@mui/material/FormControl';
+import IconButton from '@mui/material/IconButton';
 
 const Page = () => {
+  const [showPassword, setShowPassword] = useState(false);
   const router = useRouter();
   const auth = useAuth();
   const formik = useFormik({
@@ -52,6 +61,12 @@ const Page = () => {
     }
   });
 
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
+
   return (
     <>
       <Head>
@@ -87,7 +102,7 @@ const Page = () => {
                 color="text.secondary"
                 variant="body2"
               >
-                Already have an account?
+                ¿Ya tienes cuenta?
                 &nbsp;
                 <Link
                   component={NextLink}
@@ -95,7 +110,7 @@ const Page = () => {
                   underline="hover"
                   variant="subtitle2"
                 >
-                  Log in
+                  Inicia Sesión
                 </Link>
               </Typography>
             </Stack>
@@ -135,7 +150,7 @@ const Page = () => {
                   type="email"
                   //value={formik.values.email}
                 />
-                <TextField
+                {/* <TextField
                   error={!!(formik.touched.password && formik.errors.password)}
                   fullWidth
                   helperText={formik.touched.password && formik.errors.password}
@@ -145,7 +160,50 @@ const Page = () => {
                   onChange={formik.handleChange}
                   type="password"
                   //value={formik.values.password}
-                />
+                /> */}
+                <FormControl  
+                  variant="filled"
+                  margin="none"
+                  error={!!(formik.touched.password && formik.errors.password)}
+                  //sx={{m:0, p:0}}
+                  
+                  >
+                  <InputLabel
+                    //error={!!(formik.touched.password && formik.errors.password)}
+                    //variant="filled"
+                   size="small"
+                    >
+                    Password
+                  </InputLabel>
+                  <OutlinedInput
+                    //id="outlined-adornment-password"
+                    type={showPassword ? "text" : "password"}
+                    endAdornment={
+                      <InputAdornment position="end">
+                        <IconButton
+                          aria-label="toggle password visibility"
+                          onClick={handleClickShowPassword}
+                          onMouseDown={handleMouseDownPassword}
+                          edge="end"
+                          color={formik.touched.password && formik.errors.password ? 'error' : ''}
+                        >
+                          {showPassword ? <VisibilityOff /> : <Visibility />}
+                        </IconButton>
+                      </InputAdornment>
+                    }
+                    label="Password"
+                    error={!!(formik.touched.password && formik.errors.password)}
+                    fullWidth
+                    name="password"
+                    onBlur={formik.handleBlur}
+                    onChange={formik.handleChange}
+                    //notched
+                  />
+                  <FormHelperText
+                    error={!!(formik.touched.password && formik.errors.password)}>
+                    {formik.touched.password && formik.errors.password}
+                  </FormHelperText>
+                </FormControl>
               </Stack>
               {formik.errors.submit && (
                 <Typography
