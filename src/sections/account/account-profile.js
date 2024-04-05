@@ -8,18 +8,13 @@ import {
   Divider,
   Typography
 } from '@mui/material';
+import { useContext } from 'react';
+import { AuthContext } from 'src/contexts/auth-context';
 
-const user = {
-  avatar: '/assets/avatars/avatar-anika-visser.png',
-  city: 'Caracas',
-  country: 'Venezuela',
-  jobTitle: 'Developer',
-  name: 'Leonardo Bigott',
-  timezone: 'GTM-4'
-};
-
-export const AccountProfile = () => (
-  <Card>
+export const AccountProfile = () => {
+  const {user} = useContext(AuthContext);
+  return(
+    <Card>
     <CardContent>
       <Box
         sx={{
@@ -40,23 +35,17 @@ export const AccountProfile = () => (
           gutterBottom
           variant="h5"
         >
-          {user.name}
+          {user? user.name: ''} {user? user.lastname:''}
         </Typography>
-        <Typography
+        {/* <Typography
           color="text.secondary"
           variant="body2"
         >
-          {user.city} {user.country}
-        </Typography>
-        <Typography
-          color="text.secondary"
-          variant="body2"
-        >
-          {user.timezone}
-        </Typography>
+          {user.user_status} {user.user_role}
+        </Typography> */}
       </Box>
     </CardContent>
-    <Divider />
+    {/* <Divider />
     <CardActions>
       <Button
         fullWidth
@@ -64,6 +53,8 @@ export const AccountProfile = () => (
       >
         Upload picture
       </Button>
-    </CardActions>
+    </CardActions> */}
   </Card>
-);
+  )
+  
+        };

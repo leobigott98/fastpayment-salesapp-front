@@ -37,8 +37,7 @@ const handlers = {
     };
   },
   [HANDLERS.SIGN_IN]: (state, action) => {
-    const {user} = action.payload;
-
+    const user = action.payload;
     return {
       ...state,
       isAuthenticated: true,
@@ -53,11 +52,12 @@ const handlers = {
 
     };
   },
-  [HANDLERS.SIGN_UP]: (state) => {
+  [HANDLERS.SIGN_UP]: (state, action) => {
+    const user = action.payload;
     return {
       ...state,
       isAuthenticated: false,
-      user: null
+      user: user
     };
   }
 };
@@ -86,57 +86,38 @@ export const AuthProvider = (props) => {
     let isAuthenticated = false;
 
     try {
-      isAuthenticated = window.sessionStorage.getItem('authenticated') === 'true';
+      if (window.localStorage.getItem('token') != null){
+        await fetch(`${process.env.NEXT_PUBLIC_APIURL}/api/v1/auth/myData`, {
+          headers: {
+            "Access-Control-Request-Headers": ["X-Auth-Token", "Cookie"],
+            "X-Auth-Token": window.localStorage.getItem('token'),
+          },
+          mode: "cors",
+          credentials: "include"
+        }).then(async(result)=>{
+            if(result.ok){
+              isAuthenticated = true
+              const user = await result.json(); 
+              dispatch({
+                type: HANDLERS.INITIALIZE,
+                payload: user
+              });
+            } 
+        })
+      }else{
+        console.log('not authenticated')
+        dispatch({
+          type: HANDLERS.INITIALIZE
+        });
+      }   ;  
     } catch (err) {
       console.error(err);
     }
-
-    if (isAuthenticated) {
-      const user = {
-        id: '5e86809283e28b96d2d38537',
-        avatar: '/assets/avatars/avatar-anika-visser.png',
-        name: 'Anika Visser',
-        email: 'anika.visser@devias.io'
-      };
-
-      dispatch({
-        type: HANDLERS.INITIALIZE,
-        payload: user
-      });
-    } else {
-      dispatch({
-        type: HANDLERS.INITIALIZE
-      });
-    }
   };
 
-  useEffect(
-    () => {
+  useEffect(() => {
       initialize();
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    []
-  );
-
-  const skip = () => {
-    try {
-      window.sessionStorage.setItem('authenticated', 'true');
-    } catch (err) {
-      console.error(err);
-    }
-
-    const user = {
-      id: '5e86809283e28b96d2d38537',
-      avatar: '/assets/avatars/avatar-anika-visser.png',
-      name: 'Anika Visser',
-      email: 'anika.visser@devias.io'
-    };
-
-    dispatch({
-      type: HANDLERS.SIGN_IN,
-      payload: user
-    });
-  };
+    },[]);
   
   const signIn = async (email, password) => {
     try {
@@ -157,14 +138,16 @@ export const AuthProvider = (props) => {
       });
       const jsonResponse = await response.json();
       if (jsonResponse.success){
-        window.sessionStorage.setItem('authenticated', 'true');
-        window.sessionStorage.setItem('token', jsonResponse.token);
+        window.localStorage.setItem('token', jsonResponse.token);
 
         const user = {
-          name: jsonResponse.user_name,
-          lastname: jsonResponse.user_last,
-
+          name: jsonResponse.name,
+          lastname: jsonResponse.lastname,
+          email: jsonResponse.email,
+          role: jsonResponse.role,
+          status: jsonResponse.status
         };
+        //console.log(user)
     
         dispatch({
           type: HANDLERS.SIGN_IN,
@@ -176,17 +159,7 @@ export const AuthProvider = (props) => {
     } catch (error) {
       console.log(error)
       return false
-
     }
-    /* if (email !== 'demo@devias.io' || password !== 'Password123!') {
-      throw new Error('Please check your email and password');
-    }
-
-    try {
-      window.sessionStorage.setItem('authenticated', 'true');
-    } catch (err) {
-      console.error(err);
-    } */ 
   };
 
   const signUp = async (name, lastname, email, password) => {
@@ -227,12 +200,7 @@ export const AuthProvider = (props) => {
   const signOut = async () => {
 
     try{
-      window.sessionStorage.setItem('authenticated', 'false');
-      window.sessionStorage.setItem('token', '');
-      /* await fetch(`${process.env.NEXT_PUBLIC_APIURL}/api/v1/auth/sign-out`, {
-        method: "POST",
-        headers: {'Content-Type': 'application/json'},
-      }) */
+      window.localStorage.removeItem('token');
     }catch(err){
       console.log(err);
     }
@@ -246,10 +214,9 @@ export const AuthProvider = (props) => {
     <AuthContext.Provider
       value={{
         ...state,
-        skip,
         signIn,
         signUp,
-        signOut
+        signOut,
       }}
     >
       {children}

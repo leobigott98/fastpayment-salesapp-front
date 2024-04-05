@@ -11,6 +11,8 @@ import ImportButton from 'src/components/import-button';
 import ExportButton from 'src/components/export-button';
 import NotAvailable from 'src/components/not-available-message';
 import { SalesTable } from 'src/sections/sales/sales-table';
+import { useRouter } from 'next/navigation';
+import { useAuth } from "src/hooks/use-auth";
 
 const useSales = (data, page, rowsPerPage) => {
   return useMemo(
@@ -38,16 +40,23 @@ const Page = () => {
   const salesIds = useSaleIds(sales);
   const salesSelection = useSelection(salesIds);
   const [saleType, setSaleType] = useState('available');
+  const auth = useAuth();
+  const router = useRouter();
 
   const getData = async ()=>{
     try{
       const response = await fetch(`${process.env.NEXT_PUBLIC_APIURL}/api/v1/sales`, {
       headers: {
-        "X-Auth-Token": window.sessionStorage.getItem('token')
+        "X-Auth-Token": window.localStorage.getItem('token')
       }
     })
+    if(response.ok){
       const jsonData = await response.json();
       setData(jsonData.result);
+    }else{
+      auth.signOut();
+      router.push('/auth/login');
+    }
     }catch(err){
       console.log(err)
     }  

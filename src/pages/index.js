@@ -16,6 +16,8 @@ import { AddButton } from 'src/components/add-button';
 import ImportButton from 'src/components/import-button';
 import ExportButton from 'src/components/export-button';
 import NotAvailable from 'src/components/not-available-message';
+import { useAuth } from "src/hooks/use-auth";
+import { useRouter } from 'next/navigation';
 
 const now = new Date();
 
@@ -45,23 +47,31 @@ const Page = () => {
   const customersIds = useCustomerIds(customers);
   const customersSelection = useSelection(customersIds);
   const [customerType, setCustomerType] = useState('available');
+  const auth = useAuth();
+  const router = useRouter();
 
   const getData = async ()=>{
     try{
       const response = await fetch(`${process.env.NEXT_PUBLIC_APIURL}/api/v1/customers`, {
       headers: {
         "Access-Control-Request-Headers": ["X-Auth-Token", "Cookie"],
-        "X-Auth-Token": window.sessionStorage.getItem('token'),
+        "X-Auth-Token": window.localStorage.getItem('token'),
       },
       mode: "cors",
       credentials: "include",
       referrerPolicy: 'no-referrer-when-downgrade'
     })
+    if(response.ok){
       const jsonData = await response.json();
-      console.log(jsonData)
       setData(jsonData.result);
+    }else{
+      auth.signOut();
+      router.push('/auth/login');
+    }
     }catch(err){
-      console.log(err)
+      console.log(err);
+      auth.signOut()
+    
     }  
   } 
 

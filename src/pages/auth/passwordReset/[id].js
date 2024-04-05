@@ -52,7 +52,7 @@ const Page = () => {
         }
       try {
         console.log(token)
-        await fetch(`http://localhost:3001/api/v1/auth/passwordReset/reset`,{
+        await fetch(`${process.env.NEXT_PUBLIC_APIURL}/api/v1/auth/passwordReset/reset`,{
             method: 'POST',
             headers: {
                 "X-Auth-Token": token,
@@ -87,7 +87,7 @@ const Page = () => {
   useEffect(()=>{
     const id = router.query.id
     const checkURL = async(id)=>{
-        await fetch(`http://localhost:3001/api/v1/auth/passwordReset/checkURL/${id}`)
+        await fetch(`${process.env.NEXT_PUBLIC_APIURL}/api/v1/auth/passwordReset/checkURL/${id}`)
             .then(async (response)=>{
                 if (!response.ok){
                     setError(true)

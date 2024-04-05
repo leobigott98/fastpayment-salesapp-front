@@ -57,7 +57,7 @@ const Page = () => {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            "X-Auth-Token": window.sessionStorage.getItem('token')
+            "X-Auth-Token": window.localStorage.getItem('token')
           },
           body: JSON.stringify(body)
         }).then(async(result)=>{

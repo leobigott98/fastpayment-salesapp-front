@@ -119,7 +119,7 @@ const AddLocationForm = ({ handleStep, handleStepBack, activeStep, setOpenedDial
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "X-Auth-Token": window.sessionStorage.getItem('token')
+          "X-Auth-Token": window.localStorage.getItem('token')
         },
         credentials: "include",
         body: JSON.stringify(customerBody)
@@ -151,7 +151,7 @@ const AddLocationForm = ({ handleStep, handleStepBack, activeStep, setOpenedDial
             method: "POST",
             headers: {
               "Content-Type": "application/json",
-              "X-Auth-Token": window.sessionStorage.getItem('token')
+              "X-Auth-Token": window.localStorage.getItem('token')
             },
             body: JSON.stringify(ComAddress)
           })
@@ -175,7 +175,7 @@ const AddLocationForm = ({ handleStep, handleStepBack, activeStep, setOpenedDial
             method: "POST",
             headers: {
               "Content-Type": "application/json",
-              "X-Auth-Token": window.sessionStorage.getItem('token')
+              "X-Auth-Token": window.localStorage.getItem('token')
             },
             body: JSON.stringify(POSAddress)
           })
@@ -199,7 +199,7 @@ const AddLocationForm = ({ handleStep, handleStepBack, activeStep, setOpenedDial
             method: "POST",
             headers: {
               "Content-Type": "application/json",
-              "X-Auth-Token": window.sessionStorage.getItem('token')
+              "X-Auth-Token": window.localStorage.getItem('token')
             },
             body: JSON.stringify(RepAddress)
           }) 

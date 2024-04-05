@@ -9,7 +9,7 @@ const fetchData = async(url, data)=> {
         const result = await fetch(url, {
           method: 'POST',
           headers: {
-            "X-Auth-Token": window.sessionStorage.getItem("token"),
+            "X-Auth-Token": window.localStorage.getItem("token"),
             'Content-Type': 'application/json'
           },
           body: JSON.stringify(data)

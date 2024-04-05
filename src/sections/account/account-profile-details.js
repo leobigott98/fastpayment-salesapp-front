@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useState, useContext, useEffect } from 'react';
 import {
   Box,
   Button,
@@ -10,35 +10,11 @@ import {
   TextField,
   Unstable_Grid2 as Grid
 } from '@mui/material';
-
-const states = [
-  {
-    value: 'caracas',
-    label: 'Caracas'
-  },
-  {
-    value: 'new-york',
-    label: 'New York'
-  },
-  {
-    value: 'san-francisco',
-    label: 'San Francisco'
-  },
-  {
-    value: 'los-angeles',
-    label: 'Los Angeles'
-  }
-];
+import { AuthContext } from 'src/contexts/auth-context';
 
 export const AccountProfileDetails = () => {
-  const [values, setValues] = useState({
-    firstName: 'Leonardo',
-    lastName: 'Bigott',
-    email: 'l.bigott@puntogove.com',
-    phone: '',
-    state: 'Caracas',
-    country: 'Venezuela'
-  });
+  const [values, setValues] = useState({});
+  const {user} = useContext(AuthContext);
 
   const handleChange = useCallback(
     (event) => {
@@ -57,6 +33,11 @@ export const AccountProfileDetails = () => {
     []
   );
 
+  useEffect(()=>{
+    setValues(user)
+    console.log(user)
+  },[])
+
   return (
     <form
       autoComplete="off"
@@ -65,8 +46,8 @@ export const AccountProfileDetails = () => {
     >
       <Card>
         <CardHeader
-          subheader="The information can be edited"
-          title="Profile"
+          subheader="Para cambios, comuníquese con TI."
+          title="Perfil"
         />
         <CardContent sx={{ pt: 0 }}>
           <Box sx={{ m: -1.5 }}>
@@ -80,12 +61,13 @@ export const AccountProfileDetails = () => {
               >
                 <TextField
                   fullWidth
-                  helperText="Please specify the first name"
+                  //helperText="Please specify the first name"
                   label="First name"
                   name="firstName"
                   onChange={handleChange}
                   required
-                  value={values.firstName}
+                  value={values.name}
+                  disabled
                 />
               </Grid>
               <Grid
@@ -98,12 +80,13 @@ export const AccountProfileDetails = () => {
                   name="lastName"
                   onChange={handleChange}
                   required
-                  value={values.lastName}
+                  value={values.lastname}
+                  disabled
                 />
               </Grid>
               <Grid
                 xs={12}
-                md={6}
+                md={12}
               >
                 <TextField
                   fullWidth
@@ -112,67 +95,32 @@ export const AccountProfileDetails = () => {
                   onChange={handleChange}
                   required
                   value={values.email}
+                  disabled
                 />
               </Grid>
-              <Grid
+              {/* <Grid
                 xs={12}
                 md={6}
               >
                 <TextField
                   fullWidth
-                  label="Phone Number"
-                  name="phone"
+                  label="Rol"
+                  name="role"
                   onChange={handleChange}
-                  type="number"
-                  value={values.phone}
+                  type="text"
+                  value={values.user_role}
+                  disabled
                 />
-              </Grid>
-              <Grid
-                xs={12}
-                md={6}
-              >
-                <TextField
-                  fullWidth
-                  label="Country"
-                  name="country"
-                  onChange={handleChange}
-                  required
-                  value={values.country}
-                />
-              </Grid>
-              <Grid
-                xs={12}
-                md={6}
-              >
-                <TextField
-                  fullWidth
-                  label="Select State"
-                  name="state"
-                  onChange={handleChange}
-                  required
-                  select
-                  SelectProps={{ native: true }}
-                  value={values.state}
-                >
-                  {states.map((option) => (
-                    <option
-                      key={option.value}
-                      value={option.value}
-                    >
-                      {option.label}
-                    </option>
-                  ))}
-                </TextField>
-              </Grid>
+              </Grid> */}
             </Grid>
           </Box>
         </CardContent>
-        <Divider />
+        {/* <Divider />
         <CardActions sx={{ justifyContent: 'flex-end' }}>
           <Button variant="contained">
             Save details
           </Button>
-        </CardActions>
+        </CardActions> */}
       </Card>
     </form>
   );

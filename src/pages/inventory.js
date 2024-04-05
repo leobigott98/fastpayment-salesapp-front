@@ -11,23 +11,37 @@ import ImportButton from 'src/components/import-button';
 import ExportButton from 'src/components/export-button';
 import NotAvailable from 'src/components/not-available-message';
 import { ProductsTable } from 'src/sections/products/products-table'; 
+import { useRouter } from 'next/navigation';
+import { useAuth } from "src/hooks/use-auth";
 
 const useProducts = (data, page, rowsPerPage) => {
-  return useMemo(
-    () => {
-      return applyPagination(data, page, rowsPerPage);
-    },
-    [page, rowsPerPage, data]
-  );
+
+  try {
+    return useMemo(
+      () => {
+        return applyPagination(data, page, rowsPerPage);
+      },
+      [page, rowsPerPage, data]
+    );
+  } catch (error) {
+    console.log(error)
+  }
+  
 };
 
 const useProductIds = (products) => {
-  return useMemo(
-    () => {
-      return products.map((product) => product.id);
-    },
-    [products]
-  );
+  try {
+    return useMemo(
+      () => {
+        return products.map((product) => product.id);
+      },
+      [products]
+    );
+    
+  } catch (error) {
+    console.log(error)
+  }
+
 };
 
 const Page = () => {
@@ -38,18 +52,26 @@ const Page = () => {
   const productsIds = useProductIds(products);
   const productsSelection = useSelection(productsIds);
   const [productType, setProductType] = useState('available');
+  const auth = useAuth();
+  const router = useRouter();
 
   const getData = async ()=>{
     try{
       const response = await fetch(`${process.env.NEXT_PUBLIC_APIURL}/api/v1/products`, {
       headers: {
-        "X-Auth-Token": window.sessionStorage.getItem('token')
+        "X-Auth-Token": window.localStorage.getItem('token')
       }
     })
-      const jsonData = await response.json();
-      setData(jsonData.result);
+      if(response.ok){
+        const jsonData = await response.json();
+        setData(jsonData.result);
+      }else{
+        auth.signOut();
+        router.push('/auth/login');
+      }
+      
     }catch(err){
-      console.log(err)
+      console.log(err);
     }  
   }
 

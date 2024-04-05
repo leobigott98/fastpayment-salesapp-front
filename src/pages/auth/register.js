@@ -50,7 +50,7 @@ const Page = () => {
       try {
         await auth.signUp(values.name, values.lastname, values.email, values.password).then(()=>{
           alert('Usuario registrado exitosamente');
-          router.push('/auth/login');
+          router.push('/auth/verify-email');
         })
           
       } catch (err) {

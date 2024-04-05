@@ -9,7 +9,7 @@ const fetchData = async(url)=> {
         const result = await fetch(url, {
           method: 'GET',
           headers: {
-            "X-Auth-Token": window.sessionStorage.getItem("token")
+            "X-Auth-Token": window.localStorage.getItem("token")
           }
         });
         const jsonResult = await result.json();

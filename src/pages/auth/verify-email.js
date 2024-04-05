@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useState, useContext } from 'react';
 import Head from 'next/head';
 import NextLink from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -19,36 +19,50 @@ import {
 import { useAuth } from 'src/hooks/use-auth';
 import { Layout as AuthLayout } from 'src/layouts/auth/layout';
 import GeneralErrorModal from 'src/components/general-error-modal';
+import { AuthContext } from 'src/contexts/auth-context';
+import GeneralSuccessModal from 'src/components/general-success-modal';
+
 
 const Page = () => {
   const router = useRouter();
   const auth = useAuth();
+  const {user} = useContext(AuthContext);
   //const [method, setMethod] = useState('email');
   const [error, setError] = useState(false);
+  const [success, setSuccess] = useState(false);
+
   const formik = useFormik({
     initialValues: {
-      email: '',
-      password: '',
-      submit: null
+      code: ''
     },
     validationSchema: Yup.object({
-      email: Yup
+      code: Yup
         .string()
-        .email('Must be a valid email')
-        .max(255)
-        .required('Email is required'),
-      password: Yup
-        .string()
-        .max(255)
-        .required('Password is required')
+        .matches(/\d{6}/, 'Debe introducir una OTP válida')
+        .length(6, 'Debe introducir una OTP válida')
+        .required('Debe introducir una OTP válida')
     }),
     onSubmit: async (values, helpers) => {
       try {
-        const response = await auth.signIn(values.email, values.password);
-        if(response) {router.push('/');}
-        else{
-          setError(true);
+        //console.log(values.code);
+        const {email} = user;
+        const body = {
+          email: email,
+          code: values.code
         }
+        await fetch(`${process.env.NEXT_PUBLIC_APIURL}/api/v1/auth/verify-otp`,{
+          method: 'POST',
+          headers:{
+              "Content-Type": "application/json"
+          },
+          body: JSON.stringify(body)
+        })
+        .then(async(result)=>{
+          if(result.ok){
+            setSuccess(true)
+            router.replace('http://localhost:3000/auth/login')
+          }
+        })
       } catch (err) {
         helpers.setStatus({ success: false });
         helpers.setErrors({ submit: err.message });
@@ -57,34 +71,18 @@ const Page = () => {
     }
   });
 
-  /* const handleMethodChange = useCallback(
-    (event, value) => {
-      setMethod(value);
-      console.log(method);
-    },
-    []
-  ); */
-
-  const handleSkip = useCallback(
-    () => {
-      auth.skip();
-      router.push('/');
-    },
-    [auth, router]
-  );
-
   return (
     <>
       <Head>
         <title>
-          Login | Ventas FP
+          Verificación de Correo | Ventas FP
         </title>
       </Head>
       <Box
         sx={{
           backgroundColor: 'background.paper',
           flex: '1 1 auto',
-          alignItems: 'center',
+          //alignItems: 'center',
           display: 'flex',
           justifyContent: 'center'
         }}
@@ -92,6 +90,11 @@ const Page = () => {
       <GeneralErrorModal 
       opened={error} 
       setOpened={setError}/>
+      <GeneralSuccessModal 
+        opened={success}
+        setOpened={setSuccess}
+        message={"OTP validada"}
+      />
         <Box
           sx={{
             maxWidth: 550,
@@ -106,7 +109,7 @@ const Page = () => {
               sx={{ mb: 3 }}
             >
               <Typography variant="h4">
-                Inicio de Sesión
+                Verifica tu Correo
               </Typography>
               <Typography
                 color="text.secondary"
@@ -124,46 +127,27 @@ const Page = () => {
                 </Link>
               </Typography>
             </Stack>
-            {/* <Tabs
-              onChange={handleMethodChange}
-              sx={{ mb: 3 }}
-              value={method}
-            >
-              <Tab
-                label="Email"
-                value="email"
-              />
-              <Tab
-                label="Phone Number"
-                value="phoneNumber"
-              />
-            </Tabs> */}
-            {/* {method === 'email' && ( */}
               <form
                 noValidate
                 onSubmit={formik.handleSubmit}
               >
                 <Stack spacing={3}>
+
                   <TextField
-                    error={!!(formik.touched.email && formik.errors.email)}
+                    //size= 'medium'
+                    error={!!(formik.touched.code && formik.errors.code)}
                     fullWidth
-                    helperText={formik.touched.email && formik.errors.email}
-                    label="Email Address"
-                    name="email"
+                    helperText={formik.touched.code && formik.errors.code}
+                    label="OTP"
+                    name="code"
                     onBlur={formik.handleBlur}
                     onChange={formik.handleChange}
-                    type="email"
-                    //value={formik.values.email}
-                  />
-                  <TextField
-                    error={!!(formik.touched.password && formik.errors.password)}
-                    fullWidth
-                    helperText={formik.touched.password && formik.errors.password}
-                    label="Password"
-                    name="password"
-                    onBlur={formik.handleBlur}
-                    onChange={formik.handleChange}
-                    type="password"
+                    type="text"
+                    //sx={{textAlign: 'center'}}
+                    inputProps={{
+                      style: {textAlign: 'center', fontSize: 40}
+                    }}
+                    
                     //value={formik.values.password}
                   />
                 </Stack>
