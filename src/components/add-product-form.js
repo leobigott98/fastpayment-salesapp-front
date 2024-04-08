@@ -13,10 +13,16 @@ import { CustomerContext } from 'src/contexts/customer-context';
 import { OpenDialogContext } from "src/contexts/openDialog-context";
 import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
+import GeneralErrorModal from "./general-error-modal";
+import GeneralSuccessModal from "./general-success-modal";
 
 const ProductForm = () => {
   const theme = useTheme();
   const {openSuccessModal, setOpenSuccessModal} = useContext(OpenDialogContext);
+  const [success, setSuccess] = useState(false)
+  const [ error, setError ] = useState(false)
+  const [ message, setMessage ] = useState('')
+  
 
   const formik = useFormik({
     initialValues: {
@@ -42,17 +48,33 @@ const ProductForm = () => {
             "X-Auth-Token": window.localStorage.getItem('token')
           },
           body: JSON.stringify(values)
-        }).then(setOpenSuccessModal(true))
+        }).then(async(result)=>{
+          if(result.ok){
+            const json = await result.json()
+            //console.log(json.result.messge)
+            setMessage(json.result[0].messge)
+            if (json.error_num >5000){
+              setError(true)
+            } else{
+              setSuccess(true)
+            }
+          }
+          //setOpenSuccessModal(true)
+        })
       } catch (err) {
         helpers.setStatus({ success: false });
         helpers.setErrors({ submit: err.message });
         helpers.setSubmitting(false);
+        setMessage(err.message)
+        setError(true)
       }
     },
   });
 
   return (
     <>
+    <GeneralErrorModal opened={error} setOpened={setError} message={message}/>
+    <GeneralSuccessModal opened={success} setOpened={setSuccess} message={message}/>
       <Box
         sx={{
           flex: "1 1 auto",

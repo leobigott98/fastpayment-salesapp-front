@@ -26,9 +26,16 @@ const style = {
   textAlign: 'center'
 };
 
-export default function GeneralErrorModal({opened, setOpened}) {
+export default function GeneralErrorModal({opened, setOpened, message}) {
   const [open, setOpen] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('Ha ocurrido un problema. Asegúrese de haber suministrado los datos correctamente.')
   const router = useRouter();
+
+  useEffect(()=>{
+    if(message != ''){
+      setErrorMessage(message)
+    }
+  },[message])
 
   const handleClose = () => {
     setOpen(false)
@@ -52,7 +59,7 @@ export default function GeneralErrorModal({opened, setOpened}) {
           id="modal-modal-title" 
           variant="h6" 
           component="h2">
-            Ha ocurrido un problema. Asegúrese de haber suministrado los datos correctamente.
+            {errorMessage}
           </Typography>
           <Box sx={{display: 'flex', justifyContent: 'space-between', mt: '2%'}}>
           <Button 

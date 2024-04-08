@@ -1,23 +1,16 @@
 import * as dotenv from 'dotenv';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import Head from 'next/head';
-import { subDays, subHours } from 'date-fns';
-import ArrowDownOnSquareIcon from '@heroicons/react/24/solid/ArrowDownOnSquareIcon';
-import ArrowUpOnSquareIcon from '@heroicons/react/24/solid/ArrowUpOnSquareIcon';
-import PlusIcon from '@heroicons/react/24/solid/PlusIcon';
-import { Box, Button, Container, Stack, SvgIcon, Typography, Tab, Tabs, Card } from '@mui/material';
-import { Scrollbar } from 'src/components/scrollbar';
+import { Box, Container, Stack, Typography} from '@mui/material';
 import { useSelection } from 'src/hooks/use-selection';
 import { Layout as DashboardLayout } from 'src/layouts/dashboard/layout';
 import { CustomersTable } from 'src/sections/customer/customers-table';
 import { CustomersSearch } from 'src/sections/customer/customers-search';
 import { applyPagination } from 'src/utils/apply-pagination';
 import { AddButton } from 'src/components/add-button';
-import ImportButton from 'src/components/import-button';
-import ExportButton from 'src/components/export-button';
-import NotAvailable from 'src/components/not-available-message';
 import { useAuth } from "src/hooks/use-auth";
 import { useRouter } from 'next/navigation';
+import GeneralErrorModal from 'src/components/general-error-modal';
 
 const now = new Date();
 
@@ -41,12 +34,13 @@ const useCustomerIds = (customers) => {
 
 const Page = () => {
   const [data, setData] = useState([]);
+  const [error, setError] = useState(false);
+  const [message, setMessage] = useState('')
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const customers = useCustomers(data, page, rowsPerPage);
   const customersIds = useCustomerIds(customers);
   const customersSelection = useSelection(customersIds);
-  const [customerType, setCustomerType] = useState('available');
   const auth = useAuth();
   const router = useRouter();
 
@@ -65,8 +59,12 @@ const Page = () => {
       const jsonData = await response.json();
       setData(jsonData.result);
     }else{
+      setError(true);
       auth.signOut();
-      router.push('/auth/login');
+      setTimeout(()=>{
+        router.push('/auth/login');
+      }, 2000)
+      
     }
     }catch(err){
       console.log(err);
@@ -93,13 +91,6 @@ const Page = () => {
     []
   );
 
-  const handleCustomerTypeChange = useCallback(
-    (event, value) => {
-      setCustomerType(value);
-    },
-    []
-  );
-
   return (
     <>
       <Head>
@@ -107,6 +98,7 @@ const Page = () => {
           Clientes | Ventas FP
         </title>
       </Head>
+      <GeneralErrorModal setOpened={setError} opened={error} message={message}/>
       <Box
         component="main"
         sx={{
@@ -130,42 +122,13 @@ const Page = () => {
                   direction="row"
                   spacing={1}
                 >
-
-                   <ImportButton/>
-                  
-                  <ExportButton selected={customersSelection}/> 
                 </Stack>
               </Stack>
               <div>
               <AddButton/> 
-                {/* <Button
-                  startIcon={(
-                    <SvgIcon fontSize="small">
-                      <PlusIcon />
-                    </SvgIcon>
-                  )}
-                  variant="contained"
-                >
-                  Agregar
-                </Button>  */}
               </div>
             </Stack>
-            <CustomersSearch />
-            <Tabs
-              onChange={handleCustomerTypeChange}
-              sx={{ mb: 3 }}
-              value={customerType}
-            >
-              <Tab
-                label="Disponibles"
-                value="available"
-              />
-              <Tab
-                label="Incompletos"
-                value="incomplete"
-              />
-            </Tabs>
-            {customerType === 'available' && (
+            <CustomersSearch />   
             <CustomersTable
               count={data.length}
               items={customers}
@@ -179,10 +142,6 @@ const Page = () => {
               rowsPerPage={rowsPerPage}
               selected={customersSelection.selected}
             />
-            )}
-            {customerType === 'incomplete' && (
-              <NotAvailable/>
-            )}
           </Stack> 
         </Container>
       </Box>

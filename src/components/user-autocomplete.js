@@ -3,8 +3,25 @@ import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import CircularProgress from '@mui/material/CircularProgress';
 
-const fetchData = async(url)=> {
+const fetchData = async(url, body)=> {
     //if (true) {
+  if(body){
+    try{
+      const result = await fetch(url, {
+        method: 'POST',
+        headers: {
+          "X-Auth-Token": window.localStorage.getItem("token"),
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(body)
+      });
+      const jsonResult = await result.json();
+      return jsonResult.result;
+
+    }catch(err){
+      console.log(err.message)
+    }
+  }else{
       try{
         const result = await fetch(url, {
           method: 'GET',
@@ -19,16 +36,21 @@ const fetchData = async(url)=> {
       }catch(err){
         console.log(err.message)
       }
-          
+    }  
       }
 
-export default function UserAutocomplete({name, url, roles, customers, products, data, setData, payOptions, banks, codlocalid, serials}) {
+export default function UserAutocomplete({name, url, roles, customers, products, saleProducts, data, setData, payOptions, banks, codlocalid, serials, disabled}) {
   const [open, setOpen] = React.useState(false);
   const [options, setOptions] = React.useState([]);
   const loading = open && options.length === 0;
   const [input, setInput] = React.useState(null);
+  const [disableElement, setDisableElement] = React.useState(false)
   React.useEffect(()=>{
     setData(input)
+    if(disabled){
+      setDisableElement(disabled)
+    }
+    
   },[input, setData])
 
   React.useEffect(() => {
@@ -63,6 +85,7 @@ export default function UserAutocomplete({name, url, roles, customers, products,
       id="asynchronous-demo"
       sx={{ width: '100%', paddingTop:0 }}
       open={open}
+      disabled={disableElement}
       onOpen={() => {
         setOpen(true);
       }}
@@ -77,6 +100,7 @@ export default function UserAutocomplete({name, url, roles, customers, products,
         roles? (option, value) => option.rol_desc === value.rol_desc :
         customers? (option, value) => option.cliente === value.cliente :
         products? (option, value) => option.modelo === value.modelo :
+        saleProducts? (option, value) => option.prod_id == value.prod_id:
         payOptions? (option, value) => option.ops_desc === value.ops_desc :
         banks? (option, value) => option.bank_desc === value.bank_desc :
         codlocalid? (option, value) => option.cod_value === value.cod_value :
@@ -86,6 +110,7 @@ export default function UserAutocomplete({name, url, roles, customers, products,
         roles? (option) => option.rol_desc:
         customers? (option) => option.cliente:
         products? (option) => option.modelo:
+        saleProducts? (option) => option.prod_id:
         payOptions? (option) => option.ops_desc :
         banks? (option) => option.bank_desc :
         codlocalid? (option) => option.cod_value :

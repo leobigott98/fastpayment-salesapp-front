@@ -21,6 +21,7 @@ import { Layout as AuthLayout } from 'src/layouts/auth/layout';
 import GeneralErrorModal from 'src/components/general-error-modal';
 import { AuthContext } from 'src/contexts/auth-context';
 import GeneralSuccessModal from 'src/components/general-success-modal';
+import Timer from '../../components/timer'
 
 
 const Page = () => {
@@ -30,6 +31,8 @@ const Page = () => {
   //const [method, setMethod] = useState('email');
   const [error, setError] = useState(false);
   const [success, setSuccess] = useState(false);
+  const [reset, setResetTime] = useState(false);
+  const [timeElapsed, setTimeElapsed] = useState(false);
 
   const formik = useFormik({
     initialValues: {
@@ -132,9 +135,7 @@ const Page = () => {
                 onSubmit={formik.handleSubmit}
               >
                 <Stack spacing={3}>
-
                   <TextField
-                    //size= 'medium'
                     error={!!(formik.touched.code && formik.errors.code)}
                     fullWidth
                     helperText={formik.touched.code && formik.errors.code}
@@ -143,17 +144,12 @@ const Page = () => {
                     onBlur={formik.handleBlur}
                     onChange={formik.handleChange}
                     type="text"
-                    //sx={{textAlign: 'center'}}
                     inputProps={{
                       style: {textAlign: 'center', fontSize: 40}
                     }}
-                    
-                    //value={formik.values.password}
                   />
                 </Stack>
-                {/* <FormHelperText sx={{ mt: 1 }}>
-                  Optionally you can skip.
-                </FormHelperText> */}
+
                 {formik.errors.submit && (
                   <Typography
                     color="error"
@@ -163,6 +159,29 @@ const Page = () => {
                     {formik.errors.submit}
                   </Typography>
                 )}
+                <Typography
+                color="text.secondary"
+                variant="body2"
+              >
+                ¿Necesitas otra clave temporal?
+                &nbsp;
+                <Link
+                  component={NextLink}
+                  href="/auth/register"
+                  //onClick={}
+                  underline="hover"
+                  variant="subtitle2"
+                  color={timeElapsed ? 'primary' : 'text.secondary'}
+                  style={
+                    {'pointerEvents': timeElapsed ? 'auto' : 'none'}
+                  }
+                  aria-disabled={!timeElapsed}
+                  tabIndex={timeElapsed? undefined : -1}
+                >
+                  Enviar de nuevo &nbsp;
+                </Link>
+                <Timer reset={reset} setTimeElapsed={setTimeElapsed}/>
+              </Typography>
                 <Button
                   fullWidth
                   size="large"
@@ -172,38 +191,10 @@ const Page = () => {
                 >
                   Continuar
                 </Button>
-                {/* <Button
-                  fullWidth
-                  size="large"
-                  sx={{ mt: 3 }}
-                  onClick={handleSkip}
-                >
-                  Skip authentication
-                </Button> */}
-                {/* <Alert
-                  color="primary"
-                  severity="info"
-                  sx={{ mt: 3 }}
-                >
-                  <div>
-                    You can use <b>demo@devias.io</b> and password <b>Password123!</b>
-                  </div>
-                </Alert> */}
+
               </form>
-            {/* )}
-            {method === 'phoneNumber' && ( */}
-              {/* <div>
-                <Typography
-                  sx={{ mb: 1 }}
-                  variant="h6"
-                >
-                  Not available in the demo
-                </Typography>
-                <Typography color="text.secondary">
-                  To prevent unnecessary costs we disabled this feature in the demo.
-                </Typography>
-              </div> */}
-            {/* )} */}
+
+
           </div>
         </Box>
       </Box>

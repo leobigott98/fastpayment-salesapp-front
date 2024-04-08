@@ -92,6 +92,7 @@ const AddLocationForm = ({ handleStep, handleStepBack, activeStep, setOpenedDial
 
   const {openSuccessModal, setOpenSuccessModal} = useContext(OpenDialogContext);
   const [error, setError] = useState(false);
+  const [message, setMessage] = useState('')
 
 
   const handleSubmit = async ()=>{
@@ -128,7 +129,7 @@ const AddLocationForm = ({ handleStep, handleStepBack, activeStep, setOpenedDial
         console.log(jsonCustomerResponse);
 
         if(jsonCustomerResponse.result[0].error_num){
-          setError(true);
+          setMessage(result[0].message)
           throw new Error('Error al crear el cliente')
         } else{
 
@@ -210,6 +211,7 @@ const AddLocationForm = ({ handleStep, handleStepBack, activeStep, setOpenedDial
         
     } catch (err) {
       console.log(err.message)
+      setMessage(err.message)
       setError(true);
       /* helpers.setStatus({ success: false });
       helpers.setErrors({ submit: err.message });
@@ -229,8 +231,10 @@ const AddLocationForm = ({ handleStep, handleStepBack, activeStep, setOpenedDial
         }}
       >
       <GeneralErrorModal 
-      opened={error} 
-      setOpened={setError}/>
+        opened={error} 
+        setOpened={setError}
+        message={message}
+      />
         <Box
           sx={{
             //maxWidth: 550,

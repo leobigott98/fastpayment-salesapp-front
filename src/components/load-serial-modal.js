@@ -31,6 +31,7 @@ export default function SerialModal({ open, setOpen, id, serial, assign}) {
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
   const [assignSerial, setAssignSerial] = useState('');
+  const [ message, setMessage ] = useState('')
   const handleModalClose = () => {
     setOpenModal(false);
     setOpen(false);
@@ -58,13 +59,18 @@ export default function SerialModal({ open, setOpen, id, serial, assign}) {
             },
             body: JSON.stringify(body),
           }).then(async(result) => {
-            const json = await result.json();
-            if (json.error){
-              setError(true);
+            if(result.ok){
+              const json = await result.json();
+              console.log(json)
+              setMessage(json.result[0].message)
+              if (json.result[0].error_num> 0){
+                console.log(message)
+                setError(true);
+              } else {
+                setSuccess(true)
+              };
             }
-            else if (json.result[0].error_num> 0){
-              setError(true);
-            } else setSuccess(true);
+            
           });
         } catch (err) {
           helpers.setStatus({ success: false });
@@ -83,8 +89,10 @@ export default function SerialModal({ open, setOpen, id, serial, assign}) {
       opened={success} 
       setOpened={setSuccess} />
       <GeneralErrorModal 
-      opened={error} 
-      setOpened={setError}/>
+        opened={error} 
+        setOpened={setError}
+        message={message}
+      />
       <Modal
         open={open}
         onClose={handleModalClose}

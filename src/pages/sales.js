@@ -1,15 +1,11 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import Head from 'next/head';
-import { Box, Container, Stack, Typography, Tab, Tabs } from '@mui/material';
+import { Box, Container, Stack, Typography } from '@mui/material';
 import { useSelection } from 'src/hooks/use-selection';
 import { Layout as DashboardLayout } from 'src/layouts/dashboard/layout';
-import { ItemsTable } from 'src/sections/items/items-table';
 import { CustomersSearch } from 'src/sections/customer/customers-search';
 import { applyPagination } from 'src/utils/apply-pagination';
 import { AddButton } from 'src/components/add-button';
-import ImportButton from 'src/components/import-button';
-import ExportButton from 'src/components/export-button';
-import NotAvailable from 'src/components/not-available-message';
 import { SalesTable } from 'src/sections/sales/sales-table';
 import { useRouter } from 'next/navigation';
 import { useAuth } from "src/hooks/use-auth";
@@ -39,7 +35,6 @@ const Page = () => {
   const sales = useSales(data, page, rowsPerPage);
   const salesIds = useSaleIds(sales);
   const salesSelection = useSelection(salesIds);
-  const [saleType, setSaleType] = useState('available');
   const auth = useAuth();
   const router = useRouter();
 
@@ -80,13 +75,6 @@ const Page = () => {
     []
   );
 
-  const handleSaleTypeChange = useCallback(
-    (event, value) => {
-      setSaleType(value);
-    },
-    []
-  );
-
   return (
     <>
       <Head>
@@ -117,42 +105,13 @@ const Page = () => {
                   direction="row"
                   spacing={1}
                 >
-
-                  <ImportButton/>
-                  
-                  <ExportButton selected={salesSelection}/>
                 </Stack>
               </Stack>
               <div>
               <AddButton sales/>
-                {/* <Button
-                  startIcon={(
-                    <SvgIcon fontSize="small">
-                      <PlusIcon />
-                    </SvgIcon>
-                  )}
-                  variant="contained"
-                >
-                  Agregar
-                </Button> */}
               </div>
             </Stack>
             <CustomersSearch />
-            <Tabs
-              onChange={handleSaleTypeChange}
-              sx={{ mb: 3 }}
-              value={saleType}
-            >
-              <Tab
-                label="Disponibles"
-                value="available"
-              />
-              <Tab
-                label="Incompletos"
-                value="incomplete"
-              />
-            </Tabs>
-            {saleType === 'available' && (
             <SalesTable
               count={data.length}
               items={sales}
@@ -166,10 +125,6 @@ const Page = () => {
               rowsPerPage={rowsPerPage}
               selected={salesSelection.selected}
             />
-            )}
-            {saleType === 'incomplete' && (
-              <NotAvailable/>
-            )}
           </Stack>
         </Container>
       </Box>

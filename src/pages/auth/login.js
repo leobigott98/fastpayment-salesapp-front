@@ -32,6 +32,7 @@ const Page = () => {
   const auth = useAuth();
   //const [method, setMethod] = useState('email');
   const [error, setError] = useState(false);
+  const [ message, setMessage ] = useState('')
   
   const [showPassword, setShowPassword] = useState(false);
 
@@ -49,11 +50,21 @@ const Page = () => {
       try {
         const response = await auth.signIn(values.email, values.password);
         if (response) {
+          if(response.status == 3002){
+            router.push("/auth/verify-email")
+          }else if(response.status != 3000){
+            throw new Error('Acceso Restringido')
+          }
+          if(response.role == 1004){
+            throw new Error('Sin rol asignado. Contacte a TI')
+          }
           router.push("/");
         } else {
+          //setMessage()
           setError(true);
         }
       } catch (err) {
+        console.log(err.message)
         helpers.setStatus({ success: false });
         helpers.setErrors({ submit: err.message });
         helpers.setSubmitting(false);
@@ -96,7 +107,10 @@ const Page = () => {
           justifyContent: "center",
         }}
       >
-        <GeneralErrorModal opened={error} setOpened={setError} />
+        <GeneralErrorModal 
+          opened={error} 
+          setOpened={setError} 
+          message={message}/>
         <Box
           sx={{
             maxWidth: 550,

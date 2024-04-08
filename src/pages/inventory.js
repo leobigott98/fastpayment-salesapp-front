@@ -1,15 +1,11 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import Head from 'next/head';
-import { Box, Container, Stack, Typography, Tab, Tabs } from '@mui/material';
+import { Box, Container, Stack, Typography } from '@mui/material';
 import { useSelection } from 'src/hooks/use-selection';
 import { Layout as DashboardLayout } from 'src/layouts/dashboard/layout';
-import { ItemsTable } from 'src/sections/items/items-table';
 import { CustomersSearch } from 'src/sections/customer/customers-search';
 import { applyPagination } from 'src/utils/apply-pagination';
 import { AddButton } from 'src/components/add-button';
-import ImportButton from 'src/components/import-button';
-import ExportButton from 'src/components/export-button';
-import NotAvailable from 'src/components/not-available-message';
 import { ProductsTable } from 'src/sections/products/products-table'; 
 import { useRouter } from 'next/navigation';
 import { useAuth } from "src/hooks/use-auth";
@@ -51,7 +47,6 @@ const Page = () => {
   const products = useProducts(data, page, rowsPerPage);
   const productsIds = useProductIds(products);
   const productsSelection = useSelection(productsIds);
-  const [productType, setProductType] = useState('available');
   const auth = useAuth();
   const router = useRouter();
 
@@ -93,13 +88,6 @@ const Page = () => {
     []
   );
 
-  const handleProductTypeChange = useCallback(
-    (event, value) => {
-      setProductType(value);
-    },
-    []
-  );
-
   return (
     <>
       <Head>
@@ -131,41 +119,13 @@ const Page = () => {
                   spacing={1}
                 >
 
-                  <ImportButton/>
-                  
-                  <ExportButton selected={productsSelection}/>
                 </Stack>
               </Stack>
               <div>
               <AddButton products/>
-                {/* <Button
-                  startIcon={(
-                    <SvgIcon fontSize="small">
-                      <PlusIcon />
-                    </SvgIcon>
-                  )}
-                  variant="contained"
-                >
-                  Agregar
-                </Button> */}
               </div>
             </Stack>
             <CustomersSearch />
-            <Tabs
-              onChange={handleProductTypeChange}
-              sx={{ mb: 3 }}
-              value={productType}
-            >
-              <Tab
-                label="Disponibles"
-                value="available"
-              />
-              <Tab
-                label="Incompletos"
-                value="incomplete"
-              />
-            </Tabs>
-            {productType === 'available' && (
             <ProductsTable
               count={data.length}
               items={products}
@@ -179,10 +139,6 @@ const Page = () => {
               rowsPerPage={rowsPerPage}
               selected={productsSelection.selected}
             />
-            )}
-            {productType === 'incomplete' && (
-              <NotAvailable/>
-            )}
           </Stack>
         </Container>
       </Box>

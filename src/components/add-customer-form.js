@@ -45,28 +45,6 @@ const tipos_persona = [
   },
 ];
 
-const bancos = [
-  {
-    value: 1,
-    label: "Banesco",
-  },
-  {
-    value: 2,
-    label: "Mercantil",
-  },
-];
-
-const actividades = [
-  {
-    value: 2000,
-    label: "Alimentación",
-  },
-  {
-    value: 2001,
-    label: "Turismo",
-  },
-];
-
 const CustomerForm = ({ handleStep, handleStepBack, activeStep }) => {
   const theme = useTheme();
   const { v_person_id, 

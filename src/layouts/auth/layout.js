@@ -107,6 +107,7 @@ export const Layout = withPublicGuard((props) => {
             <img
               alt=""
               src="/assets/t1-pro.png"
+              style={{borderRadius: 10}}
             />
           </Box>
         </Grid>

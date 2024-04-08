@@ -31,6 +31,8 @@ export default function AssignSerialModal({ open, setOpen, id}) {
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
   const [assignSerial, setAssignSerial] = useState('');
+  const [product, setProduct] = useState('')
+  //const [selectedProduct, setSelectedProduct] = useState('')
   const handleModalClose = () => {
     setOpenModal(false);
     setOpen(false);
@@ -114,6 +116,16 @@ export default function AssignSerialModal({ open, setOpen, id}) {
                   <Grid 
                   xs={12} 
                   columnSpacing={1} >
+                  
+                    <UserAutocomplete 
+                          url={`${process.env.NEXT_PUBLIC_APIURL}/api/v1/products/sale`}
+                          saleProducts
+                          data={product}
+                          setData={setProduct}
+                          name={"Producto"}
+                          body={{sale_id: id}}
+                        />
+                    
                     
                       <UserAutocomplete 
                         url={`${process.env.NEXT_PUBLIC_APIURL}/api/v1/seriales`}
@@ -121,6 +133,8 @@ export default function AssignSerialModal({ open, setOpen, id}) {
                         data={assignSerial}
                         setData={setAssignSerial}
                         name={"Serial"}
+                        body={product == ''? null : {prod_id: product?.prod_id}}
+                        disabled={product == ''? true:false}
                       />
                     
                   </Grid>

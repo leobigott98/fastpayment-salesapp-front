@@ -102,7 +102,12 @@ export const AuthProvider = (props) => {
                 type: HANDLERS.INITIALIZE,
                 payload: user
               });
-            } 
+            } else{
+              console.log('not authenticated')
+              dispatch({
+                type: HANDLERS.INITIALIZE
+              });
+            }
         })
       }else{
         console.log('not authenticated')
@@ -112,6 +117,10 @@ export const AuthProvider = (props) => {
       }   ;  
     } catch (err) {
       console.error(err);
+      console.log('not authenticated')
+        dispatch({
+          type: HANDLERS.INITIALIZE
+        });
     }
   };
 
@@ -153,7 +162,10 @@ export const AuthProvider = (props) => {
           type: HANDLERS.SIGN_IN,
           payload: user
         });
-        return jsonResponse.token;
+        return {
+          status: user.status,
+          role: user.role
+        };
       }
 
     } catch (error) {

@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import PropTypes from 'prop-types';
 import { useAuthContext } from 'src/contexts/auth-context';
 
-export const VerifyEmailGuard = (props) => {
+export const AuthGuard = (props) => {
   const { children } = props;
   const router = useRouter();
   const { isAuthenticated } = useAuthContext();
@@ -27,11 +27,12 @@ export const VerifyEmailGuard = (props) => {
 
       ignore.current = true;
 
-      if (isAuthenticated) {
-        console.log('User is signed-in. Redirectiong');
+      if (!isAuthenticated) {
+        console.log('Not authenticated, redirecting');
         router
           .replace({
-            pathname: '/'
+            pathname: '/auth/login',
+            query: router.asPath !== '/' ? { continueUrl: router.asPath } : undefined
           })
           .catch(console.error);
       } else {
@@ -51,6 +52,6 @@ export const VerifyEmailGuard = (props) => {
   return children;
 };
 
-PublicGuard.propTypes = {
+AuthGuard.propTypes = {
   children: PropTypes.node
 };
