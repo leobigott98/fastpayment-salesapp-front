@@ -14,10 +14,6 @@ FRONTEND MADE USING DEVIAS KIT TEMPLATE. MODIFICATIONS WERE MADE FROM THERE.
 
 - More freebies like this one: <https://devias.io>
 
-## Reporting Issues:
-
-- [Github Issues Page](https://github.com/devias-io/react-material-dashboard/issues?ref=devias-io)
-
 ## License
 
 - Licensed under MIT (https://github.com/devias-io/react-material-dashboard/blob/master/LICENSE.md)
