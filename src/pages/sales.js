@@ -86,7 +86,8 @@ const Page = () => {
         component="main"
         sx={{
           flexGrow: 1,
-          py: 8
+          py: 8,
+          width: '100%'
         }}
       >
         <Container maxWidth="xl">
@@ -124,6 +125,7 @@ const Page = () => {
               page={page}
               rowsPerPage={rowsPerPage}
               selected={salesSelection.selected}
+              type={'sales'}
             />
           </Stack>
         </Container>

@@ -18,11 +18,13 @@ import { Logo } from 'src/components/logo';
 import { Scrollbar } from 'src/components/scrollbar';
 import { items } from './config';
 import { SideNavItem } from './side-nav-item';
+import { useAuth } from 'src/hooks/use-auth';
 
 export const SideNav = (props) => {
   const { open, onClose } = props;
   const pathname = usePathname();
   const lgUp = useMediaQuery((theme) => theme.breakpoints.up('lg'));
+  const auth = useAuth();
 
   const content = (
     <Scrollbar
@@ -114,7 +116,10 @@ export const SideNav = (props) => {
               m: 0
             }}
           >
-            {items.map((item) => {
+            {items.filter((item)=>{
+              const found = item.roles.find((role)=> role == auth.user?.role)
+              return found != undefined
+            }).map((item) => {
               const active = item.path ? (pathname === item.path) : false;
 
               return (
@@ -195,7 +200,7 @@ export const SideNav = (props) => {
           sx: {
             backgroundColor: 'neutral.800',
             color: 'common.white',
-            width: 280
+            width: 250
           }
         }}
         variant="permanent"

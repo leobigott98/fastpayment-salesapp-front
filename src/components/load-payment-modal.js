@@ -29,7 +29,7 @@ const ubicaciones = [
 
 export default function PaymentModal({ open, setOpen, id }) {
   const [openModal, setOpenModal] = useState(open);
-  const [v_ops_id, set_v_ops_id] = useState("");
+  const [v_ops_id, set_v_ops_id] = useState('');
   const [v_bank_id, set_v_bank_id] = useState("");
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
@@ -120,7 +120,10 @@ export default function PaymentModal({ open, setOpen, id }) {
                 <Grid 
                 xs={12} 
                 container 
-                columnSpacing={1}>
+                columnSpacing={2}>
+                <Grid xs={12}>
+
+               
                   
                     <UserAutocomplete
                       name={"Tipo de Operación"}
@@ -129,14 +132,25 @@ export default function PaymentModal({ open, setOpen, id }) {
                       data={v_ops_id}
                       setData={set_v_ops_id}
                     />
-                  
-                    <UserAutocomplete
+                     </Grid>
+                    {
+                      v_ops_id?.ops_id == 2 | v_ops_id?.ops_id == 3? 
+                      <Grid xs={12}>
+
+                      <UserAutocomplete
                       name={"Banco"}
                       url={`${process.env.NEXT_PUBLIC_APIURL}/api/v1/listar-bancos`}
                       banks
                       data={v_bank_id}
                       setData={set_v_bank_id}
                     />
+                  </Grid>
+                    :
+                    <></>
+
+                    }
+                  
+                    
                   
                 </Grid>
                 <Grid 
@@ -171,8 +185,6 @@ export default function PaymentModal({ open, setOpen, id }) {
                 <Button
                   size="small"
                   type="submit"
-                  //onClick={()=>{console.log('clicked!')}}
-                  //disabled={activeStep === 4}
                   variant="contained"
                   sx={{ marginLeft: "auto" }}
                 >

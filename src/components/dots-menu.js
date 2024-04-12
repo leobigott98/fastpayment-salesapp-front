@@ -12,8 +12,9 @@ import InventoryModal from "./load-inventory-modal";
 import SerialModal from "./load-serial-modal";
 import PaymentModal from "./load-payment-modal";
 import AssignSerialModal from "./assign-serial-modal";
+import TranredConfirmation from "./tranred-confirmation-modal";
 
-export default function DotsMenu({ sales, id, balance }) {
+export default function DotsMenu({ type, id, balance }) {
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const [modalOpen, setModalOpen] = useState(false);
@@ -49,6 +50,10 @@ export default function DotsMenu({ sales, id, balance }) {
   const handleClose = () => {
     setAnchorEl(null);
   };
+  const handleTranredClick = ()=>{
+    handleModalOpen();
+    handleClose();
+  };
 
   return (
     <div>
@@ -72,15 +77,16 @@ export default function DotsMenu({ sales, id, balance }) {
           "aria-labelledby": "basic-button",
         }}
       >
-        {sales ? (
+        {type === 'sales' ? (
           <>
-            <MenuItem onClick={handleOptionClick}>Modificar</MenuItem>
-            <MenuItem onClick={handleOptionClick}>Eliminar</MenuItem>
             {balance==0? 
             <MenuItem onClick={handleAssignmentOptionClick}>Asignar Serial</MenuItem> : 
             <MenuItem onClick={handlePaymentOptionClick}>Registrar Pago</MenuItem>}
 
           </>
+        ) : type === 'tranred'? (
+            <MenuItem onClick={handleTranredClick}>Aprovisionar Cliente</MenuItem>
+
         ) : (
           <>
             <MenuItem onClick={handleOptionClick}>Modificar</MenuItem>
@@ -90,7 +96,7 @@ export default function DotsMenu({ sales, id, balance }) {
           </>
         )}
       </Menu>
-      {sales ? (
+      {type === 'sales' ? (
         <>
         <PaymentModal 
         open={modalOpen} 
@@ -102,7 +108,13 @@ export default function DotsMenu({ sales, id, balance }) {
         id={id} 
         assign/>
         </>
-      ) :  (
+      ) :  type === 'tranred' ? (
+        <>
+        <TranredConfirmation 
+        open={modalOpen} 
+        setOpen={setModalOpen} 
+        id={id} />
+        </>) : (
         <>
         <InventoryModal 
         open={modalOpen} 

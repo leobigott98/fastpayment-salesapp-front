@@ -33,6 +33,7 @@ const Page = () => {
   const [success, setSuccess] = useState(false);
   const [reset, setResetTime] = useState(false);
   const [timeElapsed, setTimeElapsed] = useState(false);
+  const [ message, setMessage ] = useState('')
 
   const formik = useFormik({
     initialValues: {
@@ -48,6 +49,9 @@ const Page = () => {
     onSubmit: async (values, helpers) => {
       try {
         //console.log(values.code);
+        if(user == null){
+          throw new Error('Inicie sesión o Regístrese para validar su correo')
+        }
         const {email} = user;
         const body = {
           email: email,
@@ -74,6 +78,34 @@ const Page = () => {
     }
   });
 
+  const handleNewOTP = async()=>{
+    try{
+      if(user == null) throw new Error('Inicie Sesión o Regístrese para validar su correo')
+      const {email} = auth.user
+      const body = {
+        email: email
+      }
+      await fetch(`${process.env.NEXT_PUBLIC_APIURL}/api/v1/auth/new-otp`,{
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(body)
+      })
+        .then(async(result)=>{
+          if(result.ok){
+            setResetTime(true)
+            alert('OTP enviada exitosamente')
+          }
+        })
+    }catch(err){
+      setMessage(err.message)
+      setError(true)
+    }
+    
+  }
+
+
   return (
     <>
       <Head>
@@ -91,8 +123,10 @@ const Page = () => {
         }}
       >
       <GeneralErrorModal 
-      opened={error} 
-      setOpened={setError}/>
+        opened={error} 
+        setOpened={setError}
+        message={message}
+      />
       <GeneralSuccessModal 
         opened={success}
         setOpened={setSuccess}
@@ -114,6 +148,7 @@ const Page = () => {
               <Typography variant="h4">
                 Verifica tu Correo
               </Typography>
+              <Stack direction="row" spacing={1}>
               <Typography
                 color="text.secondary"
                 variant="body2"
@@ -126,9 +161,25 @@ const Page = () => {
                   underline="hover"
                   variant="subtitle2"
                 >
-                  Regístrate
+                  Regístrate 
                 </Link>
               </Typography>
+              <Typography
+                color="text.secondary"
+                variant="body2"
+              >
+                ¿Ya estás registrado?
+                &nbsp;
+                <Link
+                  component={NextLink}
+                  href="/auth/login"
+                  underline="hover"
+                  variant="subtitle2"
+                >
+                  Inicia Sesión
+                </Link>
+              </Typography>
+              </Stack>
             </Stack>
               <form
                 noValidate
@@ -165,21 +216,15 @@ const Page = () => {
               >
                 ¿Necesitas otra clave temporal?
                 &nbsp;
-                <Link
-                  component={NextLink}
-                  href="/auth/register"
-                  //onClick={}
-                  underline="hover"
-                  variant="subtitle2"
-                  color={timeElapsed ? 'primary' : 'text.secondary'}
-                  style={
-                    {'pointerEvents': timeElapsed ? 'auto' : 'none'}
-                  }
-                  aria-disabled={!timeElapsed}
-                  tabIndex={timeElapsed? undefined : -1}
+                <Button
+                  disabled={timeElapsed? false: true}
+                  size="small"
+                  //sx={{ mt: 3 }}
+                  onClick={handleNewOTP}
+                  variant="text"
                 >
-                  Enviar de nuevo &nbsp;
-                </Link>
+                  Enviar Código Nuevo
+                </Button>
                 <Timer reset={reset} setTimeElapsed={setTimeElapsed}/>
               </Typography>
                 <Button

@@ -291,7 +291,7 @@ const CustomerForm = ({ handleStep, handleStepBack, activeStep }) => {
                 </Typography>
               )}
 
-              {/* <Grid xs={12} container columnSpacing={1}>
+              <Grid xs={12} container columnSpacing={1}>
 
               <Button size="small" onClick={handleStepBack} disabled={activeStep === 0} >
                 {theme.direction === "rtl" ? <KeyboardArrowRight /> : <KeyboardArrowLeft />}
@@ -303,7 +303,7 @@ const CustomerForm = ({ handleStep, handleStepBack, activeStep }) => {
                 {theme.direction === "rtl" ? <KeyboardArrowLeft /> : <KeyboardArrowRight />}
               </Button>
 
-              </Grid> */}
+              </Grid>
 
               {/* <Button
                 fullWidth

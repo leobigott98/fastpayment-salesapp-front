@@ -40,19 +40,7 @@ export const CustomersTable = (props) => {
           <Table>
             <TableHead>
               <TableRow>
-                <TableCell padding="checkbox">
-                  <Checkbox
-                    checked={selectedAll}
-                    indeterminate={selectedSome}
-                    onChange={(event) => {
-                      if (event.target.checked) {
-                        onSelectAll?.();
-                      } else {
-                        onDeselectAll?.();
-                      }
-                    }}
-                  />
-                </TableCell>
+                
                 <TableCell>
                   RIF/Cédula
                 </TableCell>
@@ -81,18 +69,7 @@ export const CustomersTable = (props) => {
                     key={customer.cusm_id}
                     selected={isSelected}
                   >
-                    <TableCell padding="checkbox">
-                      <Checkbox
-                        checked={isSelected}
-                        onChange={(event) => {
-                          if (event.target.checked) {
-                            onSelectOne?.(customer.cusm_id);
-                          } else {
-                            onDeselectOne?.(customer.cusm_id);
-                          }
-                        }}
-                      />
-                    </TableCell>
+                    
                     <TableCell>
                       <Stack
                         alignItems="center"

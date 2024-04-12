@@ -48,19 +48,7 @@ export const ProductsTable = (props) => {
           <Table>
             <TableHead>
               <TableRow>
-                <TableCell padding="checkbox">
-                  <Checkbox
-                    checked={selectedAll}
-                    indeterminate={selectedSome}
-                    onChange={(event) => {
-                      if (event.target.checked) {
-                        onSelectAll?.();
-                      } else {
-                        onDeselectAll?.();
-                      }
-                    }}
-                  />
-                </TableCell>
+                
                 <TableCell>
                   Marca
                 </TableCell>
@@ -89,18 +77,7 @@ export const ProductsTable = (props) => {
                     selected={isSelected}
                     //onClick={(e) => handleClick(product.id)}
                   >
-                    <TableCell padding="checkbox">
-                      <Checkbox
-                        checked={isSelected}
-                        onChange={(event) => {
-                          if (event.target.checked) {
-                            onSelectOne?.(product.id);
-                          } else {
-                            onDeselectOne?.(product.id);
-                          }
-                        }}
-                      />
-                    </TableCell>
+                    
                     <TableCell>
                       <Stack
                         alignItems="center"

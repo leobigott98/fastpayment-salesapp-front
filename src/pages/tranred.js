@@ -1,20 +1,16 @@
-import * as dotenv from 'dotenv';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import Head from 'next/head';
-import { Box, Container, Stack, Typography} from '@mui/material';
+import { Box, Container, Stack, Typography } from '@mui/material';
 import { useSelection } from 'src/hooks/use-selection';
 import { Layout as DashboardLayout } from 'src/layouts/dashboard/layout';
-import { CustomersTable } from 'src/sections/customer/customers-table';
 import { CustomersSearch } from 'src/sections/customer/customers-search';
 import { applyPagination } from 'src/utils/apply-pagination';
 import { AddButton } from 'src/components/add-button';
-import { useAuth } from "src/hooks/use-auth";
+import { SalesTable } from 'src/sections/sales/sales-table';
 import { useRouter } from 'next/navigation';
-import GeneralErrorModal from 'src/components/general-error-modal';
+import { useAuth } from "src/hooks/use-auth";
 
-const now = new Date();
-
-const useCustomers = (data, page, rowsPerPage) => {
+const useSales = (data, page, rowsPerPage) => {
   return useMemo(
     () => {
       return applyPagination(data, page, rowsPerPage);
@@ -23,56 +19,45 @@ const useCustomers = (data, page, rowsPerPage) => {
   );
 };
 
-const useCustomerIds = (customers) => {
+const useSaleIds = (sales) => {
   return useMemo(
     () => {
-      return customers.map((customer) => customer.cusm_id);
+      return sales.map((sale) => sale.id);
     },
-    [customers]
+    [sales]
   );
 };
 
 const Page = () => {
   const [data, setData] = useState([]);
-  const [error, setError] = useState(false);
-  const [message, setMessage] = useState('')
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
-  const customers = useCustomers(data, page, rowsPerPage);
-  const customersIds = useCustomerIds(customers);
-  const customersSelection = useSelection(customersIds);
+  const sales = useSales(data, page, rowsPerPage);
+  const salesIds = useSaleIds(sales);
+  const salesSelection = useSelection(salesIds);
   const auth = useAuth();
   const router = useRouter();
 
   const getData = async ()=>{
     try{
-      const response = await fetch(`${process.env.NEXT_PUBLIC_APIURL}/api/v1/customers`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_APIURL}/api/v1/sales`, {
       headers: {
-        "Access-Control-Request-Headers": ["X-Auth-Token", "Cookie"],
-        "X-Auth-Token": window.localStorage.getItem('token'),
-      },
-      mode: "cors",
-      credentials: "include",
-      referrerPolicy: 'no-referrer-when-downgrade'
+        "X-Auth-Token": window.localStorage.getItem('token')
+      }
     })
     if(response.ok){
-      const jsonData = await response.json();
-      setData(jsonData.result);
+      const json = await response.json();
+      const sales = json.result;
+      const filtered = sales.filter((sale)=> sale.status_id === 3011)
+      setData(filtered);
     }else{
-      setMessage('No Autorizado. Redirigiendo...')
-      setError(true);
-      setTimeout(()=>{
-        auth.signOut();
-        router.push('/auth/login');
-      }, 2000)
-      
+      auth.signOut();
+      router.push('/auth/login');
     }
     }catch(err){
-      console.log(err);
-      auth.signOut()
-    
+      console.log(err)
     }  
-  } 
+  }
 
   useEffect(()=>{
     getData();
@@ -96,15 +81,15 @@ const Page = () => {
     <>
       <Head>
         <title>
-          Clientes | Ventas FP
+          Ventas | Ventas FP
         </title>
       </Head>
-      <GeneralErrorModal setOpened={setError} opened={error} message={message}/>
       <Box
         component="main"
         sx={{
           flexGrow: 1,
-          py: 8
+          py: 8,
+          width: '100%'
         }}
       >
         <Container maxWidth="xl">
@@ -116,7 +101,7 @@ const Page = () => {
             >
               <Stack spacing={1}>
                 <Typography variant="h4">
-                  Clientes
+                  Ventas
                 </Typography>
                 <Stack
                   alignItems="center"
@@ -125,25 +110,23 @@ const Page = () => {
                 >
                 </Stack>
               </Stack>
-              <div>
-              <AddButton/> 
-              </div>
             </Stack>
-            <CustomersSearch />   
-            <CustomersTable
+            <CustomersSearch />
+            <SalesTable
               count={data.length}
-              items={customers}
-              onDeselectAll={customersSelection.handleDeselectAll}
-              onDeselectOne={customersSelection.handleDeselectOne}
+              items={sales}
+              onDeselectAll={salesSelection.handleDeselectAll}
+              onDeselectOne={salesSelection.handleDeselectOne}
               onPageChange={handlePageChange}
               onRowsPerPageChange={handleRowsPerPageChange}
-              onSelectAll={customersSelection.handleSelectAll}
-              onSelectOne={customersSelection.handleSelectOne}
+              onSelectAll={salesSelection.handleSelectAll}
+              onSelectOne={salesSelection.handleSelectOne}
               page={page}
               rowsPerPage={rowsPerPage}
-              selected={customersSelection.selected}
+              selected={salesSelection.selected}
+              type='tranred'
             />
-          </Stack> 
+          </Stack>
         </Container>
       </Box>
     </>

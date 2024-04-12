@@ -303,7 +303,7 @@ const RepresentativeForm = ({ handleStep, handleStepBack, activeStep }) => {
                   {formik.errors.submit}
                 </Typography>
               )}
-              {/* <Grid xs={12} container columnSpacing={1}>
+              <Grid xs={12} container columnSpacing={1}>
                 <Button size="small" onClick={handleStepBack} disabled={activeStep === 0}>
                   {theme.direction === "rtl" ? <KeyboardArrowRight /> : <KeyboardArrowLeft />}
                   Anterior
@@ -318,7 +318,7 @@ const RepresentativeForm = ({ handleStep, handleStepBack, activeStep }) => {
                   Siguiente
                   {theme.direction === "rtl" ? <KeyboardArrowLeft /> : <KeyboardArrowRight />}
                 </Button>
-              </Grid> */}
+              </Grid>
             </form>
           </div>
         </Box>

@@ -213,6 +213,7 @@ export const AuthProvider = (props) => {
 
     try{
       window.localStorage.removeItem('token');
+      if(window.localStorage.getItem('tranred-token')) window.localStorage.removeItem('tranred-token')
     }catch(err){
       console.log(err);
     }

@@ -21,47 +21,29 @@ export const SalesTable = (props) => {
   const {
     count = 0,
     items = [],
-    onDeselectAll,
-    onDeselectOne,
     onPageChange = () => {},
     onRowsPerPageChange,
-    onSelectAll,
-    onSelectOne,
     page = 0,
     rowsPerPage = 0,
     selected = [],
+    type
   } = props;
-
-  const selectedSome = selected.length > 0 && selected.length < items.length;
-  const selectedAll = items.length > 0 && selected.length === items.length;
 
   const router = useRouter();
 
-  /*   const handleClick = (categoryId)=>{
-    router.push(`/inventory/${categoryId}`)
-  } */
-
   return (
-    <Card>
+    <Card
+      sx={{
+        width:'100%',
+        m: 0
+      }}>
       <Scrollbar>
-        <Box sx={{ minWidth: 800 }}>
+        <Box sx={{ minWidth: 800}}>
           <Table>
             <TableHead>
               <TableRow>
-                <TableCell padding="checkbox">
-                  <Checkbox
-                    checked={selectedAll}
-                    indeterminate={selectedSome}
-                    onChange={(event) => {
-                      if (event.target.checked) {
-                        onSelectAll?.();
-                      } else {
-                        onDeselectAll?.();
-                      }
-                    }}
-                  />
-                </TableCell>
                 <TableCell>Serie</TableCell>
+                <TableCell>Fecha</TableCell>
                 {items[0]?.vendedor ? <TableCell>Vendedor</TableCell> : <></>}
                 <TableCell>Cliente</TableCell>
                 <TableCell>Total</TableCell>
@@ -74,40 +56,23 @@ export const SalesTable = (props) => {
             <TableBody>
               {items.map((sale) => {
                 const isSelected = selected.includes(sale.id);
-                {
-                  /* const createdAt = format(customer.createdAt, 'dd/MM/yyyy'); */
-                }
 
                 return (
                   <TableRow
                     hover
                     key={sale.id}
                     selected={isSelected}
-                    //onClick={(e) => handleClick(product.id)}
                   >
-                    <TableCell padding="checkbox">
-                      <Checkbox
-                        checked={isSelected}
-                        onChange={(event) => {
-                          if (event.target.checked) {
-                            onSelectOne?.(sale.id);
-                          } else {
-                            onDeselectOne?.(sale.id);
-                          }
-                        }}
-                      />
-                    </TableCell>
+                    
                     <TableCell>
                       <Stack 
                       alignItems="center" 
                       direction="row" 
                       spacing={2}>
-                        {/* <Avatar src={customer.avatar}>
-                          {getInitials(customer.name)}
-                        </Avatar> */}
                         <Typography variant="subtitle2">{sale.serie}</Typography>
                       </Stack>
                     </TableCell>
+                    <TableCell>{sale.fecha}</TableCell>
                     {sale?.vendedor ? <TableCell>{sale.vendedor}</TableCell> : <></>}
                     <TableCell>{sale.cliente}</TableCell>
                     <TableCell>{sale.total}</TableCell>
@@ -116,13 +81,11 @@ export const SalesTable = (props) => {
                     <TableCell>{sale.status}</TableCell>
                     <TableCell>
                       <DotsMenu 
-                      sales 
+                      type={type}
                       id={sale.id} 
                       balance={sale.balance}/>
                     </TableCell>
-                    {/* <TableCell>
-                      {createdAt}
-                    </TableCell> */}
+                    
                   </TableRow>
                 );
               })}

@@ -124,20 +124,9 @@ export default function NewCustomerStepper() {
           <React.Fragment>
             {stepComponents[activeStep].component}
             <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
-              <Button
-                color="inherit"
-                disabled={activeStep === 0}
-                onClick={handleBack}
-                sx={{ mr: 1 }}
-              >
-                Anterior
-              </Button>
+              
               <Box sx={{ flex: "1 1 auto" }} />
-              <Button 
-              onClick={handleNext} 
-              sx={{ mr: 1 }}>
-                Siguiente
-              </Button>
+              
               {activeStep !== steps.length &&
                 (completed[activeStep] ? (
                     <>
@@ -146,9 +135,11 @@ export default function NewCustomerStepper() {
                   </Typography> */}
                   </>
                 ) : (
-                  <Button onClick={handleComplete}>
-                    {completedSteps() === totalSteps() - 1 ? "Finalizar" : "Completar Paso"}
-                  </Button>
+                  <>
+                  {/* <Button onClick={handleComplete}>
+                    {completedSteps() === totalSteps() - 1 ? "Enviar" : "Siguiente"}
+                  </Button> */}
+                  </>
                 ))}
             </Box>
           </React.Fragment>

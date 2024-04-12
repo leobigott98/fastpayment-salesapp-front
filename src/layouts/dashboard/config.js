@@ -14,15 +14,6 @@ import CurrencyExchangeIcon from '@mui/icons-material/CurrencyExchange';
 import RequestQuoteIcon from '@mui/icons-material/RequestQuote';
 
 export const items = [
-  /* {
-    title: 'Overview',
-    path: '/overview',
-    icon: (
-      <SvgIcon fontSize="small">
-        <ChartBarIcon />
-      </SvgIcon>
-    )
-  }, */
   {
     title: 'Clientes',
     path: '/',
@@ -30,17 +21,9 @@ export const items = [
       <SvgIcon fontSize="small">
         <AddBusinessIcon />
       </SvgIcon>
-    )
+    ),
+    roles: [1000, 1001, 1002]
   },
- /*  {
-    title: 'Companies',
-    path: '/companies',
-    icon: (
-      <SvgIcon fontSize="small">
-        <ShoppingBagIcon />
-      </SvgIcon>
-    )
-  }, */
   {
     title: 'Productos',
     path: '/inventory',
@@ -48,7 +31,8 @@ export const items = [
       <SvgIcon fontSize="small">
         <PointOfSaleIcon />
       </SvgIcon>
-    )
+    ),
+    roles: [1000, 1003]
   },
   {
     title: 'Tranred',
@@ -57,7 +41,8 @@ export const items = [
       <SvgIcon fontSize="small">
         <CurrencyExchangeIcon />
       </SvgIcon>
-    )
+    ),
+    roles: [1000, 1001, 1002]
   },
   {
     title: 'Ventas',
@@ -66,7 +51,8 @@ export const items = [
       <SvgIcon fontSize="small">
         <RequestQuoteIcon />
       </SvgIcon>
-    )
+    ),
+    roles: [1000, 1001, 1002]
   },
   {
     title: 'Usuarios',
@@ -75,7 +61,8 @@ export const items = [
       <SvgIcon fontSize="small">
         <UsersIcon />
       </SvgIcon>
-    )
+    ),
+    roles: [1000]
   },
   {
     title: 'Perfil',
@@ -84,42 +71,7 @@ export const items = [
       <SvgIcon fontSize="small">
         <UserIcon />
       </SvgIcon>
-    )
-  },
-/*   {
-    title: 'Settings',
-    path: '/settings',
-    icon: (
-      <SvgIcon fontSize="small">
-        <CogIcon />
-      </SvgIcon>
-    )
-  }, */
-/*   {
-    title: 'Login',
-    path: '/auth/login',
-    icon: (
-      <SvgIcon fontSize="small">
-        <LockClosedIcon />
-      </SvgIcon>
-    )
-  }, */
-  /* {
-    title: 'Register',
-    path: '/auth/register',
-    icon: (
-      <SvgIcon fontSize="small">
-        <UserPlusIcon />
-      </SvgIcon>
-    )
-  }, */
-/*   {
-    title: 'Error',
-    path: '/404',
-    icon: (
-      <SvgIcon fontSize="small">
-        <XCircleIcon />
-      </SvgIcon>
-    )
-  } */
+    ),
+    roles: [1000, 1001, 1002, 1003]
+  }
 ];

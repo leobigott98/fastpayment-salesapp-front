@@ -7,6 +7,7 @@ export const PublicGuard = (props) => {
   const { children } = props;
   const router = useRouter();
   const { isAuthenticated } = useAuthContext();
+  const { user } = useAuthContext();
   const ignore = useRef(false);
   const [checked, setChecked] = useState(false);
 
@@ -27,7 +28,7 @@ export const PublicGuard = (props) => {
 
       ignore.current = true;
 
-      if (isAuthenticated) {
+      if (isAuthenticated && user.role != 1004 && user.status == 3000) {
         console.log('User is signed-in. Redirectiong');
         router
           .replace({

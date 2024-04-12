@@ -56,9 +56,12 @@ const Page = () => {
             throw new Error('Acceso Restringido')
           }
           if(response.role == 1004){
-            throw new Error('Sin rol asignado. Contacte a TI')
+            throw new Error('Sin rol asignado. Contacte a su supervisor')
           }
-          router.push("/");
+          if(response.role == 1003){
+            return router.push("/inventory");
+          }
+            router.push("/");
         } else {
           //setMessage()
           setError(true);
