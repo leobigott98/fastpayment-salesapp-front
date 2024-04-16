@@ -13,8 +13,9 @@ import SerialModal from "./load-serial-modal";
 import PaymentModal from "./load-payment-modal";
 import AssignSerialModal from "./assign-serial-modal";
 import TranredConfirmation from "./tranred-confirmation-modal";
+import SerialTranredModal from "./serial-tranred-modal";
 
-export default function DotsMenu({ type, id, balance }) {
+export default function DotsMenu({ type, id, balance, tranred }) {
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const [modalOpen, setModalOpen] = useState(false);
@@ -55,6 +56,7 @@ export default function DotsMenu({ type, id, balance }) {
     handleClose();
   };
 
+
   return (
     <div>
       <Tooltip title="Opciones">
@@ -85,7 +87,12 @@ export default function DotsMenu({ type, id, balance }) {
 
           </>
         ) : type === 'tranred'? (
-            <MenuItem onClick={handleTranredClick}>Aprovisionar Cliente</MenuItem>
+          <>
+          {tranred? 
+          <MenuItem onClick={handleTranredClick}>Aprovisionar Seriales</MenuItem> :
+          <MenuItem onClick={handleTranredClick}>Aprovisionar Cliente</MenuItem>}
+          </>
+            
 
         ) : (
           <>
@@ -99,22 +106,29 @@ export default function DotsMenu({ type, id, balance }) {
       {type === 'sales' ? (
         <>
         <PaymentModal 
-        open={modalOpen} 
-        setOpen={setModalOpen} 
-        id={id} />
+          open={modalOpen} 
+          setOpen={setModalOpen} 
+          id={id} />
         <AssignSerialModal 
-        open={assignModalOpen} 
-        setOpen={setAssignModalOpen} 
-        id={id} 
-        assign/>
+          open={assignModalOpen} 
+          setOpen={setAssignModalOpen} 
+          id={id} 
+          assign/>        
         </>
       ) :  type === 'tranred' ? (
         <>
-        <TranredConfirmation 
-        open={modalOpen} 
-        setOpen={setModalOpen} 
-        id={id} />
-        </>) : (
+        {tranred? 
+          <SerialTranredModal 
+            open={modalOpen}
+            setOpen={setModalOpen}
+            id={id} /> :  
+          <TranredConfirmation 
+            open={modalOpen} 
+            setOpen={setModalOpen} 
+            id={id} />
+        }
+        </>
+       ) : (
         <>
         <InventoryModal 
         open={modalOpen} 
