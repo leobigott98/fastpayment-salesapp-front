@@ -42,7 +42,17 @@ export const items = [
         <CurrencyExchangeIcon />
       </SvgIcon>
     ),
-    roles: [1000, 1001, 1002]
+    roles: [1000, 1001, 1002], 
+    options: [
+      {
+        title: 'Aprovisionados',
+        path: '/tranred/clientes'
+      },
+      {
+        title: 'Terminales',
+        path: '/tranred/terminales'
+      }
+    ]
   },
   {
     title: 'Ventas',

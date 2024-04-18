@@ -6,6 +6,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 const fetchData = async(url, body)=> {
     //if (true) {
   if(body){
+    console.log(body)
     try{
       const result = await fetch(url, {
         method: 'POST',
@@ -31,6 +32,13 @@ const fetchData = async(url, body)=> {
           },
         });
         const jsonResult = await result.json();
+        
+        if(jsonResult.result[0].cantidad_disponible != null){
+          console.log('qty')
+          const filtered = jsonResult.result.filter((result)=> result.cantidad_disponible > 0)
+          console.log(filtered)
+          return filtered
+        } 
         return jsonResult.result;
 
       }catch(err){
@@ -39,19 +47,19 @@ const fetchData = async(url, body)=> {
     }  
       }
 
-export default function UserAutocomplete({name, url, roles, customers, products, saleProducts, data, setData, payOptions, banks, codlocalid, serials, disabled}) {
+export default function UserAutocomplete({name, url, roles, customers, products, saleProducts, data, setData, payOptions, banks, codlocalid, serials, disabled, body}) {
   const [open, setOpen] = React.useState(false);
   const [options, setOptions] = React.useState([]);
   const loading = open && options.length === 0;
   const [input, setInput] = React.useState(null);
   const [disableElement, setDisableElement] = React.useState(false)
+
   React.useEffect(()=>{
     setData(input)
     if(disabled){
       setDisableElement(disabled)
-    }
-    
-  },[input, setData])
+    }    
+  },[input, setData, disabled])
 
   React.useEffect(() => {
     let active = true;
@@ -64,7 +72,7 @@ export default function UserAutocomplete({name, url, roles, customers, products,
       //await sleep(1e3); // For demo purposes.
 
       if (active) {
-        setOptions(await fetchData(url));
+        setOptions(await fetchData(url, body));
         //console.log(await fetchData())
       }
     })();
@@ -72,7 +80,7 @@ export default function UserAutocomplete({name, url, roles, customers, products,
     return () => {
       active = false;
     };
-  }, [loading, url]);
+  }, [loading, url, body]);
 
   React.useEffect(() => {
     if (!open) {
@@ -85,7 +93,7 @@ export default function UserAutocomplete({name, url, roles, customers, products,
       id="asynchronous-demo"
       sx={{ width: '100%', paddingTop:0 }}
       open={open}
-      disabled={disableElement}
+      disabled={disabled}
       onOpen={() => {
         setOpen(true);
       }}
@@ -95,12 +103,13 @@ export default function UserAutocomplete({name, url, roles, customers, products,
       value={data!=''?data:input}
       onChange={(event, value)=>{
         setInput(value);
+        //setData(value)
       }}
       isOptionEqualToValue={
         roles? (option, value) => option.rol_desc === value.rol_desc :
         customers? (option, value) => option.cliente === value.cliente :
         products? (option, value) => option.modelo === value.modelo :
-        saleProducts? (option, value) => option.prod_id == value.prod_id:
+        saleProducts? (option, value) => option.name == value.name:
         payOptions? (option, value) => option.ops_desc === value.ops_desc :
         banks? (option, value) => option.bank_desc === value.bank_desc :
         codlocalid? (option, value) => option.cod_value === value.cod_value :
@@ -110,7 +119,7 @@ export default function UserAutocomplete({name, url, roles, customers, products,
         roles? (option) => option.rol_desc:
         customers? (option) => option.cliente:
         products? (option) => option.modelo:
-        saleProducts? (option) => option.prod_id:
+        saleProducts? (option) => option.name  :
         payOptions? (option) => option.ops_desc :
         banks? (option) => option.bank_desc :
         codlocalid? (option) => option.cod_value :

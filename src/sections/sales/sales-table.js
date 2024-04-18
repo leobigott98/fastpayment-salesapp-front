@@ -1,9 +1,7 @@
 import PropTypes from "prop-types";
-import { format } from "date-fns";
 import {
   Box,
   Card,
-  Checkbox,
   Stack,
   Table,
   TableBody,
@@ -14,7 +12,6 @@ import {
   Typography,
 } from "@mui/material";
 import { Scrollbar } from "src/components/scrollbar";
-import { useRouter } from "next/router";
 import DotsMenu from "src/components/dots-menu";
 
 export const SalesTable = (props) => {
@@ -29,8 +26,6 @@ export const SalesTable = (props) => {
     type
   } = props;
 
-  const router = useRouter();
-
   return (
     <Card
       sx={{
@@ -44,7 +39,7 @@ export const SalesTable = (props) => {
               <TableRow>
                 <TableCell>Serie</TableCell>
                 <TableCell>Fecha</TableCell>
-                {items[0]?.vendedor ? <TableCell>Vendedor</TableCell> : <></>}
+                {items[0]?.vendedor ? <TableCell>Vendedor</TableCell> : (<></>)}
                 <TableCell>Cliente</TableCell>
                 <TableCell>Total</TableCell>
                 <TableCell>Pagado</TableCell>

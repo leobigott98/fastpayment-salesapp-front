@@ -92,7 +92,6 @@ export default function AccountModal({ open, setOpen, id }) {
               No, Cancelar
             </Button>
             <Button
-              onClick={console.log('clicked')}
               variant="contained"
               //color="error"
               sx={{ width: "30%" }}

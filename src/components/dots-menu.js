@@ -26,9 +26,9 @@ export default function DotsMenu({ type, id, balance, tranred }) {
   const handleAssignModalOpen = () => setAssignModalOpen(true);
   const handleSerialModalClose = () => setSerialModalOpen(false);
   const handleModalClose = () => setModalOpen(false);
-  const handleOptionClick = ()=>{
+  const handleOptionClick = () => {
     handleClose();
-  }
+  };
   const handleInventoryOptionClick = () => {
     handleClose();
     handleModalOpen();
@@ -41,21 +41,20 @@ export default function DotsMenu({ type, id, balance, tranred }) {
     handleClose();
     handleModalOpen();
   };
-  const handleSerialOptionClick = ()=>{
+  const handleSerialOptionClick = () => {
     handleClose();
     handleSerialModalOpen();
-  }
+  };
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
   const handleClose = () => {
     setAnchorEl(null);
   };
-  const handleTranredClick = ()=>{
+  const handleTranredClick = () => {
     handleModalOpen();
     handleClose();
   };
-
 
   return (
     <div>
@@ -79,66 +78,44 @@ export default function DotsMenu({ type, id, balance, tranred }) {
           "aria-labelledby": "basic-button",
         }}
       >
-        {type === 'sales' ? (
-          <>
-            {balance==0? 
-            <MenuItem onClick={handleAssignmentOptionClick}>Asignar Serial</MenuItem> : 
-            <MenuItem onClick={handlePaymentOptionClick}>Registrar Pago</MenuItem>}
-
-          </>
-        ) : type === 'tranred'? (
-          <>
-          {tranred? 
-          <MenuItem onClick={handleTranredClick}>Aprovisionar Seriales</MenuItem> :
-          <MenuItem onClick={handleTranredClick}>Aprovisionar Cliente</MenuItem>}
-          </>
-            
-
+        {type === "sales" ? (
+          balance == 0 ? (
+            <MenuItem onClick={handleAssignmentOptionClick}>Asignar Serial</MenuItem>
+          ) : (
+            <MenuItem onClick={handlePaymentOptionClick}>Registrar Pago</MenuItem>
+          )
+        ) : type === "tranred" ? (
+          tranred ? (
+            <MenuItem onClick={handleTranredClick}>Aprovisionar Seriales</MenuItem>
+          ) : (
+            <MenuItem onClick={handleTranredClick}>Aprovisionar Cliente</MenuItem>
+          )
         ) : (
-          <>
-            <MenuItem onClick={handleOptionClick}>Modificar</MenuItem>
-            <MenuItem onClick={handleOptionClick}>Eliminar</MenuItem>
-            <MenuItem onClick={handleInventoryOptionClick}>Cargar Inventario</MenuItem>
-            <MenuItem onClick={handleSerialOptionClick}>Cargar Serial</MenuItem>
-          </>
+          [
+            <MenuItem onClick={handleOptionClick} key={'edit'}>Modificar</MenuItem>,
+            <MenuItem onClick={handleOptionClick} key={'delete'}>Eliminar</MenuItem>,
+            <MenuItem onClick={handleInventoryOptionClick} key={'inventory'}>Cargar Inventario</MenuItem>,
+            <MenuItem onClick={handleSerialOptionClick} key={'serial'}>Cargar Serial</MenuItem>,
+          ]
         )}
       </Menu>
-      {type === 'sales' ? (
+      {type === "sales" ? (
         <>
-        <PaymentModal 
-          open={modalOpen} 
-          setOpen={setModalOpen} 
-          id={id} />
-        <AssignSerialModal 
-          open={assignModalOpen} 
-          setOpen={setAssignModalOpen} 
-          id={id} 
-          assign/>        
+          <PaymentModal open={modalOpen} setOpen={setModalOpen} id={id} />
+          <AssignSerialModal open={assignModalOpen} setOpen={setAssignModalOpen} id={id} assign />
         </>
-      ) :  type === 'tranred' ? (
+      ) : type === "tranred" ? (
         <>
-        {tranred? 
-          <SerialTranredModal 
-            open={modalOpen}
-            setOpen={setModalOpen}
-            id={id} /> :  
-          <TranredConfirmation 
-            open={modalOpen} 
-            setOpen={setModalOpen} 
-            id={id} />
-        }
+          {tranred ? (
+            <SerialTranredModal open={modalOpen} setOpen={setModalOpen} id={id} />
+          ) : (
+            <TranredConfirmation open={modalOpen} setOpen={setModalOpen} id={id} />
+          )}
         </>
-       ) : (
+      ) : (
         <>
-        <InventoryModal 
-        open={modalOpen} 
-        setOpen={setModalOpen} 
-        id={id} />
-        <SerialModal 
-        open={serialModalOpen} 
-        setOpen={setSerialModalOpen} 
-        id={id} 
-        serial/>
+          <InventoryModal open={modalOpen} setOpen={setModalOpen} id={id} />
+          <SerialModal open={serialModalOpen} setOpen={setSerialModalOpen} id={id} serial />
         </>
       )}
     </div>
