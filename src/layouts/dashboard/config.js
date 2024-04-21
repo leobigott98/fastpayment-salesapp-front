@@ -12,6 +12,10 @@ import AddBusinessIcon from '@mui/icons-material/AddBusiness';
 import PointOfSaleIcon from '@mui/icons-material/PointOfSale';
 import CurrencyExchangeIcon from '@mui/icons-material/CurrencyExchange';
 import RequestQuoteIcon from '@mui/icons-material/RequestQuote';
+import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
+import CloudSyncIcon from '@mui/icons-material/CloudSync';
+import PeopleIcon from '@mui/icons-material/People';
+import SecurityUpdateGoodIcon from '@mui/icons-material/SecurityUpdateGood';
 
 export const items = [
   {
@@ -45,12 +49,31 @@ export const items = [
     roles: [1000, 1001, 1002], 
     options: [
       {
-        title: 'Aprovisionados',
-        path: '/tranred/clientes'
+        title: 'Aprovisionamiento',
+        path: '/tranred/sales',
+        icon: (
+          <SvgIcon fontSize="small">
+            <CloudSyncIcon />
+          </SvgIcon>
+        ),
+      },
+      {
+        title: 'Clientes',
+        path: '/tranred/clients',
+        icon: (
+          <SvgIcon fontSize="small">
+            <PeopleIcon />
+          </SvgIcon>
+        ),
       },
       {
         title: 'Terminales',
-        path: '/tranred/terminales'
+        path: '/tranred/terminals',
+        icon: (
+          <SvgIcon fontSize="small">
+            <SecurityUpdateGoodIcon />
+          </SvgIcon>
+        ),
       }
     ]
   },
