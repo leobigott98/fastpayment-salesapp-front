@@ -81,7 +81,7 @@ const Page = () => {
     <>
       <Head>
         <title>
-          Ventas | Ventas FP
+          Aprovisionamiento | Ventas FP
         </title>
       </Head>
       <Box
@@ -101,7 +101,7 @@ const Page = () => {
             >
               <Stack spacing={1}>
                 <Typography variant="h4">
-                  Ventas
+                  Aprovisionamiento de Ventas
                 </Typography>
                 <Stack
                   alignItems="center"
