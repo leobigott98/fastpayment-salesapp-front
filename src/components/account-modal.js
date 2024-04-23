@@ -24,19 +24,64 @@ const style = {
   p: 4,
 };
 
-export default function AccountModal({ open, setOpen, id }) {
+export default function AccountModal({ open, setOpen, sale_id, serial }) {
   const [openModal, setOpenModal] = useState(open);
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
   const [message, setMessage] = useState('Ha ocurrido un error')
   const [v_bank_id, setBankId] = useState('')
   const [v_acct_number, setVAcctNumber] = useState('')
-  
+  const [v_sale_id, setVSaleId] = useState(sale_id)
+  const [v_serial_num, setVSerialNum] = useState(serial)
+
+  useEffect(()=>{
+    console.log(serial)
+    setVSerialNum(serial)
+  },[])
 
   const handleModalClose = () => {
     setOpenModal(false);
     setOpen(false);
+    setVSerialNum('')
+    setVAcctNumber('')
+    setBankId('')
   };
+
+  const handleSubmit = async ()=>{
+    const body = {
+      v_sale_id,
+      v_serial_num,
+      v_bank_id: v_bank_id.bank_id,
+      v_acct_number
+    }
+    try {
+      console.log(body)
+      await fetch(`${process.env.NEXT_PUBLIC_APIURL}/api/v1/sales/account`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-Auth-Token': window.localStorage.getItem('token')
+        },
+        body: JSON.stringify(body)
+      })
+      .then(async(response)=>{
+        const json =  await response.json()
+        if(response.ok){
+          setMessage(json.message)
+          if (json.error_num > 0){
+            setError(true)
+          }else{
+            setSuccess(true)
+          }
+        }
+      })
+    } catch (error) {
+      setMessage(error.message);
+      setError(true);
+      
+    }
+    handleModalClose()
+  }
 
   return (
     <>
@@ -78,7 +123,7 @@ export default function AccountModal({ open, setOpen, id }) {
             label="Número de Cuenta"
             name="v_acct_number"
             //onBlur={formik.handleBlur}
-            //onChange={formik.handleChange}
+            onChange={(e)=> setVAcctNumber(e.target.value)}
             //value={formik.values.v_acct_number}
             value={v_acct_number}
             sx={{mt: '10px'}}
@@ -93,6 +138,7 @@ export default function AccountModal({ open, setOpen, id }) {
             </Button>
             <Button
               variant="contained"
+              onClick={handleSubmit}
               //color="error"
               sx={{ width: "30%" }}
             >

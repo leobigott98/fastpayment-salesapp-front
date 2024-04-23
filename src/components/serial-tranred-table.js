@@ -14,7 +14,7 @@ import {
 } from "@mui/material";
 import { Scrollbar } from "src/components/scrollbar";
 import DotsMenu from "src/components/dots-menu";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import AccountModal from "./account-modal";
 
 export const SerialTranredTable = (props) => {
@@ -25,23 +25,18 @@ export const SerialTranredTable = (props) => {
     onRowsPerPageChange,
     page = 0,
     rowsPerPage = 0,
-    open,
-    setOpen
+    sale_id,
   } = props;
-
-const handleModalOpen = ()=>{
-  setOpen(true);
-}
 
   return (
     <Card
       sx={{
-        width:'100%',
-        m: 0
-      }}>
-      <AccountModal open={open} setOpen={setOpen}/>
+        width: "100%",
+        m: 0,
+      }}
+    >
       <Scrollbar>
-        <Box sx={{ minWidth: 800}}>
+        <Box sx={{ minWidth: 800 }}>
           <Table>
             <TableHead>
               <TableRow>
@@ -53,28 +48,31 @@ const handleModalOpen = ()=>{
             </TableHead>
             <TableBody>
               {items.map((serial) => {
+                const [open, setOpen] = useState(false);
+
+                const handleModalOpen = () => {
+                  setOpen(true);
+                };
+
                 return (
-                  <TableRow
-                    hover
-                    key={serial.serial}
-                  >
-                    
+                  <TableRow hover key={serial.serial}>
                     <TableCell>
-                      <Stack 
-                      alignItems="center" 
-                      direction="row" 
-                      spacing={2}>
+                      <Stack alignItems="center" direction="row" spacing={2}>
                         <Typography variant="subtitle2">{serial.serial}</Typography>
                       </Stack>
                     </TableCell>
                     <TableCell>{serial.marca}</TableCell>
                     <TableCell>{serial.modelo}</TableCell>
                     <TableCell>
-                      <Button onClick={handleModalOpen}>
-                        ¿Desea Asignar Cuenta?
-                      </Button>
+                      <Button onClick={handleModalOpen}>¿Desea Asignar Cuenta?</Button>
                     </TableCell>
-                    
+                    <AccountModal
+                      open={open}
+                      setOpen={setOpen}
+                      sale_id={sale_id}
+                      serial={serial.serial}
+                      //key={serial.serial}
+                    />
                   </TableRow>
                 );
               })}

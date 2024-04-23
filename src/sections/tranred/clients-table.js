@@ -14,7 +14,7 @@ import {
 import { Scrollbar } from "src/components/scrollbar";
 import DotsMenu from "src/components/dots-menu";
 
-export const SalesTable = (props) => {
+export const ClientsTable = (props) => {
   const {
     count = 0,
     items = [],
@@ -22,7 +22,6 @@ export const SalesTable = (props) => {
     onRowsPerPageChange,
     page = 0,
     rowsPerPage = 0,
-    selected = [],
     type
   } = props;
 
@@ -50,13 +49,11 @@ export const SalesTable = (props) => {
             </TableHead>
             <TableBody>
               {items.map((sale) => {
-                const isSelected = selected.includes(sale.id);
 
                 return (
                   <TableRow
                     hover
                     key={sale.id}
-                    selected={isSelected}
                   >
                     
                     <TableCell>
@@ -102,16 +99,11 @@ export const SalesTable = (props) => {
   );
 };
 
-SalesTable.propTypes = {
+ClientsTable.propTypes = {
   count: PropTypes.number,
   items: PropTypes.array,
-  onDeselectAll: PropTypes.func,
-  onDeselectOne: PropTypes.func,
   onPageChange: PropTypes.func,
   onRowsPerPageChange: PropTypes.func,
-  onSelectAll: PropTypes.func,
-  onSelectOne: PropTypes.func,
   page: PropTypes.number,
   rowsPerPage: PropTypes.number,
-  selected: PropTypes.array,
 };

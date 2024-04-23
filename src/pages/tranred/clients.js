@@ -1,55 +1,30 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import Head from 'next/head';
 import { Box, Container, Stack, Typography } from '@mui/material';
-import { useSelection } from 'src/hooks/use-selection';
 import { Layout as DashboardLayout } from 'src/layouts/dashboard/layout';
 import { CustomersSearch } from 'src/sections/customer/customers-search';
-import { applyPagination } from 'src/utils/apply-pagination';
-import { AddButton } from 'src/components/add-button';
-import { SalesTable } from 'src/sections/sales/sales-table';
 import { useRouter } from 'next/navigation';
 import { useAuth } from "src/hooks/use-auth";
-
-const useSales = (data, page, rowsPerPage) => {
-  return useMemo(
-    () => {
-      return applyPagination(data, page, rowsPerPage);
-    },
-    [page, rowsPerPage, data]
-  );
-};
-
-const useSaleIds = (sales) => {
-  return useMemo(
-    () => {
-      return sales.map((sale) => sale.id);
-    },
-    [sales]
-  );
-};
+import { ClientsTable } from 'src/sections/tranred/clients-table';
 
 const Page = () => {
   const [data, setData] = useState([]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
-  const sales = useSales(data, page, rowsPerPage);
-  const salesIds = useSaleIds(sales);
-  const salesSelection = useSelection(salesIds);
   const auth = useAuth();
   const router = useRouter();
 
   const getData = async ()=>{
     try{
-      const response = await fetch(`${process.env.NEXT_PUBLIC_APIURL}/api/v1/sales`, {
-      headers: {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_APIURL}/api/v1/tranred/customer/all`, {
+        method: 'POST',
+        headers: {
         "X-Auth-Token": window.localStorage.getItem('token')
       }
     })
     if(response.ok){
       const json = await response.json();
-      const sales = json.result;
-      const filtered = sales.filter((sale)=> sale.status_id === 3011)
-      setData(filtered);
+      setData(json);
     }else{
       auth.signOut();
       router.push('/auth/login');
@@ -112,18 +87,13 @@ const Page = () => {
               </Stack>
             </Stack>
             <CustomersSearch />
-            <SalesTable
+            <ClientsTable
               count={data.length}
-              items={sales}
-              onDeselectAll={salesSelection.handleDeselectAll}
-              onDeselectOne={salesSelection.handleDeselectOne}
+              items={data}
               onPageChange={handlePageChange}
               onRowsPerPageChange={handleRowsPerPageChange}
-              onSelectAll={salesSelection.handleSelectAll}
-              onSelectOne={salesSelection.handleSelectOne}
               page={page}
               rowsPerPage={rowsPerPage}
-              selected={salesSelection.selected}
               type='tranred'
             />
           </Stack>

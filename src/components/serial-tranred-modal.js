@@ -54,7 +54,6 @@ export default function SerialTranredModal({ open, setOpen, id }) {
   const sales = useSales(data, page, rowsPerPage);
   const salesIds = useSaleIds(sales);
   const salesSelection = useSelection(salesIds);
-  const [accountModalOpen, setAccountModalOpen] = useState(false);
 
   const getData = async ()=>{
     try{
@@ -94,16 +93,13 @@ export default function SerialTranredModal({ open, setOpen, id }) {
   );
   
   const handleModalClose = () => {
+    console.log(data)
     setOpenModal(false);
     setOpen(false);
   };
 
   return (
     <>
-    <AccountModal 
-        open={accountModalOpen}
-        setOpen={setAccountModalOpen}
-    />
     <GeneralSuccessModal 
     message={message} 
     opened={success} 
@@ -141,8 +137,7 @@ export default function SerialTranredModal({ open, setOpen, id }) {
               rowsPerPage={rowsPerPage}
               selected={salesSelection.selected}
               type={'sales'}
-              open={accountModalOpen}
-              setOpen={setAccountModalOpen}
+              sale_id={id}
             />
         <Box sx={{ display: "flex", justifyContent: "space-between", mt: "2%" }}>
             <Button 
@@ -152,7 +147,7 @@ export default function SerialTranredModal({ open, setOpen, id }) {
               No, Cancelar
             </Button>
             <Button
-             // onClick={console.log('clicked')}
+              onClick={handleModalClose}
               variant="contained"
               //color="error"
               sx={{ width: "30%" }}
