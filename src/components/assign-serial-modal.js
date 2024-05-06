@@ -73,6 +73,8 @@ export default function AssignSerialModal({ open, setOpen, id }) {
           await response.json().then((result) => {
             if (result.result[0].error_num == 0) {
               setSuccess(true);
+              setAssignSerial(null)
+              setProduct(null)
             } else {
               setError(true);
               setMessage(result.result[0].message)
@@ -97,6 +99,7 @@ export default function AssignSerialModal({ open, setOpen, id }) {
         message={"Serial Cargado con Éxito"}
         opened={success}
         setOpened={setSuccess}
+        noReload
       />
       <GeneralErrorModal opened={error} setOpened={setError} message={message} />
       <Modal

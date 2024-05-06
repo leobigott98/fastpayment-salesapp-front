@@ -34,10 +34,10 @@ export default function AccountModal({ open, setOpen, sale_id, serial }) {
   const [v_sale_id, setVSaleId] = useState(sale_id)
   const [v_serial_num, setVSerialNum] = useState(serial)
 
-  useEffect(()=>{
+  /* useEffect(()=>{
     console.log(serial)
     setVSerialNum(serial)
-  },[])
+  },[]) */
 
   const handleModalClose = () => {
     setOpenModal(false);
@@ -88,7 +88,9 @@ export default function AccountModal({ open, setOpen, sale_id, serial }) {
     <GeneralSuccessModal 
     message={message} 
     opened={success} 
-    setOpened={setSuccess} />
+    setOpened={setSuccess} 
+      noReload
+    />
     <GeneralErrorModal 
         opened={error} 
         setOpened={setError}
@@ -120,6 +122,7 @@ export default function AccountModal({ open, setOpen, sale_id, serial }) {
             //error={!!(formik.touched.v_acct_number && formik.errors.v_acct_number)}
             //helperText={formik.touched.v_acct_number && formik.errors.v_acct_number}
             fullWidth
+            required
             label="Número de Cuenta"
             name="v_acct_number"
             //onBlur={formik.handleBlur}

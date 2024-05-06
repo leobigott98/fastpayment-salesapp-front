@@ -26,14 +26,14 @@ const style = {
   textAlign: 'center'
 };
 
-export default function GeneralSuccessModal({message, data, opened, setOpened}) {
+export default function GeneralSuccessModal({message, data, opened, setOpened, noReload}) {
   const [open, setOpen] = useState(false);
   const router = useRouter();
 
   const handleClose = () => {
     setOpen(false)
     setOpened(false)
-    router.reload();
+    if(!noReload) router.reload();
 }; 
   return (
     <div>

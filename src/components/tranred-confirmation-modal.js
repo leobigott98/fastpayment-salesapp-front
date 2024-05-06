@@ -80,7 +80,7 @@ export default function TranredConfirmation({ open, setOpen, id }) {
 
   
   
-  const tranredLogin = async()=>{
+/*   const tranredLogin = async()=>{
     try {
       await fetch(`${process.env.NEXT_PUBLIC_APIURL}/api/v1/tranred/auth/login`,{
         headers: {
@@ -103,24 +103,18 @@ export default function TranredConfirmation({ open, setOpen, id }) {
       setError(true)
     }
 
-  }
+  } */
 
   const createCommerce = async(commerce, commerceAddress, POSAddress, contactAddress, contacto)=>{
-    
+    const body={
+      commerce: commerce,
+      commerceAddress: commerceAddress,
+      POSAddress: POSAddress,
+      contactAddress: contactAddress,
+      contacto: contacto
+    }
+    console.log(body)
     try {
-      if(window.localStorage.getItem('tranred-token') == null || window.localStorage.getItem('tranred-token') == undefined){
-        console.log('not valid token')
-        tranredLogin()
-      }
-      const body={
-        token: window.localStorage.getItem('tranred-token'),
-        commerce: commerce,
-        commerceAddress: commerceAddress,
-        POSAddress: POSAddress,
-        contactAddress: contactAddress,
-        contacto: contacto
-      }
-      console.log(body)
       await fetch(`${process.env.NEXT_PUBLIC_APIURL}/api/v1/tranred/customer/create`, {
         method: 'POST',
         headers: {
@@ -135,17 +129,10 @@ export default function TranredConfirmation({ open, setOpen, id }) {
             setMessage(json.message)
             setSuccess(true)
             console.log('created!')
-            return
-          }else if (json.statusCode == 401) {
-            console.log('not logged in')
-            tranredLogin()
-            createCommerce(customer, commerceAddress, POSAddress, contactAddress, contacto)
-            return
           }else{
             setMessage(json.message)
             setError(true)
             console.log('did not work')
-            return
           }
         })
     } catch (error) {

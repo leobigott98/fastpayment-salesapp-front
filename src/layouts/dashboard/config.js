@@ -29,14 +29,14 @@ export const items = [
     roles: [1000, 1001, 1002]
   },
   {
-    title: 'Productos',
-    path: '/inventory',
+    title: 'Ventas',
+    path: '/sales',
     icon: (
       <SvgIcon fontSize="small">
-        <PointOfSaleIcon />
+        <RequestQuoteIcon />
       </SvgIcon>
     ),
-    roles: [1000, 1003]
+    roles: [1000, 1001, 1002]
   },
   {
     title: 'Tranred',
@@ -78,14 +78,14 @@ export const items = [
     ]
   },
   {
-    title: 'Ventas',
-    path: '/sales',
+    title: 'Productos',
+    path: '/inventory',
     icon: (
       <SvgIcon fontSize="small">
-        <RequestQuoteIcon />
+        <PointOfSaleIcon />
       </SvgIcon>
     ),
-    roles: [1000, 1001, 1002]
+    roles: [1000, 1003]
   },
   {
     title: 'Usuarios',

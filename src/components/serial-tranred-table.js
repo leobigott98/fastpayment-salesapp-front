@@ -65,14 +65,15 @@ export const SerialTranredTable = (props) => {
                     <TableCell>{serial.modelo}</TableCell>
                     <TableCell>
                       <Button onClick={handleModalOpen}>¿Desea Asignar Cuenta?</Button>
-                    </TableCell>
-                    <AccountModal
+                      <AccountModal
                       open={open}
                       setOpen={setOpen}
                       sale_id={sale_id}
                       serial={serial.serial}
                       //key={serial.serial}
                     />
+                    </TableCell>
+                    
                   </TableRow>
                 );
               })}

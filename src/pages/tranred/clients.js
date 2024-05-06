@@ -14,29 +14,40 @@ const Page = () => {
   const auth = useAuth();
   const router = useRouter();
 
-  const getData = async ()=>{
-    try{
-      const response = await fetch(`${process.env.NEXT_PUBLIC_APIURL}/api/v1/tranred/customer/all`, {
-        method: 'POST',
-        headers: {
-        "X-Auth-Token": window.localStorage.getItem('token')
-      }
-    })
-    if(response.ok){
-      const json = await response.json();
-      setData(json);
-    }else{
-      auth.signOut();
-      router.push('/auth/login');
-    }
-    }catch(err){
-      console.log(err)
-    }  
-  }
 
-  useEffect(()=>{
+   const getData = async ()=>{
+    /* const body = {
+      token: window.localStorage.getItem('tranred-token')
+    } */
+      /* if(!body.token){
+        tranredLogin()
+        return getData()
+      } else{ */
+        try{
+          const response = await fetch(`${process.env.NEXT_PUBLIC_APIURL}/api/v1/tranred/customer/all`, {
+            headers: {
+            "X-Auth-Token": window.localStorage.getItem('token'),
+          },
+          //body: JSON.stringify(body)
+        })     
+        const json = await response.json(); 
+        if(response.ok){ 
+          setData(json.comercios);
+        }else {
+          console.log('not 401')
+          /* auth.signOut();
+          router.push('/auth/login'); */
+          //return
+        }
+        }catch(err){
+          console.log(err)
+        }  
+      //}   
+  } 
+
+   useEffect(()=>{
     getData();
-  },[]);
+  },[]); 
 
   const handlePageChange = useCallback(
     (event, value) => {

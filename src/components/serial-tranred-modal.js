@@ -11,6 +11,8 @@ import GeneralErrorModal from "./general-error-modal";
 import GeneralSuccessModal from "./general-success-modal";
 import { SerialTranredTable } from "./serial-tranred-table";
 import AccountModal from "./account-modal";
+import { useAuth } from "src/hooks/use-auth";
+import { useRouter } from "next/router";
 
 const style = {
   position: "absolute",
@@ -54,6 +56,8 @@ export default function SerialTranredModal({ open, setOpen, id }) {
   const sales = useSales(data, page, rowsPerPage);
   const salesIds = useSaleIds(sales);
   const salesSelection = useSelection(salesIds);
+  const auth = useAuth();
+  const router = useRouter();
 
   const getData = async ()=>{
     try{
@@ -66,8 +70,9 @@ export default function SerialTranredModal({ open, setOpen, id }) {
       const jsonData = await response.json();
       setData(jsonData.result);
     }else{
-      auth.signOut();
-      router.push('/auth/login');
+      console.log('something happended')
+      /* auth.signOut();
+      router.push('/auth/login'); */
     }
     }catch(err){
       console.log(err)
@@ -93,7 +98,7 @@ export default function SerialTranredModal({ open, setOpen, id }) {
   );
   
   const handleModalClose = () => {
-    console.log(data)
+    //console.log(data)
     setOpenModal(false);
     setOpen(false);
   };
