@@ -32,7 +32,6 @@ const fetchData = async(url, body)=> {
           },
         });
         const jsonResult = await result.json();
-        
         if(jsonResult.result[0].cantidad_disponible != null){
           console.log('qty')
           const filtered = jsonResult.result.filter((result)=> result.cantidad_disponible > 0)
@@ -47,7 +46,7 @@ const fetchData = async(url, body)=> {
     }  
       }
 
-export default function UserAutocomplete({name, url, roles, customers, products, saleProducts, data, setData, payOptions, banks, codlocalid, serials, disabled, body}) {
+export default function UserAutocomplete({name, url, roles, customers, products, saleProducts, data, setData, payOptions, banks, codlocalid, serials, disabled, body, plans}) {
   const [open, setOpen] = React.useState(false);
   const [options, setOptions] = React.useState([]);
   const loading = open && options.length === 0;
@@ -91,7 +90,7 @@ export default function UserAutocomplete({name, url, roles, customers, products,
   return (
     <Autocomplete
       id="asynchronous-demo"
-      sx={{ width: '100%', paddingTop:0 }}
+      sx={{ width: '100%', paddingTop:0}}
       open={open}
       disabled={disabled}
       onOpen={() => {
@@ -114,6 +113,7 @@ export default function UserAutocomplete({name, url, roles, customers, products,
         banks? (option, value) => option.bank_desc === value.bank_desc :
         codlocalid? (option, value) => option.cod_value === value.cod_value :
         serials? (option, value) => option.serial_num === value.serial_num :
+        plans? (option, value) => option.name === value.name :
          (option, value) => option.usuario === value.usuario}
       getOptionLabel={
         roles? (option) => option.rol_desc:
@@ -124,6 +124,7 @@ export default function UserAutocomplete({name, url, roles, customers, products,
         banks? (option) => option.bank_desc :
         codlocalid? (option) => option.cod_value :
         serials? (option) => option.serial_num :
+        plans? (option) => option.name :
          (option) => option.usuario}
       options={options}
       loading={loading}

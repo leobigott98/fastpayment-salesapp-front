@@ -64,10 +64,10 @@ export const SalesTable = (props) => {
                       alignItems="center" 
                       direction="row" 
                       spacing={2}>
-                        <Typography variant="subtitle2">{sale.serie}</Typography>
+                        <Typography variant="subtitle2">{sale.serie.substring(6)}</Typography>
                       </Stack>
                     </TableCell>
-                    <TableCell>{sale.fecha}</TableCell>
+                    <TableCell sx={{px:0}}>{sale.fecha}</TableCell>
                     {sale?.vendedor ? <TableCell>{sale.vendedor}</TableCell> : <></>}
                     <TableCell>{sale.cliente}</TableCell>
                     <TableCell>{sale.total}</TableCell>

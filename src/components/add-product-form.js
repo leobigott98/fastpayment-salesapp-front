@@ -35,7 +35,7 @@ const ProductForm = () => {
       v_prod_brand: Yup.string().required("Obligatorio"),
       v_prod_model: Yup.string().required("Obligatorio"),
       v_prod_spec: Yup.string().required("Obligatorio"),
-      v_prod_price: Yup.number().required("Obligatorio"),
+      v_prod_price: Yup.number().required("Obligatorio").moreThan(0, "Debe ser mayor que cero"),
       v_prod_serial: Yup.boolean().required("Obligatorio"),
     }),
     onSubmit: async (values, helpers) => {
@@ -180,8 +180,8 @@ const ProductForm = () => {
                   {formik.errors.submit}
                 </Typography>
               )}
-
-              <Button fullWidth size="medium" sx={{ mt: 3 }} type="submit" variant="contained">
+ 
+              <Button fullWidth size="medium" sx={{ mt: 3 }} type="submit" variant="contained" disabled={formik.values.v_prod_brand == "" || formik.values.v_prod_model == "" ||formik.values.v_prod_spec == "" || formik.values.v_prod_price == ""}>
                 Guardar
               </Button>
             </form>

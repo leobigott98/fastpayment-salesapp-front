@@ -133,7 +133,7 @@ const Page = () => {
                         label="Comisión de Venta"
                         name="v_sell_fee"
                         value={fee}
-                        onChange={(event)=>setFee(Number(event.target.value))}
+                        onChange={(event)=>setFee((event.target.value))}
                     />
                     <TextField
                         fullWidth
@@ -157,7 +157,7 @@ const Page = () => {
                     size="large"
                     type="submit"
                     //onClick={handleSubmit}
-                    //disabled={activeStep === 4}
+                    disabled={!user || !role || (role.rol_desc == 'Ventas' && (!Number(fee) || Number(fee)<1 || !location))}
                     variant="contained"
                     sx={{ marginLeft: "auto" }}
                 >

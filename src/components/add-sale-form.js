@@ -1,5 +1,3 @@
-import Head from "next/head";
-import { Layout as DashboardLayout } from "src/layouts/dashboard/layout";
 import {
   Box,
   Container,
@@ -7,21 +5,17 @@ import {
   Typography,
   Button,
   TextField,
-  MenuItem,
-  Card,
-  CardContent,
 } from "@mui/material";
-import Grid from "@mui/material/Unstable_Grid2";
 import UserAutocomplete from "./user-autocomplete";
 import GeneralSuccessModal from "./general-success-modal";
 import GeneralErrorModal from "./general-error-modal";
 import { useEffect, useState } from "react";
 import { PriceTable } from "./price-table";
-import { style, textAlign } from "@mui/system";
 
 const AddSaleForm = () => {
   const [customer, setCustomer] = useState("");
   const [product, setProduct] = useState("");
+  const [plan, setPlan] = useState("");
   const [qty, setQty] = useState("");
   const [items, setItems] = useState([]);
   const [total, setTotal] = useState(0);
@@ -52,6 +46,10 @@ const AddSaleForm = () => {
 
     if (todayObject.dd < 10) todayObject.dd = "0" + todayObject.dd;
     if (todayObject.mm < 10) todayObject.mm = "0" + todayObject.mm;
+    if (todayObject.min < 10) todayObject.min = "0" + todayObject.min;
+    if (todayObject.ss < 10) todayObject.ss = "0" + todayObject.ss;
+    if (todayObject.ms < 10) todayObject.ms = "00" + todayObject.ms;
+    if (todayObject.ms < 100) todayObject.ms = "0" + todayObject.ms;
 
     const formattedToday =
       todayObject.yyyy +
@@ -132,13 +130,6 @@ const AddSaleForm = () => {
               <Typography variant="h4">Cotización</Typography>
             </Stack>
             <Stack spacing={1} sx={{ width: "30%" }}>
-              {/* <Card  sx={{minWidth:275}}>
-                <CardContent>
-                    <Typography variant="h5" component="div" sx={{textAlign: 'center'}}>
-                        Test
-                    </Typography>
-                </CardContent>
-              </Card> */}
 
               <TextField
                 disabled
@@ -182,6 +173,7 @@ const AddSaleForm = () => {
                   ""
                 )}
                 <Typography variant="h6">Datos del Producto</Typography>
+                <Stack spacing={1} direction="column">
                 <Stack spacing={2} direction="row">
                   <UserAutocomplete
                     url={`${process.env.NEXT_PUBLIC_APIURL}/api/v1/products`}
@@ -203,44 +195,41 @@ const AddSaleForm = () => {
                     label="Cantidad"
                     name="qty"
                     value={qty}
-                    onChange={(event) => setQty(Number(event.target.value))}
+                    onChange={(event) => setQty((event.target.value))}
                     sx={{ width: "20%" }}
                   />
-                  <Button
-                    //size="large"
-                    //type="submit"
-                    onClick={handleAdd}
-                    //disabled={activeStep === 4}
-                    variant="contained"
-                    sx={{ marginLeft: "auto" }}
-                  >
-                    Agregar
-                  </Button>
+                  
                 </Stack>
                 {product?.marca ? (
-                  <Stack spacing={2}>
-                    <Stack spacing={5} direction="row">
-                      <Stack spacing={1} direction="row">
-                        <Typography>Precio:</Typography>
-                        <Typography>{product.precio}</Typography>
+                      <Stack spacing={1} direction="row" >
+                        <Typography sx={{mt: -2}}>Precio: {product.precio}</Typography>
+                        
                       </Stack>
-                    </Stack>
-                  </Stack>
                 ) : (
                   ""
                 )}
-              </Stack>
-
-              {/* <Button
-                    size="large"
-                    type="submit"
-                    //onClick={handleSubmit}
-                    //disabled={activeStep === 4}
+                </Stack>
+                <Typography variant="h6">Plan</Typography>
+                <Stack spacing={2} direction="row">
+                  <UserAutocomplete
+                    url={`${process.env.NEXT_PUBLIC_APIURL}/api/v1/tranred/terminal/plans/all`}
+                    plans
+                    data={plan}
+                    setData={setPlan}
+                    name={"Plan"}
+                  />
+                </Stack>
+                <Button
+                    //size="small"
+                    //type="submit"
+                    onClick={handleAdd}
+                    disabled={!Number(qty) || Number(qty)<1 || !plan}
                     variant="contained"
-                    sx={{ marginLeft: "auto" }}
-                >
-                    Enviar
-                </Button> */}
+                    sx={{ position: "relative", left: "75%", width: "25%" }}
+                  >
+                    Agregar
+                  </Button>
+              </Stack>
             </Stack>
           </form>
           <Stack spacing={2}>
@@ -249,7 +238,7 @@ const AddSaleForm = () => {
               //size="large"
               type="submit"
               onClick={(e) => handleSale(e)}
-              //disabled={activeStep === 4}
+              disabled={items.length < 1}
               variant="contained"
               sx={{ marginLeft: "auto" }}
             >
