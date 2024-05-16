@@ -41,6 +41,7 @@ const Page = () => {
   const customers = useCustomers(data, page, rowsPerPage);
   const customersIds = useCustomerIds(customers);
   const customersSelection = useSelection(customersIds);
+  const [loading, setLoading] = useState(true)
   const auth = useAuth();
   const router = useRouter();
 
@@ -56,8 +57,10 @@ const Page = () => {
       referrerPolicy: 'no-referrer-when-downgrade'
     })
     if(response.ok){
+      setLoading(false)
       const jsonData = await response.json();
       setData(jsonData.result);
+
     }else{
       setMessage('No Autorizado. Redirigiendo...')
       setError(true);
@@ -91,6 +94,9 @@ const Page = () => {
     },
     []
   );
+  if(loading){
+    return (<Typography>Loading...</Typography>)
+  }
 
   return (
     <>

@@ -14,6 +14,7 @@ import PaymentModal from "./load-payment-modal";
 import AssignSerialModal from "./assign-serial-modal";
 import TranredConfirmation from "./tranred-confirmation-modal";
 import SerialTranredModal from "./serial-tranred-modal";
+import { useRouter } from "next/router";
 
 export default function DotsMenu({ type, id, balance, tranred }) {
   const [anchorEl, setAnchorEl] = useState(null);
@@ -21,6 +22,7 @@ export default function DotsMenu({ type, id, balance, tranred }) {
   const [modalOpen, setModalOpen] = useState(false);
   const [serialModalOpen, setSerialModalOpen] = useState(false);
   const [assignModalOpen, setAssignModalOpen] = useState(false);
+  const router = useRouter();
   const handleModalOpen = () => setModalOpen(true);
   const handleSerialModalOpen = () => setSerialModalOpen(true);
   const handleAssignModalOpen = () => setAssignModalOpen(true);
@@ -56,6 +58,10 @@ export default function DotsMenu({ type, id, balance, tranred }) {
     handleClose();
   };
 
+  const handleDetailClick = ()=>{
+    router.push('/sales/'+id)
+  }
+
   return (
     <div>
       <Tooltip title="Opciones">
@@ -78,6 +84,7 @@ export default function DotsMenu({ type, id, balance, tranred }) {
           "aria-labelledby": "basic-button",
         }}
       >
+      {type === "sales" && <MenuItem onClick={handleDetailClick}>Ver Detalle</MenuItem>}
         {type === "sales" ? (
           balance == 0 ? (
             <MenuItem onClick={handleAssignmentOptionClick}>Asignar Serial</MenuItem>

@@ -31,7 +31,7 @@ const Page = () => {
   //const [method, setMethod] = useState('email');
   const [error, setError] = useState(false);
   const [success, setSuccess] = useState(false);
-  const [reset, setResetTime] = useState(false);
+  const [resetTime, setResetTime] = useState(false);
   const [timeElapsed, setTimeElapsed] = useState(false);
   const [ message, setMessage ] = useState('')
 
@@ -78,6 +78,12 @@ const Page = () => {
     }
   });
 
+  const resetTimer = ()=>{
+    if(timeElapsed){
+      setResetTime(true)
+    }
+  }
+
   const handleNewOTP = async()=>{
     try{
       if(user == null) throw new Error('Inicie Sesión o Regístrese para validar su correo')
@@ -93,8 +99,9 @@ const Page = () => {
         body: JSON.stringify(body)
       })
         .then(async(result)=>{
+          setResetTime(false)
           if(result.ok){
-            setResetTime(true)
+            //setResetTime(true)
             alert('OTP enviada exitosamente')
           }
         })
@@ -225,7 +232,7 @@ const Page = () => {
                 >
                   Enviar Código Nuevo
                 </Button>
-                <Timer reset={reset} setTimeElapsed={setTimeElapsed}/>
+                <Timer reset={resetTimer} setTimeElapsed={setTimeElapsed}/>
               </Typography>
                 <Button
                   fullWidth

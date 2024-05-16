@@ -6,7 +6,6 @@ const Timer = ({reset, setTimeElapsed})=>{
     const [minutes, setMinutes] = useState(0)
 
     useEffect(()=>{
-        do{
         setDeadline(Date.now() + (20 * 1000));  
 
         const getTime = (deadline) => {
@@ -21,7 +20,7 @@ const Timer = ({reset, setTimeElapsed})=>{
             clearInterval(interval);
             setTimeElapsed(true)
         }, 19*1000)
-    }while(reset) 
+
 
     },[setDeadline, setMinutes, setMinutes, deadline, reset])
 

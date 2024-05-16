@@ -29,7 +29,7 @@ const AddSaleForm = () => {
   }, []);
 
   const handleAdd = () => {
-    setItems([...items, { product: product, qty: qty }]);
+    setItems([...items, { product: product, qty: qty, plan: plan }]);
   };
 
   const serieNumber = () => {
@@ -83,12 +83,16 @@ const AddSaleForm = () => {
         const sale_id = saleInfo.result[0].sale_id;
 
         items.forEach(async (item) => {
+
           const body = {
             v_sale_id: sale_id,
-            v_prod_id: item.product.id,
+            v_prod_id: item.product.id ,
             v_salesdt_qty: item.qty,
             v_prod_price: item.product.precio,
+            v_plan_id: item.plan.id
           };
+          
+          
           await fetch(`${process.env.NEXT_PUBLIC_APIURL}/api/v1/sales/detail`, {
             method: "POST",
             headers: {

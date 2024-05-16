@@ -13,11 +13,13 @@ import Tab from "@mui/material/Tab";
 import Collapse from "@mui/material/Collapse";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
+import { usePathname } from 'next/navigation';
 
 export const SideNavItem = (props) => {
   const { active = false, disabled, external, icon, path, title, options } = props;
   const [value, setValue] = useState(0);
   const [open, setOpen] = useState(false);
+  const pathname = usePathname();
 
   function a11yProps(index) {
     return {

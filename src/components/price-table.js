@@ -22,7 +22,7 @@ export const PriceTable = ({ items, setItems, total, setTotal }) => {
     const addItems = () => {
       let acumulado = 0
       items.forEach((item) => {
-        acumulado = acumulado + (item.product.precio * item.qty);
+          acumulado = acumulado + (item.product.precio * item.qty);
       });
       return acumulado;
     };
@@ -45,7 +45,8 @@ export const PriceTable = ({ items, setItems, total, setTotal }) => {
             </TableHead>
             <TableBody>
               {items?.map((item) => {
-                return (
+                  return (
+                  <>
                   <TableRow key={items.indexOf(item)}>
                     <TableCell>
                       <Typography>{item.product.modelo}</Typography>
@@ -66,8 +67,16 @@ export const PriceTable = ({ items, setItems, total, setTotal }) => {
                       </Button>
                     </TableCell>
                   </TableRow>
-                );
-              })}
+                  <TableRow key={items.indexOf(item)}>
+                      <TableCell colSpan={5}>
+                        {item.plan.name}
+                      </TableCell>
+                      
+                  </TableRow>
+                  </>
+                  )
+                }  
+              )}
               <TableRow>
                 <TableCell colSpan={2} />
                 <TableCell>

@@ -103,6 +103,10 @@ export default function SerialTranredModal({ open, setOpen, id }) {
     setOpen(false);
   };
 
+  const handleTerminalCreation = ()=>{
+    
+  }
+
   return (
     <>
     <GeneralSuccessModal 

@@ -55,7 +55,7 @@ export const SerialTranredTable = (props) => {
                 };
 
                 return (
-                  <TableRow hover key={serial.serial}>
+                  <TableRow hover key={serial.serial_id}>
                     <TableCell>
                       <Stack alignItems="center" direction="row" spacing={2}>
                         <Typography variant="subtitle2">{serial.serial}</Typography>
