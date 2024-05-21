@@ -129,7 +129,7 @@ const Page = () => {
             {/* <CustomersSearch data={data} query={query} setQuery={setQuery}/>  */}
             <CustomersSearchAutocomplete data={data} query={query} setQuery={setQuery}/>   
             <CustomersTable
-              count={data.length}
+              count={query.length? query.length : data.length}
               items={query.length? query : customers}
               onPageChange={handlePageChange}
               onRowsPerPageChange={handleRowsPerPageChange}

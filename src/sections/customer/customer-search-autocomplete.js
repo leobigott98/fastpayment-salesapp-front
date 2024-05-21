@@ -1,5 +1,5 @@
 import MagnifyingGlassIcon from "@heroicons/react/24/solid/MagnifyingGlassIcon";
-import { Card, InputAdornment, OutlinedInput, SvgIcon, Autocomplete, TextField, CircularProgress } from "@mui/material";
+import { Card, InputAdornment, SvgIcon, Autocomplete, TextField, CircularProgress } from "@mui/material";
 import { useState, useEffect } from 'react';
 
 export const CustomersSearchAutocomplete = ({ data, query, setQuery }) => {

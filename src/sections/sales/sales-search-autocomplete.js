@@ -1,8 +1,8 @@
 import MagnifyingGlassIcon from "@heroicons/react/24/solid/MagnifyingGlassIcon";
-import { Card, InputAdornment, OutlinedInput, SvgIcon, Autocomplete, TextField, CircularProgress } from "@mui/material";
+import { Card, InputAdornment, SvgIcon, Autocomplete, TextField, CircularProgress } from "@mui/material";
 import { useState, useEffect } from 'react';
 
-export const CustomersSearchAutocomplete = ({ data, query, setQuery }) => {
+export const SalesSearchAutocomplete = ({ data, query, setQuery }) => {
   const [open, setOpen] = useState(false)
   const [options, setOptions] = useState([]);
   const loading = open && options.length === 0;
@@ -19,10 +19,11 @@ export const CustomersSearchAutocomplete = ({ data, query, setQuery }) => {
       //await sleep(1e3); // For demo purposes.
 
       if (active) {
-        setOptions(data.map((element)=>{
-            return element = `${element.doc_value}-${element.cusm_ndoc} ${element.cusm_namec}`
-        }));
-        //console.log(await fetchData())
+        const optionsArray = data.map((element,i)=>{
+            return element = element.cliente
+        });
+        setOptions(optionsArray.filter((option, i, self)=> self.indexOf(option) == i))
+       
       }
     })();
 
@@ -39,7 +40,7 @@ export const CustomersSearchAutocomplete = ({ data, query, setQuery }) => {
 
   useEffect(()=>{
     if(input !== ''){
-        setQuery(data.filter((element)=> `${element.doc_value}-${element.cusm_ndoc} ${element.cusm_namec}` === input))
+        setQuery(data.filter((element)=> element.cliente === input))
       }
       else{
         setQuery([])

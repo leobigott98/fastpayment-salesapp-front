@@ -35,8 +35,10 @@ export default function CustomerInfo({ open, setOpen, index, customer }) {
         setError(true);
       }
     };
-    fetchCustomerData()
-  }, []);
+    if(open[index]){
+      fetchCustomerData()
+    }
+  }, [open]);
 
   const handleModalOpen = ()=>{
     const openArray = open?.map((element, i)=>{
@@ -59,7 +61,6 @@ export default function CustomerInfo({ open, setOpen, index, customer }) {
     })
     setOpen(openArray)
   };
-
 
   return (
     <>

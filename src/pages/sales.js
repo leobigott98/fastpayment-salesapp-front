@@ -3,12 +3,12 @@ import Head from 'next/head';
 import { Box, Container, Stack, Typography } from '@mui/material';
 import { useSelection } from 'src/hooks/use-selection';
 import { Layout as DashboardLayout } from 'src/layouts/dashboard/layout';
-import { CustomersSearch } from 'src/sections/customer/customers-search';
 import { applyPagination } from 'src/utils/apply-pagination';
 import { AddButton } from 'src/components/add-button';
 import { SalesTable } from 'src/sections/sales/sales-table';
 import { useRouter } from 'next/navigation';
 import { useAuth } from "src/hooks/use-auth";
+import { SalesSearchAutocomplete } from 'src/sections/sales/sales-search-autocomplete';
 
 const useSales = (data, page, rowsPerPage) => {
   return useMemo(
@@ -32,6 +32,7 @@ const Page = () => {
   const [data, setData] = useState([]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [query, setQuery] = useState([])
   const sales = useSales(data, page, rowsPerPage);
   const salesIds = useSaleIds(sales);
   const salesSelection = useSelection(salesIds);
@@ -112,10 +113,10 @@ const Page = () => {
               <AddButton sales/>
               </div>
             </Stack>
-            <CustomersSearch />
+            <SalesSearchAutocomplete data={data} query={query} setQuery={setQuery}/>
             <SalesTable
-              count={data.length}
-              items={sales}
+              count={query.length? query.length : data.length}
+              items={query.length? query : sales}
               onDeselectAll={salesSelection.handleDeselectAll}
               onDeselectOne={salesSelection.handleDeselectOne}
               onPageChange={handlePageChange}
