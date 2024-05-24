@@ -15,6 +15,7 @@ import AssignSerialModal from "./assign-serial-modal";
 import TranredConfirmation from "./tranred-confirmation-modal";
 import SerialTranredModal from "./serial-tranred-modal";
 import { useRouter } from "next/router";
+import SalesDetailModal from "src/sections/sales/sales-detail-modal";
 
 export default function DotsMenu({ type, id, balance, tranred }) {
   const [anchorEl, setAnchorEl] = useState(null);
@@ -22,12 +23,14 @@ export default function DotsMenu({ type, id, balance, tranred }) {
   const [modalOpen, setModalOpen] = useState(false);
   const [serialModalOpen, setSerialModalOpen] = useState(false);
   const [assignModalOpen, setAssignModalOpen] = useState(false);
+  const [saleDetailModalOpen, setSaleDetailModalOpen] = useState(false);
   const router = useRouter();
   const handleModalOpen = () => setModalOpen(true);
   const handleSerialModalOpen = () => setSerialModalOpen(true);
   const handleAssignModalOpen = () => setAssignModalOpen(true);
   const handleSerialModalClose = () => setSerialModalOpen(false);
   const handleModalClose = () => setModalOpen(false);
+  const handleSaleDetailModalOpen = () => setSaleDetailModalOpen(true);
   const handleOptionClick = () => {
     handleClose();
   };
@@ -59,7 +62,7 @@ export default function DotsMenu({ type, id, balance, tranred }) {
   };
 
   const handleDetailClick = ()=>{
-    router.push('/sales/'+id)
+    setSaleDetailModalOpen(true)
   }
 
   return (
@@ -110,6 +113,7 @@ export default function DotsMenu({ type, id, balance, tranred }) {
         <>
           <PaymentModal open={modalOpen} setOpen={setModalOpen} id={id} />
           <AssignSerialModal open={assignModalOpen} setOpen={setAssignModalOpen} id={id} assign />
+          <SalesDetailModal open={saleDetailModalOpen} setOpen={setSaleDetailModalOpen} id={id} />
         </>
       ) : type === "tranred" ? (
         <>

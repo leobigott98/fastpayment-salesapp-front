@@ -2,17 +2,14 @@ import {
   Box,
   Button,
   Card,
-  Checkbox,
-  Stack,
   Table,
   TableBody,
   TableCell,
   TableHead,
-  TablePagination,
   TableRow,
   Typography,
 } from "@mui/material";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { Scrollbar } from "src/components/scrollbar";
 import BackspaceIcon from "@mui/icons-material/Backspace";
 
