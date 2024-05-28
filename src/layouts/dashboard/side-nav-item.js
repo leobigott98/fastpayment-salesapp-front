@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import NextLink from "next/link";
 import PropTypes from "prop-types";
 import { Box, ButtonBase, Typography } from "@mui/material";
@@ -85,7 +85,7 @@ export const SideNavItem = (props) => {
                 justifyContent: "center",
                 mr: 2,
                 ...(active && {
-                  color: "primary.main",
+                  color: "primary.icon",
                 }),
               }}
             >
@@ -126,7 +126,7 @@ export const SideNavItem = (props) => {
               py: "6px",
               textAlign: "left",
               width: "100%",
-              ...(active && {
+              ...(pathname.includes(path) && {
                 backgroundColor: "rgba(255, 255, 255, 0.04)",
               }),
               "&:hover": {
@@ -143,8 +143,8 @@ export const SideNavItem = (props) => {
                   display: "inline-flex",
                   justifyContent: "center",
                   mr: 2,
-                  ...(active && {
-                    color: "primary.main",
+                  ...(pathname.includes(path) && {
+                    color: "primary.icon",
                   }),
                 }}
               >
@@ -157,11 +157,13 @@ export const SideNavItem = (props) => {
                 color: "neutral.400",
                 flexGrow: 1,
                 fontFamily: (theme) => theme.typography.fontFamily,
+                textOverflow: "ellipsis",
+                overflow: "hidden",
                 fontSize: 14,
                 fontWeight: 600,
                 lineHeight: "24px",
                 whiteSpace: "nowrap",
-                ...(active && {
+                ...(pathname.includes(path) && {
                   color: "common.white",
                 }),
                 ...(disabled && {
@@ -191,7 +193,6 @@ export const SideNavItem = (props) => {
             {options.map((option, index) => {
               return (
                 <ButtonBase
-                  //onClick={console.log(linkProps)}
                   key={index}
                   sx={{
                     alignItems: "center",
@@ -203,7 +204,7 @@ export const SideNavItem = (props) => {
                     py: "6px",
                     textAlign: "left",
                     width: "100%",
-                    ...(active && {
+                    ...(pathname === option.path && {
                       backgroundColor: "rgba(255, 255, 255, 0.04)",
                     }),
                     "&:hover": {
@@ -221,8 +222,8 @@ export const SideNavItem = (props) => {
                         display: "inline-flex",
                         justifyContent: "center",
                         mr: 2,
-                        ...(active && {
-                          color: "primary.main",
+                        ...(pathname === option.path && {
+                          color: "primary.icon",
                         }),
                       }}
                     >
@@ -239,7 +240,7 @@ export const SideNavItem = (props) => {
                       fontWeight: 400,
                       lineHeight: "24px",
                       whiteSpace: "nowrap",
-                      ...(active && {
+                      ...(pathname === option.path && {
                         color: "common.white",
                       }),
                       ...(disabled && {

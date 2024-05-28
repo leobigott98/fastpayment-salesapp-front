@@ -19,12 +19,14 @@ import { Scrollbar } from 'src/components/scrollbar';
 import { items } from './config';
 import { SideNavItem } from './side-nav-item';
 import { useAuth } from 'src/hooks/use-auth';
+import { useState } from 'react';
 
 export const SideNav = (props) => {
   const { open, onClose } = props;
   const pathname = usePathname();
   const lgUp = useMediaQuery((theme) => theme.breakpoints.up('lg'));
   const auth = useAuth();
+  const [activeArray, setActiveArray] = useState([]);
 
   const content = (
     <Scrollbar
@@ -59,13 +61,13 @@ export const SideNav = (props) => {
           >
             <Image
               alt="FastPayment Logo"
-              src="/assets/LogotipoFastPayment-03.png"
+              src="/assets/cropped-fastpayment_logo.png"
               width={200}
-              height={100}
+              height={50  }
             />
           </Box>
         </Box>
-        <Divider sx={{ borderColor: 'neutral.700' }} />
+        <Divider sx={{ borderColor: 'neutral.400' }} />
         <Box
           component="nav"
           sx={{

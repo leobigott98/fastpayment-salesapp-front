@@ -68,7 +68,8 @@ export const Layout = withPublicGuard((props) => {
           lg={6}
           sx={{
             alignItems: 'center',
-            background: 'radial-gradient(50% 50% at 50% 50%, #122647 0%, #090E23 100%)',
+            //background: 'radial-gradient(50% 50% at 50% 50%, #122647 0%, #090E23 100%)',
+            background:  '#003c77',
             color: 'white',
             display: 'flex',
             justifyContent: 'center',
@@ -77,7 +78,7 @@ export const Layout = withPublicGuard((props) => {
             }
           }}
         >
-          <Box sx={{ p: 3 }}>
+          <Box sx={{ p: 3 }} >
             <Typography
               align="center"
               color="inherit"
@@ -91,7 +92,7 @@ export const Layout = withPublicGuard((props) => {
               Bienvenido a {' '}
               <Box
                 component="a"
-                sx={{ color: '#15B79E' }}
+                sx={{ color: '#f26524' }}
                 target="_blank"
               >
                 Ventas FP
