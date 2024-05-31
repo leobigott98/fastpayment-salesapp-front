@@ -16,6 +16,7 @@ import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
 import CloudSyncIcon from '@mui/icons-material/CloudSync';
 import PeopleIcon from '@mui/icons-material/People';
 import SecurityUpdateGoodIcon from '@mui/icons-material/SecurityUpdateGood';
+import TrendingUpIcon from '@mui/icons-material/TrendingUp';
 
 export const items = [
   {
@@ -37,6 +38,16 @@ export const items = [
       </SvgIcon>
     ),
     roles: [1000, 1001, 1002]
+  },
+  {
+    title: 'Finanzas',
+    path: '/finance',
+    icon: (
+      <SvgIcon fontSize="small">
+        <TrendingUpIcon />
+      </SvgIcon>
+    ),
+    roles: [1000, 1001]
   },
   {
     title: 'Tranred',

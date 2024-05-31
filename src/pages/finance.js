@@ -1,55 +1,66 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import Head from 'next/head';
 import { Box, Container, Stack, Typography } from '@mui/material';
+import { useSelection } from 'src/hooks/use-selection';
 import { Layout as DashboardLayout } from 'src/layouts/dashboard/layout';
-import { CustomersSearch } from 'src/sections/customer/customers-search';
+import { applyPagination } from 'src/utils/apply-pagination';
+import { AddButton } from 'src/components/add-button';
+import { SalesTable } from 'src/sections/sales/sales-table';
 import { useRouter } from 'next/navigation';
 import { useAuth } from "src/hooks/use-auth";
-import { ClientsTable } from 'src/sections/tranred/clients-table';
-import { ClientSearchAutocomplete } from 'src/sections/tranred/client-search-autocomplete';
+import { SalesSearchAutocomplete } from 'src/sections/sales/sales-search-autocomplete';
+
+const useSales = (data, page, rowsPerPage) => {
+  return useMemo(
+    () => {
+      return applyPagination(data, page, rowsPerPage);
+    },
+    [page, rowsPerPage, data]
+  );
+};
+
+const useSaleIds = (sales) => {
+  return useMemo(
+    () => {
+      return sales.map((sale) => sale.id);
+    },
+    [sales]
+  );
+};
 
 const Page = () => {
   const [data, setData] = useState([]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [query, setQuery] = useState([])
+  const sales = useSales(data, page, rowsPerPage);
+  const salesIds = useSaleIds(sales);
+  const salesSelection = useSelection(salesIds);
   const auth = useAuth();
   const router = useRouter();
 
+  const getData = async ()=>{
+    try{
+      const response = await fetch(`${process.env.NEXT_PUBLIC_APIURL}/api/v1/sales`, {
+      headers: {
+        "X-Auth-Token": window.localStorage.getItem('token')
+      }
+    })
+    if(response.ok){
+      const jsonData = await response.json();
+      setData(jsonData.result.filter((sale)=> sale.pagado > 0));
+    }else{
+      auth.signOut();
+      router.push('/auth/login');
+    }
+    }catch(err){
+      console.log(err)
+    }  
+  }
 
-   const getData = async ()=>{
-    /* const body = {
-      token: window.localStorage.getItem('tranred-token')
-    } */
-      /* if(!body.token){
-        tranredLogin()
-        return getData()
-      } else{ */
-        try{
-          const response = await fetch(`${process.env.NEXT_PUBLIC_APIURL}/api/v1/tranred/customer/all`, {
-            headers: {
-            "X-Auth-Token": window.localStorage.getItem('token'),
-          },
-          //body: JSON.stringify(body)
-        })     
-        const json = await response.json(); 
-        if(response.ok){ 
-          setData(json.comercios);
-        }else {
-          console.log('not 401')
-          /* auth.signOut();
-          router.push('/auth/login'); */
-          //return
-        }
-        }catch(err){
-          console.log(err)
-        }  
-      //}   
-  } 
-
-   useEffect(()=>{
+  useEffect(()=>{
     getData();
-  },[]); 
+  },[]);
 
   const handlePageChange = useCallback(
     (event, value) => {
@@ -69,7 +80,7 @@ const Page = () => {
     <>
       <Head>
         <title>
-          Clientes Tranred | Ventas FP
+          Finanzas | Ventas FP
         </title>
       </Head>
       <Box
@@ -89,7 +100,7 @@ const Page = () => {
             >
               <Stack spacing={1}>
                 <Typography variant="h4">
-                  Clientes Tranred
+                  Finanzas
                 </Typography>
                 <Stack
                   alignItems="center"
@@ -99,15 +110,20 @@ const Page = () => {
                 </Stack>
               </Stack>
             </Stack>
-            <ClientSearchAutocomplete data={data} query={query} setQuery={setQuery}/>
-            <ClientsTable
+            <SalesSearchAutocomplete data={data} query={query} setQuery={setQuery}/>
+              <SalesTable
               count={query.length? query.length : data.length}
-              items={query.length? query : data}
+              items={query.length? query : sales}
+              onDeselectAll={salesSelection.handleDeselectAll}
+              onDeselectOne={salesSelection.handleDeselectOne}
               onPageChange={handlePageChange}
               onRowsPerPageChange={handleRowsPerPageChange}
+              onSelectAll={salesSelection.handleSelectAll}
+              onSelectOne={salesSelection.handleSelectOne}
               page={page}
               rowsPerPage={rowsPerPage}
-              type='tranred'
+              selected={salesSelection.selected}
+              type={'sales'}
             />
           </Stack>
         </Container>

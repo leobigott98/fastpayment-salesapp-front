@@ -103,8 +103,55 @@ export default function SerialTranredModal({ open, setOpen, id }) {
     setOpen(false);
   };
 
-  const handleTerminalCreation = ()=>{
+  const handleTerminalCreation = async ()=>{
+
+    try{
+      const result = await fetch(`${process.env.NEXT_PUBLIC_APIURL}/api/v1/tranred/terminal/create/${id}`, {
+        method: 'POST',
+        headers: {
+          'X-Auth-Token': window.localStorage.getItem('token'),
+        }
+      })
+      const json = await result.json()
+      if(result.ok){
+        setMessage(json.message)
+        setSuccess(true)
+      }else{
+        setMessage(json.message)
+        setError(true)
+      }
+
+    }catch(err){
+      console.log(err)
+      setMessage(err.message)
+      setError(true)
+    }
+      /* try{
+        const result = await fetch(`${process.env.NEXT_PUBLIC_APIURL}/api/v1/tranred/terminal/create`, {
+          method: 'POST',
+          headers: {
+            "X-Auth-Token": window.localStorage.getItem('token'),
+          },
+          body: JSON.stringify(body)
+        })
+        const json = await result.json()
+        if(result.ok){
+          setMessage(json.message)
+          setSuccess(true)
+        }else{
+          setMessage(json.message)
+          setError(true)
+        }
+  
+      }catch(err){
+        console.log(err)
+        setMessage(err.message)
+        setError(true)
+      }
+
+    }) */
     
+    handleModalClose(); 
   }
 
   return (
@@ -156,7 +203,7 @@ export default function SerialTranredModal({ open, setOpen, id }) {
               No, Cancelar
             </Button>
             <Button
-              onClick={handleModalClose}
+              onClick={handleTerminalCreation}
               variant="contained"
               //color="error"
               sx={{ width: "30%" }}

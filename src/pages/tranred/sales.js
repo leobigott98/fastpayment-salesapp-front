@@ -9,6 +9,7 @@ import { AddButton } from 'src/components/add-button';
 import { SalesTable } from 'src/sections/sales/sales-table';
 import { useRouter } from 'next/navigation';
 import { useAuth } from "src/hooks/use-auth";
+import { SalesSearchAutocomplete } from 'src/sections/tranred/sales-search-autocomplete';
 
 const useSales = (data, page, rowsPerPage) => {
   return useMemo(
@@ -37,6 +38,7 @@ const Page = () => {
   const salesSelection = useSelection(salesIds);
   const auth = useAuth();
   const router = useRouter();
+  const [query, setQuery] = useState([])
 
   const getData = async ()=>{
     try{
@@ -111,10 +113,10 @@ const Page = () => {
                 </Stack>
               </Stack>
             </Stack>
-            <CustomersSearch />
+            <SalesSearchAutocomplete data={data} query={query} setQuery={setQuery}/>
             <SalesTable
-              count={data.length}
-              items={sales}
+              count={query.length? query.length : data.length}
+              items={query.length? query : sales}
               onDeselectAll={salesSelection.handleDeselectAll}
               onDeselectOne={salesSelection.handleDeselectOne}
               onPageChange={handlePageChange}

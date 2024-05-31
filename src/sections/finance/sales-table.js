@@ -12,7 +12,7 @@ import {
   Typography,
 } from "@mui/material";
 import { Scrollbar } from "src/components/scrollbar";
-import DotsMenu from "src/components/dots-menu";
+import DotsMenu from "./dots-menu"
 
 export const SalesTable = (props) => {
   const {
@@ -79,8 +79,7 @@ export const SalesTable = (props) => {
                       tranred={sale.trandred}
                       type={type}
                       id={sale.id} 
-                      balance={sale.balance}
-                      sale={sale}/>
+                      balance={sale.balance}/>
                     </TableCell>
                     
                   </TableRow>
