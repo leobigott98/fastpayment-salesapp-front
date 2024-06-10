@@ -14,7 +14,7 @@ import {
 import { Scrollbar } from "src/components/scrollbar";
 import DotsMenu from "src/components/dots-menu";
 
-export const SalesTable = (props) => {
+export const TerminalsTable = (props) => {
   const {
     count = 0,
     items = [],
@@ -102,7 +102,7 @@ export const SalesTable = (props) => {
   );
 };
 
-SalesTable.propTypes = {
+TerminalsTable.propTypes = {
   count: PropTypes.number,
   items: PropTypes.array,
   onDeselectAll: PropTypes.func,

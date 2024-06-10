@@ -6,7 +6,7 @@ import { Layout as DashboardLayout } from 'src/layouts/dashboard/layout';
 import { CustomersSearch } from 'src/sections/customer/customers-search';
 import { applyPagination } from 'src/utils/apply-pagination';
 import { AddButton } from 'src/components/add-button';
-import { SalesTable } from 'src/sections/sales/sales-table';
+import { TerminalsTable } from 'src/sections/tranred/terminals-table';
 import { useRouter } from 'next/navigation';
 import { useAuth } from "src/hooks/use-auth";
 
@@ -112,7 +112,7 @@ const Page = () => {
               </Stack>
             </Stack>
             <CustomersSearch />
-            <SalesTable
+            <TerminalsTable
               count={data.length}
               items={sales}
               onDeselectAll={salesSelection.handleDeselectAll}

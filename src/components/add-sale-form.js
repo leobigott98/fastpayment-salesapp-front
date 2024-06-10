@@ -109,6 +109,23 @@ const AddSaleForm = () => {
             setSuccess(true);
           });
         });
+
+        /* const printDetails = {
+          client: customer.cliente,
+          type: customer.person_desc,
+          items,
+          serie          
+        } */
+
+        /* await fetch(`${process.env.NEXT_PUBLIC_APIURL}/api/v1/sales/print`, {
+          method: "POST", 
+          headers: {
+            "Content-Type": "application/json",
+            "X-Auth-Token": window.localStorage.getItem("token")
+          },
+          body: JSON.stringify(body)
+        }) */
+
       });
     } catch (err) {
       console.log(err);
@@ -227,7 +244,7 @@ const AddSaleForm = () => {
                     //size="small"
                     //type="submit"
                     onClick={handleAdd}
-                    disabled={!Number(qty) || Number(qty)<1 || !plan}
+                    disabled={!Number(qty) || Number(qty)<1 || !plan || !product}
                     variant="contained"
                     sx={{ position: "relative", left: "75%", width: "25%" }}
                   >
@@ -242,7 +259,7 @@ const AddSaleForm = () => {
               //size="large"
               type="submit"
               onClick={(e) => handleSale(e)}
-              disabled={items.length < 1}
+              disabled={items.length < 1 || !customer}
               variant="contained"
               sx={{ marginLeft: "auto" }}
             >

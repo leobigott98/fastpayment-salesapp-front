@@ -113,11 +113,12 @@ export default function SerialTranredModal({ open, setOpen, id }) {
         }
       })
       const json = await result.json()
+      const responseArray = json.responseArray
       if(result.ok){
-        setMessage(json.message)
+        setMessage(responseArray[responseArray.length -1].response.message)
         setSuccess(true)
       }else{
-        setMessage(json.message)
+        setMessage(responseArray[responseArray.length -1].response.message)
         setError(true)
       }
 

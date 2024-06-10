@@ -61,9 +61,9 @@ export const SideNav = (props) => {
           >
             <Image
               alt="FastPayment Logo"
-              src="/assets/cropped-fastpayment_logo.png"
+              src="/assets/LogotipoFastPayment-05.png"
               width={200}
-              height={50  }
+              height={100}
             />
           </Box>
         </Box>
