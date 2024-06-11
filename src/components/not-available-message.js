@@ -9,10 +9,10 @@ const NotAvailable = ()=>{
                     sx={{ mb: 1 }}
                     variant="h6"
                 >
-                    No disponible
+                    Realice una búsqueda
                 </Typography>
                 <Typography color="text.secondary">
-                    Esta sección está pendiente por ser implementada.
+                    Busque un serial o número de terminal
                 </Typography>
 
             </CardContent>

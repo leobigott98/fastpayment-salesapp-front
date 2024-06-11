@@ -80,8 +80,10 @@ export default function SerialTranredModal({ open, setOpen, id }) {
   }
 
   useEffect(()=>{
-    getData();
-  },[]);
+    if(open){
+      getData();
+    }
+  },[open]);
 
   const handlePageChange = useCallback(
     (event, value) => {
