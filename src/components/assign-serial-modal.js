@@ -38,13 +38,16 @@ export default function AssignSerialModal({ open, setOpen, id }) {
   const handleModalClose = () => {
     setOpenModal(false);
     setOpen(false);
+    setProduct(null)
   };
 
   useEffect(()=>{
     if(product != null){
       setDisable(false)
-    }   
-  }, [product, setProduct])
+    } else if( product == null){
+      setDisable(true)
+    }
+  }, [product])
 
   const formik = useFormik({
     initialValues: {
@@ -136,6 +139,7 @@ export default function AssignSerialModal({ open, setOpen, id }) {
                       disabled={disable}
                     />
                   </Grid>
+                  
                 <Button
                   size="small"
                   type="submit"

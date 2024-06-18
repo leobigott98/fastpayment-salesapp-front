@@ -1,4 +1,15 @@
-import { Box, Button, Link, Stack, TextField, MenuItem, Modal, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  Link,
+  Stack,
+  TextField,
+  MenuItem,
+  Modal,
+  Typography,
+  Tooltip,
+  Input,
+} from "@mui/material";
 import Grid from "@mui/material/Unstable_Grid2";
 import { useState } from "react";
 import { useFormik } from "formik";
@@ -7,25 +18,18 @@ import UserAutocomplete from "./user-autocomplete";
 import SuccessModal from "./success-modal";
 import GeneralErrorModal from "./general-error-modal";
 import GeneralSuccessModal from "./general-success-modal";
+import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
 
 const style = {
   position: "absolute",
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: 500,
   bgcolor: "background.paper",
   border: "2px solid #000",
   boxShadow: 24,
   p: 4,
 };
-
-const ubicaciones = [
-  {
-    id: 1,
-    label: "Piso 1",
-  },
-];
 
 export default function PaymentModal({ open, setOpen, id }) {
   const [openModal, setOpenModal] = useState(open);
@@ -34,10 +38,39 @@ export default function PaymentModal({ open, setOpen, id }) {
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
   const [message, setMessage] = useState("");
+  const [addedPhotos, setAddedPhotos] = useState([]);
+
   const handleModalClose = () => {
     setOpenModal(false);
     setOpen(false);
   };
+
+  function uploadPhoto(e) {
+    const files = e.target.files;
+    const data = new FormData();
+    for (let i = 0; i < files.length; i++) {
+      data.append("photos", files[i]);
+    }
+    fetch(`${process.env.NEXT_PUBLIC_APIURL}/api/v1/sales/upload`, {
+      method: "POST",
+      headers: {
+        
+        "X-Auth-Token": window.localStorage.getItem("token"),
+      },
+      body: data,
+    }).then((response) => {
+      const filename = response;
+      setAddedPhotos((prev) => {
+        return [...prev, filename];
+      });
+    });
+  }
+
+  function removePhoto(e, filename) {
+    e.preventDefault();
+    setAddedPhotos([...addedPhotos.filter((photo) => photo !== filename)]);
+  }
+
   const formik = useFormik({
     initialValues: {
       v_pay_ref: "",
@@ -48,15 +81,14 @@ export default function PaymentModal({ open, setOpen, id }) {
       v_amount: Yup.number().required("Obligatorio"),
     }), */
     onSubmit: async (values, helpers) => {
-      const payRef = ()=>{
-        if((v_ops_id?.ops_id == 1) | (v_ops_id?.ops_id == 4)){
-          return Date.now()
+      const payRef = () => {
+        if ((v_ops_id?.ops_id == 1) | (v_ops_id?.ops_id == 4)) {
+          return Date.now();
         } else {
-          return formik.values.v_pay_ref
+          return formik.values.v_pay_ref;
         }
-      }
+      };
       try {
-        
         const body = {
           v_sale_id: id,
           v_ops_id: v_ops_id.ops_id,
@@ -64,7 +96,6 @@ export default function PaymentModal({ open, setOpen, id }) {
           v_pay_ref: payRef(),
           v_pay_amount: formik.values.v_pay_amount,
         };
-
         await fetch(`${process.env.NEXT_PUBLIC_APIURL}/api/v1/payments`, {
           method: "POST",
           headers: {
@@ -74,7 +105,7 @@ export default function PaymentModal({ open, setOpen, id }) {
           body: JSON.stringify(body),
         }).then(async (response) => {
           await response.json().then((result) => {
-            setMessage(result.result[0].message)
+            setMessage(result.result[0].message);
             if (result.result[0].error_num > 0) {
               setError(true);
             } else {
@@ -94,15 +125,8 @@ export default function PaymentModal({ open, setOpen, id }) {
 
   return (
     <>
-      <GeneralSuccessModal
-        message={message}
-        opened={success}
-        setOpened={setSuccess}
-      />
-      <GeneralErrorModal 
-        opened={error}  
-        setOpened={setError} 
-        message={message} />
+      <GeneralSuccessModal message={message} opened={success} setOpened={setSuccess} />
+      <GeneralErrorModal opened={error} setOpened={setError} message={message} />
       <Modal
         open={open}
         onClose={handleModalClose}
@@ -116,8 +140,8 @@ export default function PaymentModal({ open, setOpen, id }) {
           <form noValidate onSubmit={formik.handleSubmit}>
             <Stack spacing={3}>
               <div>
-                <Grid container spacing={3}>
-                  <Grid xs={12} container columnSpacing={2}>
+                <Grid container spacing={2}>
+                  <Grid xs={12} container>
                     <Grid xs={12}>
                       <UserAutocomplete
                         name={"Tipo de Operación"}
@@ -141,8 +165,13 @@ export default function PaymentModal({ open, setOpen, id }) {
                       <></>
                     )}
                   </Grid>
-                  <Grid xs={12} container columnSpacing={1}>
-                    <Grid xs={6}>
+                  <Grid
+                    xs={12}
+                    container
+                    spacing={1}
+                    sx={{ alignItems: "center", justifyContent: "center" }}
+                  >
+                    <Grid xs={12} sm={6} md={6}>
                       <TextField
                         error={!!(formik.touched.v_pay_ref && formik.errors.v_pay_ref)}
                         fullWidth
@@ -154,7 +183,7 @@ export default function PaymentModal({ open, setOpen, id }) {
                         value={formik.values.v_pay_ref}
                       />
                     </Grid>
-                    <Grid xs={6}>
+                    <Grid xs={12} sm={6} md={6}>
                       <TextField
                         error={!!(formik.touched.v_pay_amount && formik.errors.v_pay_amount)}
                         fullWidth
@@ -166,15 +195,29 @@ export default function PaymentModal({ open, setOpen, id }) {
                         value={formik.values.v_pay_amount}
                       />
                     </Grid>
+                    { /*
+                    <Grid xs={12}>
+                      <Tooltip title="Subir Referencia">
+                        <Input type="file" hidden onChange={uploadPhoto}>
+                          <Button variant="outlined" fullWidth onClick={uploadPhoto} type="">
+                          <AddPhotoAlternateIcon />
+                        </Button>
+                        </Input>
+                      </Tooltip>
+                    </Grid>
+                    */}
+                    <Grid xs={12} md={12} sm={12}>
+                      <Button
+                        size="small"
+                        type="submit"
+                        variant="contained"
+                        sx={{ display: "block", margin: "auto" }}
+                        fullWidth
+                      >
+                        Enviar
+                      </Button>
+                    </Grid>
                   </Grid>
-                  <Button
-                    size="small"
-                    type="submit"
-                    variant="contained"
-                    sx={{ marginLeft: "auto" }}
-                  >
-                    Enviar
-                  </Button>
                 </Grid>
               </div>
             </Stack>
