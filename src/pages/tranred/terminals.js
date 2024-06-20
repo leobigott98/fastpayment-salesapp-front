@@ -15,6 +15,8 @@ import TerminalHistoryModal from "src/sections/tranred/terminal-history-modal";
 import BankAccountModal from "src/sections/tranred/bank-account-modal";
 import StatusChangeModal from "src/sections/tranred/status-change-modal";
 import UpdateTerminalModal from "src/sections/tranred/update-terminal-modal";
+import GetQuotasModal from "src/sections/tranred/get-quotas-modal";
+import CancelQuotaModal from "src/sections/tranred/cancel-quota-modal";
 
 
 const Page = () => {
@@ -29,6 +31,8 @@ const Page = () => {
   const [openAccount, setOpenAccount] = useState(false)
   const [openStatus, setOpenStatus] = useState(false)
   const [openUpdate, setOpenUpdate] = useState(false)
+  const [openQuotas, setOpenQuotas] = useState(false)
+  const [openCancel, setOpenCancel] = useState(false)
 
   const getData = async () => {
     try {
@@ -92,9 +96,11 @@ const Page = () => {
       </Head>
       <GeneralErrorModal opened={error} setOpened={setError} message={message}/>
       <TerminalHistoryModal open={openHistory} setOpen={setOpenHistory} terminal={query[0]?.terminal}/>
-      <BankAccountModal open={openAccount} setOpen={setOpenAccount}/>
-      <StatusChangeModal open={openStatus} setOpen={setOpenStatus} />
-      <UpdateTerminalModal open={openUpdate} setOpen={setOpenUpdate} />
+      <BankAccountModal open={openAccount} setOpen={setOpenAccount} terminal={query[0]?.terminal}/>
+      <StatusChangeModal open={openStatus} setOpen={setOpenStatus} terminal={query[0]?.terminal}/>
+      <UpdateTerminalModal open={openUpdate} setOpen={setOpenUpdate} terminal={query[0]?.terminal}/>
+      <GetQuotasModal open={openQuotas} setOpen={setOpenQuotas} terminal={query[0]?.terminal}/>
+      <CancelQuotaModal open={openCancel} setOpen={setOpenCancel} terminal={query[0]?.terminal}/>
       <Box
         component="main"
         sx={{
@@ -230,10 +236,10 @@ const Page = () => {
                     <Button variant="contained" fullWidth onClick={()=>{setOpenUpdate(true)}}>Cambiar Serial/Modelo</Button>
                   </Grid>
                   <Grid sx={12} md={4} sm={6}>
-                    <Button variant="contained" fullWidth>Consultar Cuotas</Button>
+                    <Button variant="contained" fullWidth onClick={()=>{setOpenQuotas(true)}}>Consultar Cuotas</Button>
                   </Grid>
                   <Grid sx={12} md={4} sm={6}>
-                    <Button variant="contained" fullWidth>Anular Cuotas</Button>
+                    <Button variant="contained" fullWidth onClick={()=>{setOpenCancel(true)}}>Anular Cuotas</Button>
                   </Grid>
                 </Grid>
               </>

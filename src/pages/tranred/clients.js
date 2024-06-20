@@ -2,17 +2,33 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import Head from 'next/head';
 import { Box, Container, Stack, Typography } from '@mui/material';
 import { Layout as DashboardLayout } from 'src/layouts/dashboard/layout';
-import { CustomersSearch } from 'src/sections/customer/customers-search';
+import { applyPagination } from "src/utils/apply-pagination";
+import { useSelection } from "src/hooks/use-selection";
 import { useRouter } from 'next/navigation';
 import { useAuth } from "src/hooks/use-auth";
 import { ClientsTable } from 'src/sections/tranred/clients-table';
 import { ClientSearchAutocomplete } from 'src/sections/tranred/client-search-autocomplete';
+
+const useClients = (data, page, rowsPerPage) => {
+  return useMemo(() => {
+    return applyPagination(data, page, rowsPerPage);
+  }, [page, rowsPerPage, data]);
+};
+
+const useClientIds = (clients) => {
+  return useMemo(() => {
+    return clients.map((client) => client.comerRif);
+  }, [clients]);
+};
 
 const Page = () => {
   const [data, setData] = useState([]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [query, setQuery] = useState([])
+  const clients = useClients(data, page, rowsPerPage);
+  const clientsIds = useClientIds(clients);
+  const clientsSelection = useSelection(clientsIds);
   const auth = useAuth();
   const router = useRouter();
 
@@ -102,7 +118,7 @@ const Page = () => {
             <ClientSearchAutocomplete data={data} query={query} setQuery={setQuery}/>
             <ClientsTable
               count={query.length? query.length : data.length}
-              items={query.length? query : data}
+              items={query.length? query : clients}
               onPageChange={handlePageChange}
               onRowsPerPageChange={handleRowsPerPageChange}
               page={page}

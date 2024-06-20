@@ -103,6 +103,7 @@ export default function SerialTranredModal({ open, setOpen, id }) {
     //console.log(data)
     setOpenModal(false);
     setOpen(false);
+    setData([]);
   };
 
   const handleTerminalCreation = async ()=>{
@@ -117,7 +118,7 @@ export default function SerialTranredModal({ open, setOpen, id }) {
       const json = await result.json()
       const responseArray = json.responseArray
       if(result.ok){
-        setMessage(responseArray[responseArray.length -1].response.message)
+        setMessage(`${responseArray[responseArray.length -1].response.message} con número ${responseArray[responseArray.length -1].response.terminal}`)
         setSuccess(true)
       }else{
         setMessage(responseArray[responseArray.length -1].response.message)

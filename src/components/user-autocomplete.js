@@ -90,7 +90,7 @@ export default function UserAutocomplete({name, url, roles, customers, products,
   return (
     <Autocomplete
       id="asynchronous-demo"
-      sx={{ width: '100%', paddingTop:0}}
+      sx={{ width: '100%', paddingTop:0, mb: 1}}
       open={open}
       disabled={disabled}
       onOpen={() => {

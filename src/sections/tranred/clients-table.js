@@ -71,7 +71,7 @@ export const ClientsTable = (props) => {
   };
 
   const handlePageChange = useCallback((event, value) => {
-    setPage(value);
+    setTerminalsPage(value);
   }, []);
 
   useEffect(() => {
@@ -142,7 +142,7 @@ export const ClientsTable = (props) => {
                 <TableCell>RIF</TableCell>
                 <TableCell>Descripción</TableCell>
                 <TableCell></TableCell>
-                <TableCell></TableCell>
+                {/* <TableCell></TableCell> */}
               </TableRow>
             </TableHead>
             <TableBody>
@@ -160,9 +160,9 @@ export const ClientsTable = (props) => {
                         Ver Detalle
                       </Button>
                     </TableCell>
-                    <TableCell>
+                    {/* <TableCell>
                       <Button variant="contained">Editar</Button>
-                    </TableCell>
+                    </TableCell> */}
                   </TableRow>
                 );
               })}
