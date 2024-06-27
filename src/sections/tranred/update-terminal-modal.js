@@ -40,14 +40,16 @@ const UpdateTerminalModal = ({ open, setOpen }) => {
           <Grid container spacing={1} xs={12}>
             <UserAutocomplete
               url={`${process.env.NEXT_PUBLIC_APIURL}/api/v1/products`}
-              products
+              isOptionEqualToValue={(option, value) => option.modelo === value.modelo}
+              getOptionLabel={(option) => option.modelo}
               data={model}
               setData={setModel}
               name={"Producto"}
             />
             <UserAutocomplete
               url={`${process.env.NEXT_PUBLIC_APIURL}/api/v1/seriales/all`}
-              serials
+              isOptionEqualToValue={(option, value) => option.serial_num === value.serial_num}
+              getOptionLabel={(option) => option.serial_num}
               data={serial}
               setData={setSerial}
               name={"Serial"}

@@ -198,7 +198,8 @@ const AddSaleForm = () => {
                 <Stack spacing={2} direction="row">
                   <UserAutocomplete
                     url={`${process.env.NEXT_PUBLIC_APIURL}/api/v1/products`}
-                    products
+                    isOptionEqualToValue={(option, value) => option.modelo === value.modelo}
+                    getOptionLabel={(option) => option.modelo}
                     data={product}
                     setData={setProduct}
                     name={"Producto"}
@@ -234,7 +235,8 @@ const AddSaleForm = () => {
                 <Stack spacing={2} direction="row">
                   <UserAutocomplete
                     url={`${process.env.NEXT_PUBLIC_APIURL}/api/v1/tranred/terminal/plans/all`}
-                    plans
+                    isOptionEqualToValue={(option, value) => option.name === value.name}
+                    getOptionLabel={(option) => option.name}
                     data={plan}
                     setData={setPlan}
                     name={"Plan"}

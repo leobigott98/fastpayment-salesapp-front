@@ -17,6 +17,7 @@ import {
 import { Scrollbar } from "src/components/scrollbar";
 import CustomerInfo from "./customer-info-modal";
 import { useState, useEffect } from "react";
+import DotsMenu from "./dots-menu";
 
 export const CustomersTable = (props) => {
   const [open, setOpen] = useState([])
@@ -63,7 +64,7 @@ export const CustomersTable = (props) => {
                       <TableCell>{customer.person_desc}</TableCell>
                       <TableCell>{customer.actv_desc}</TableCell>
                       <TableCell>
-                        <CustomerInfo open={open} index={items.indexOf(customer)} setOpen={setOpen} customer={customer} />
+                        <DotsMenu open={open} index={items.indexOf(customer)} setOpen={setOpen} customer={customer} />
                       </TableCell>
                     </TableRow>
                 );

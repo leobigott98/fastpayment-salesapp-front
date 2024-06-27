@@ -46,7 +46,7 @@ const fetchData = async(url, body)=> {
     }  
       }
 
-export default function UserAutocomplete({name, url, roles, customers, products, saleProducts, data, setData, payOptions, banks, codlocalid, serials, disabled, body, plans}) {
+export default function UserAutocomplete({name, url, isOptionEqualToValue, getOptionLabel, customers, data, setData, disabled, body}) {
   const [open, setOpen] = React.useState(false);
   const [options, setOptions] = React.useState([]);
   const loading = open && options.length === 0;
@@ -105,27 +105,29 @@ export default function UserAutocomplete({name, url, roles, customers, products,
         //setData(value)
       }}
       isOptionEqualToValue={
-        roles? (option, value) => option.rol_desc === value.rol_desc :
+        //roles? (option, value) => option.rol_desc === value.rol_desc :
         customers? (option, value) => option.cliente === value.cliente :
-        products? (option, value) => option.modelo === value.modelo :
-        saleProducts? (option, value) => option.name == value.name:
-        payOptions? (option, value) => option.ops_desc === value.ops_desc :
-        banks? (option, value) => option.bank_desc === value.bank_desc :
-        codlocalid? (option, value) => option.cod_value === value.cod_value :
-        serials? (option, value) => option.serial_num === value.serial_num :
-        plans? (option, value) => option.name === value.name :
-         (option, value) => option.usuario === value.usuario}
+        isOptionEqualToValue}
+        //products? (option, value) => option.modelo === value.modelo :
+        //saleProducts? (option, value) => option.name == value.name:
+        //payOptions? (option, value) => option.ops_desc === value.ops_desc :
+        //banks? (option, value) => option.bank_desc === value.bank_desc :
+        //codlocalid? (option, value) => option.cod_value === value.cod_value :
+        //serials? (option, value) => option.serial_num === value.serial_num :
+        //plans? (option, value) => option.name === value.name :
+         //(option, value) => option.usuario === value.usuario}
       getOptionLabel={
-        roles? (option) => option.rol_desc:
+        //roles? (option) => option.rol_desc:
         customers? (option) => option.cliente:
-        products? (option) => option.modelo:
-        saleProducts? (option) => option.name  :
-        payOptions? (option) => option.ops_desc :
-        banks? (option) => option.bank_desc :
-        codlocalid? (option) => option.cod_value :
-        serials? (option) => option.serial_num :
-        plans? (option) => option.name :
-         (option) => option.usuario}
+        getOptionLabel}
+        //products? (option) => option.modelo:
+        //saleProducts? (option) => option.name  :
+        //payOptions? (option) => option.ops_desc :
+        //banks? (option) => option.bank_desc :
+        //codlocalid? (option) => option.cod_value :
+        //serials? (option) => option.serial_num :
+        //plans? (option) => option.name :
+        // (option) => option.usuario}
       options={options}
       loading={loading}
       renderInput={(params) => (

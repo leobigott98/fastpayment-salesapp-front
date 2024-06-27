@@ -16,7 +16,8 @@ import BankAccountModal from "src/sections/tranred/bank-account-modal";
 import StatusChangeModal from "src/sections/tranred/status-change-modal";
 import UpdateTerminalModal from "src/sections/tranred/update-terminal-modal";
 import GetQuotasModal from "src/sections/tranred/get-quotas-modal";
-import CancelQuotaModal from "src/sections/tranred/cancel-quota-modal";
+import CancelQuotaModal from "src/sections/tranred/cancel-quota-modal"; 
+import AssignSimcard from "src/sections/tranred/assign-simcard-modal";
 
 
 const Page = () => {
@@ -33,6 +34,7 @@ const Page = () => {
   const [openUpdate, setOpenUpdate] = useState(false)
   const [openQuotas, setOpenQuotas] = useState(false)
   const [openCancel, setOpenCancel] = useState(false)
+  const [openSimcard, setOpenSimcard] = useState(false)
 
   const getData = async () => {
     try {
@@ -101,6 +103,7 @@ const Page = () => {
       <UpdateTerminalModal open={openUpdate} setOpen={setOpenUpdate} terminal={query[0]?.terminal}/>
       <GetQuotasModal open={openQuotas} setOpen={setOpenQuotas} terminal={query[0]?.terminal}/>
       <CancelQuotaModal open={openCancel} setOpen={setOpenCancel} terminal={query[0]?.terminal}/>
+      <AssignSimcard open={openSimcard} setOpen={setOpenSimcard} terminal={terminal} serial={query[0]} />
       <Box
         component="main"
         sx={{
@@ -223,24 +226,30 @@ const Page = () => {
                 </Card>
                 ) : (<></>)}
                 <Grid container spacing={2}>
-                <Grid sx={12} md={4} sm={6}>
+                <Grid xs={12} md={4} sm={6}>
                     <Button variant="contained" fullWidth onClick={()=>{setOpenHistory(true)}}>Ver Histórico</Button>
                   </Grid>
-                  <Grid sx={12} md={4} sm={6}>
+                  <Grid xs={12} md={4} sm={6}>
                     <Button variant="contained" fullWidth onClick={()=>{setOpenAccount(true)}}>Modificar Cuenta Banco</Button>
                   </Grid>
-                  <Grid sx={12} md={4} sm={6}>
+                  <Grid xs={12} md={4} sm={6}>
                     <Button variant="contained" fullWidth onClick={()=>{setOpenStatus(true)}}>Cambiar Estatus</Button>
                   </Grid>
-                  <Grid sx={12} md={4} sm={6}>
+                  <Grid xs={12} md={4} sm={6}>
                     <Button variant="contained" fullWidth onClick={()=>{setOpenUpdate(true)}}>Cambiar Serial/Modelo</Button>
                   </Grid>
-                  <Grid sx={12} md={4} sm={6}>
+                  <Grid xs={12} md={4} sm={6}>
                     <Button variant="contained" fullWidth onClick={()=>{setOpenQuotas(true)}}>Consultar Cuotas</Button>
                   </Grid>
-                  <Grid sx={12} md={4} sm={6}>
+                  <Grid xs={12} md={4} sm={6}>
                     <Button variant="contained" fullWidth onClick={()=>{setOpenCancel(true)}}>Anular Cuotas</Button>
                   </Grid>
+                  <Grid container xs={12} md={12} sm={12} >
+                  <Grid xs={12} md={4} sm={6} sx={{display: "block", marginLeft: "auto", marginRight: "auto", textAlign: "center"}}>
+                    <Button variant="contained" fullWidth onClick={()=>{setOpenSimcard(true)}}>Asignar Simcard</Button>
+                  </Grid>
+                  </Grid>
+                  
                 </Grid>
               </>
             ) : (

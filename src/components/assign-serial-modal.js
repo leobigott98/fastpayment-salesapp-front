@@ -121,7 +121,8 @@ export default function AssignSerialModal({ open, setOpen, id }) {
                 <Grid xs={12} columnSpacing={1}>
                   <UserAutocomplete
                     url={`${process.env.NEXT_PUBLIC_APIURL}/api/v1/products/sale`}
-                    saleProducts
+                    isOptionEqualToValue={(option, value) => option.name == value.name}
+                    getOptionLabel={(option) => option.name}
                     data={product}
                     setData={setProduct}
                     name={"Producto"}
@@ -131,7 +132,8 @@ export default function AssignSerialModal({ open, setOpen, id }) {
                   <Grid xs={12} columnSpacing={1}>
                     <UserAutocomplete
                       url={`${process.env.NEXT_PUBLIC_APIURL}/api/v1/seriales/all`}
-                      serials
+                      isOptionEqualToValue={(option, value) => option.serial_num === value.serial_num}
+                      getOptionLabel={(option) => option.serial_num}
                       data={assignSerial}
                       setData={setAssignSerial}
                       name={"Serial"}

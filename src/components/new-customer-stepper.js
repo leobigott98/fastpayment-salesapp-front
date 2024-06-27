@@ -96,7 +96,7 @@ export default function NewCustomerStepper() {
 
   return (
     <Box sx={{ width: "100%" }}>
-      <Stepper  activeStep={activeStep}>
+      <Stepper  activeStep={activeStep} sx={{m:2}}>
         {steps.map((label, index) => (
           <Step 
           key={label} 

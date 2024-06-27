@@ -14,7 +14,7 @@ const style = {
   p: 4,
 };
 
-export default function CustomerInfo({ open, setOpen, index, customer }) {
+export default function CustomerInfo({ open, setOpen, index, customer, handleModalClose }) {
   const [customerInfo, setCustomerInfo] = useState("");
   const [message, setMessage] = useState("Ha ocurrido un error");
   const [error, setError] = useState(false);
@@ -40,7 +40,7 @@ export default function CustomerInfo({ open, setOpen, index, customer }) {
     }
   }, [open]);
 
-  const handleModalOpen = ()=>{
+  /* const handleModalOpen = ()=>{
     const openArray = open?.map((element, i)=>{
       if(i === index){
         return true
@@ -60,7 +60,7 @@ export default function CustomerInfo({ open, setOpen, index, customer }) {
       }
     })
     setOpen(openArray)
-  };
+  }; */
 
   return (
     <>
@@ -87,9 +87,9 @@ export default function CustomerInfo({ open, setOpen, index, customer }) {
           </Button>
         </Box>
       </Modal>
-      <Button variant="contained" onClick={handleModalOpen}>
+      {/* <Button variant="contained" onClick={handleModalOpen}>
         Ver Detalle
-      </Button>
+      </Button> */}
     </>
   );
 }

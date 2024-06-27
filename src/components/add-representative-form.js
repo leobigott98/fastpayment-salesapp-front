@@ -242,7 +242,9 @@ const RepresentativeForm = ({ handleStep, handleStepBack, activeStep }) => {
                       url={`${process.env.NEXT_PUBLIC_APIURL}/api/v1/get-codlocalid`} 
                       data={v_cod_localid} 
                       setData={setCodLocalId} 
-                      codlocalid/>
+                      isOptionEqualToValue={(option, value) => option.cod_value === value.cod_value}
+                      getOptionLabel={(option) => option.cod_value}
+                      />
                         {/* <Autocomplete
                           value={v_cod_localid}
                           id="variable_cod_localid"

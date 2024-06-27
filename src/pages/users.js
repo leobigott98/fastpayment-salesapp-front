@@ -1,5 +1,5 @@
 import Head from "next/head";
-import {useState} from "react";
+import { useState } from "react";
 import { Layout as DashboardLayout } from "src/layouts/dashboard/layout";
 import { Box, Container, Stack, Typography, Button, TextField, MenuItem } from "@mui/material";
 import UserAutocomplete from "src/components/user-autocomplete";
@@ -7,26 +7,22 @@ import GeneralSuccessModal from "src/components/general-success-modal";
 import GeneralErrorModal from "src/components/general-error-modal";
 
 const locations = [
-  {value:1,
-  label: "Región Capital"},
-  {value:2,
-  label: "Región Central"},
-  {value:3,
-  label: "Región Occidental"},
-  {value:4,
-  label: "Región Oriental"}
-]
+  { value: 1, label: "Región Capital" },
+  { value: 2, label: "Región Central" },
+  { value: 3, label: "Región Occidental" },
+  { value: 4, label: "Región Oriental" },
+];
 
 const Page = () => {
-    const [role, setRole] = useState('');
-    const [user, setUser] = useState('');
-    const [location, setLocation] = useState(null);
-    const [fee, setFee] = useState(null);
-    const [openModal, setOpenModal] = useState(false);
-    const [data, setData] = useState(null);
-    const [error, setError] = useState(false);
+  const [role, setRole] = useState("");
+  const [user, setUser] = useState("");
+  const [location, setLocation] = useState(null);
+  const [fee, setFee] = useState(null);
+  const [openModal, setOpenModal] = useState(false);
+  const [data, setData] = useState(null);
+  const [error, setError] = useState(false);
 
-/*     const today = new Date();
+  /*     const today = new Date();
     const yyyy = today.getFullYear();
     let mm = today.getMonth() + 1; // Months start at 0!
     let dd = today.getDate();
@@ -42,38 +38,39 @@ const Page = () => {
 
     console.log(formattedToday); */
 
-    //console.log();
-    const handleSubmit = async (e)=>{
-      try{
-        e.preventDefault();
-        const body = {
-          v_user_id_1: user.id,
-          v_rol_id: role.rol_id,
-          v_sell_fee: fee,
-          v_sell_location: location
+  //console.log();
+  const handleSubmit = async (e) => {
+    try {
+      e.preventDefault();
+      const body = {
+        v_user_id_1: user.id,
+        v_rol_id: role.rol_id,
+        v_sell_fee: fee,
+        v_sell_location: location,
+      };
+      console.log(body);
+      await fetch(`${process.env.NEXT_PUBLIC_APIURL}/api/v1/roles/update`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "X-Auth-Token": window.localStorage.getItem("token"),
+        },
+        body: JSON.stringify(body),
+      }).then(async (result) => {
+        const jsonResult = await result.json();
+        setData(jsonResult);
+        if (jsonResult.result[0].usuario) {
+          setOpenModal(true);
+        } else {
+          setError(true);
+          console.log(jsonResult);
         }
-        console.log(body)
-        await fetch(`${process.env.NEXT_PUBLIC_APIURL}/api/v1/roles/update`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "X-Auth-Token": window.localStorage.getItem('token')
-          },
-          body: JSON.stringify(body)
-        }).then(async(result)=>{
-          const jsonResult = await result.json();
-          setData(jsonResult);
-          if(jsonResult.result[0].usuario){
-            setOpenModal(true);
-          } else {
-            setError(true)
-            console.log(jsonResult)}  
-        })
-      }catch(err){
-        console.log(err.message);
-      }
+      });
+    } catch (err) {
+      console.log(err.message);
     }
-    
+  };
+
   return (
     <>
       <Head>
@@ -87,84 +84,84 @@ const Page = () => {
         }}
       >
         <Container maxWidth="xl">
-        <GeneralSuccessModal 
-        message={''} 
-        data={data} 
-        opened={openModal} 
-        setOpened={setOpenModal}/>
-        <GeneralErrorModal 
-        opened={error} 
-        setOpened={setError}/>
+          <GeneralSuccessModal
+            message={""}
+            data={data}
+            opened={openModal}
+            setOpened={setOpenModal}
+          />
+          <GeneralErrorModal opened={error} setOpened={setError} />
           <Stack spacing={3}>
-            <Stack 
-            direction="row" 
-            justifyContent="space-between" 
-            spacing={4}>
+            <Stack direction="row" justifyContent="space-between" spacing={4}>
               <Stack spacing={1}>
                 <Typography variant="h4">Gestión de Usuarios</Typography>
               </Stack>
             </Stack>
-            <form 
-            noValidate 
-            onSubmit={(e)=>handleSubmit(e)}>
-            <Stack spacing={1}>
-            <Stack 
-            spacing={1} 
-            direction="row">
-                <UserAutocomplete 
-                url={`${process.env.NEXT_PUBLIC_APIURL}/api/v1/users`} 
-                data={user} 
-                setData={setUser} 
-                name={"Usuario"}/>
-                <UserAutocomplete 
-                url={`${process.env.NEXT_PUBLIC_APIURL}/api/v1/roles`} 
-                roles 
-                data={role} 
-                setData={setRole} 
-                name={"Rol"}/>
-            </Stack>
-            <Stack 
-            spacing={1} 
-            direction="row">
-                {role?.rol_desc === "Ventas"? 
-                <>
-                    <TextField
+            <form noValidate onSubmit={(e) => handleSubmit(e)}>
+              <Stack spacing={1}>
+                <Stack spacing={1} direction="row">
+                  <UserAutocomplete
+                    url={`${process.env.NEXT_PUBLIC_APIURL}/api/v1/users`}
+                    data={user}
+                    setData={setUser}
+                    name={"Usuario"}
+                    isOptionEqualToValue={(option, value) => option.usuario === value.usuario}
+                    getOptionLabel={(option) => option.usuario}
+                  />
+                  <UserAutocomplete
+                    url={`${process.env.NEXT_PUBLIC_APIURL}/api/v1/roles`}
+                    getOptionLabel={(option) => option.rol_desc}
+                    isOptionEqualToValue={(option, value) => option.rol_desc === value.rol_desc}
+                    data={role}
+                    setData={setRole}
+                    name={"Rol"}
+                  />
+                </Stack>
+                <Stack spacing={1} direction="row">
+                  {role?.rol_desc === "Ventas" ? (
+                    <>
+                      <TextField
                         fullWidth
                         label="Comisión de Venta"
                         name="v_sell_fee"
                         value={fee}
-                        onChange={(event)=>setFee((event.target.value))}
-                    />
-                    <TextField
+                        onChange={(event) => setFee(event.target.value)}
+                      />
+                      <TextField
                         fullWidth
                         label="Localidad del Vendedor"
                         name="v_sell_location"
                         select
                         value={location}
-                        onChange={(event)=>setLocation(event.target.value)}
-                    >{locations.map((option) => (
-                            <MenuItem 
-                            key={option.value} 
-                            value={option.value}>
-                              {option.label}
-                            </MenuItem>
-                          ))}
-                        </TextField>
-                </>
-                 : <></>}
-            </Stack>
-                <Button
-                    size="large"
-                    type="submit"
-                    //onClick={handleSubmit}
-                    disabled={!user || !role || (role.rol_desc == 'Ventas' && (!Number(fee) || Number(fee)<1 || !location))}
-                    variant="contained"
-                    sx={{ marginLeft: "auto" }}
-                >
-                    Enviar
-                </Button>
+                        onChange={(event) => setLocation(event.target.value)}
+                      >
+                        {locations.map((option) => (
+                          <MenuItem key={option.value} value={option.value}>
+                            {option.label}
+                          </MenuItem>
+                        ))}
+                      </TextField>
+                    </>
+                  ) : (
+                    <></>
+                  )}
                 </Stack>
-              </form>
+                <Button
+                  size="large"
+                  type="submit"
+                  //onClick={handleSubmit}
+                  disabled={
+                    !user ||
+                    !role ||
+                    (role.rol_desc == "Ventas" && (!Number(fee) || Number(fee) < 1 || !location))
+                  }
+                  variant="contained"
+                  sx={{ marginLeft: "auto" }}
+                >
+                  Enviar
+                </Button>
+              </Stack>
+            </form>
           </Stack>
         </Container>
       </Box>

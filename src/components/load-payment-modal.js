@@ -146,7 +146,8 @@ export default function PaymentModal({ open, setOpen, id }) {
                       <UserAutocomplete
                         name={"Tipo de Operación"}
                         url={`${process.env.NEXT_PUBLIC_APIURL}/api/v1/payments/options`}
-                        payOptions
+                        isOptionEqualToValue={(option, value) => option.ops_desc === value.ops_desc}
+                        getOptionLabel={(option) => option.ops_desc}
                         data={v_ops_id}
                         setData={set_v_ops_id}
                       />
@@ -156,7 +157,8 @@ export default function PaymentModal({ open, setOpen, id }) {
                         <UserAutocomplete
                           name={"Banco"}
                           url={`${process.env.NEXT_PUBLIC_APIURL}/api/v1/listar-bancos`}
-                          banks
+                          isOptionEqualToValue={(option, value) => option.bank_desc === value.bank_desc}
+                          getOptionLabel={(option) => option.bank_desc}
                           data={v_bank_id}
                           setData={set_v_bank_id}
                         />
