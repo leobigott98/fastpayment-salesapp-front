@@ -30,15 +30,17 @@ export default function AssignSerialModal({ open, setOpen, id }) {
   const [openModal, setOpenModal] = useState(open);
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
-  const [assignSerial, setAssignSerial] = useState("");
+  const [assignSerial, setAssignSerial] = useState(null);
   const [product, setProduct] = useState(null);
   const [disable, setDisable] = useState(true)
   const [message, setMessage] = useState('')
+
   //const [selectedProduct, setSelectedProduct] = useState('')
   const handleModalClose = () => {
     setOpenModal(false);
     setOpen(false);
     setProduct(null)
+    setAssignSerial(null)
   };
 
   useEffect(()=>{
@@ -149,6 +151,7 @@ export default function AssignSerialModal({ open, setOpen, id }) {
                   //disabled={activeStep === 4}
                   variant="contained"
                   sx={{ marginLeft: "auto" }}
+                  disabled={assignSerial === "" || assignSerial === null || disable? true : false}
                 >
                   Enviar
                 </Button>

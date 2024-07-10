@@ -23,7 +23,7 @@ const CancelQuotaConfirmationModal = ({ open, setOpen, cuota, from, to, terminal
   const [motivo, setMotivo] = useState("");
   const [error, setError] = useState(false);
   const [message, setMessage] = useState("");
-  const [succes, setSucces] = useState(false)
+  const [succes, setSuccess] = useState(false)
 
   const handleClose = () => {
     setOpen(false);
@@ -59,7 +59,7 @@ const CancelQuotaConfirmationModal = ({ open, setOpen, cuota, from, to, terminal
       const json = await response.json()
       if(response.ok){
         setMessage(json.message)
-        setSucces(true)
+        setSuccess(true)
       }else{
         setMessage(json.message)
         setError(true)
@@ -73,7 +73,7 @@ const CancelQuotaConfirmationModal = ({ open, setOpen, cuota, from, to, terminal
   return (
     <>
     <GeneralErrorModal opened={error} setOpened={setError} message={message}/>
-    <GeneralSuccessModal opened={succes} setOpened={setSucces} message={message}/>
+    <GeneralSuccessModal opened={succes} setOpened={setSuccess} message={message}/>
     <Modal
       open={open}
       onClose={handleClose}

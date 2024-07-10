@@ -48,7 +48,8 @@ const Page = () => {
     })
     if(response.ok){
       const jsonData = await response.json();
-      setData(jsonData.result);
+      const filtered = jsonData.result.filter((sale)=> sale.status_id !== 3011)
+      setData(filtered);
     }else{
       auth.signOut();
       router.push('/auth/login');

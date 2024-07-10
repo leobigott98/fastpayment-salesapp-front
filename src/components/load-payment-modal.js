@@ -43,6 +43,8 @@ export default function PaymentModal({ open, setOpen, id }) {
   const handleModalClose = () => {
     setOpenModal(false);
     setOpen(false);
+    set_v_bank_id("")
+    set_v_ops_id("")
   };
 
   function uploadPhoto(e) {
@@ -92,10 +94,13 @@ export default function PaymentModal({ open, setOpen, id }) {
         const body = {
           v_sale_id: id,
           v_ops_id: v_ops_id.ops_id,
-          v_bank_id: v_bank_id.bank_id,
+          v_bank_id: v_bank_id?.bank_id,
           v_pay_ref: payRef(),
           v_pay_amount: formik.values.v_pay_amount,
         };
+
+        console.log(body)
+
         await fetch(`${process.env.NEXT_PUBLIC_APIURL}/api/v1/payments`, {
           method: "POST",
           headers: {

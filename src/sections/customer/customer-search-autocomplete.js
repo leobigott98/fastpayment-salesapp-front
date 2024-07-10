@@ -68,13 +68,7 @@ export const CustomersSearchAutocomplete = ({ data, query, setQuery }) => {
       options={options}
       loading={loading}
       fullWidth
-      startAdornment={
-            <InputAdornment position="start">
-              <SvgIcon color="action" fontSize="small">
-                <MagnifyingGlassIcon />
-              </SvgIcon>
-            </InputAdornment>
-          }
+     
       renderInput={(params) => (
         <TextField
         sx={{p:0}}

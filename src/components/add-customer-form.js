@@ -10,6 +10,7 @@ import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
 import  AsyncAutocomplete  from "./async-autocomplete";
 import { useContext } from 'react';
 import { CustomerContext } from 'src/contexts/customer-context';
+import UserAutocomplete from "./user-autocomplete";
 
 const tipos_doc = [
   {
@@ -76,10 +77,10 @@ const CustomerForm = ({ handleStep, handleStepBack, activeStep }) => {
       v_person_id: Yup.number().moreThan(0).lessThan(3).required("Obligatorio"),
       v_doc_typeid: Yup.number().moreThan(0).lessThan(6).required("Obligatorio"),
       v_cusm_ndoc: Yup.string()
-        .matches(/([0-9])/)
-        .max(10)
-        .min(7)
-        .required("Debe ingresar un RIF/Cédula válido"),
+        .matches(/^[0-9]*$/, "No debe incluir letras ni caracteres especiales")
+        .max(10, "El RIF debe ser de máximo 10 caracteres")
+        .min(7, "El RIF debe ser de mínimo 7 caracteres")
+        .required("Campo requerido"),
      // v_actv_id: Yup.number().required("Obligatorio"),
       v_cusm_namec: Yup.string()
         .matches(/([A-Za-zÀ-ÿ&']+(\s{0,1}))+/g, "Debe ser un nombre válido")
@@ -124,7 +125,7 @@ const CustomerForm = ({ handleStep, handleStepBack, activeStep }) => {
       //setBankId(formik.values.v_bank_id) 
       setAcctNumber(formik.values.v_acct_number)  
   }, [formik.values.v_person_id, formik.values.v_doc_typeid, formik.values.v_cusm_ndoc, formik.values.v_actv_id, formik.values.v_cusm_namec, formik.values.v_bank_id, formik.values.v_acct_number, setAcctNumber, setCusmNameC, setCusmNdOC, setDocTypeId, setPersonId])
-
+  
   return (
     <>
       <Box
@@ -225,12 +226,14 @@ const CustomerForm = ({ handleStep, handleStepBack, activeStep }) => {
                       xs={12} 
                       md={6} 
                       lg={4}>
-                      <AsyncAutocomplete 
-                        activity 
-                        name="Actividad de la Empresa" 
-                        url={`${process.env.NEXT_PUBLIC_APIURL}/api/v1/listar-actividades`} 
-                        update={{v_actv_id, setActvId}} 
-                        /> 
+                      <UserAutocomplete
+                        data={v_actv_id}
+                        getOptionLabel={(option) => option.actv_desc}
+                        isOptionEqualToValue={(option, value) => option.actv_desc === value.actv_desc}
+                        name="Actividad de la Empresa"
+                        setData={setActvId}
+                        url={`${process.env.NEXT_PUBLIC_APIURL}/api/v1/listar-actividades`}
+                      />
                       </Grid>
                       <Grid xs={8}>
                         <TextField

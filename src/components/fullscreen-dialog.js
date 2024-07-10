@@ -23,6 +23,7 @@ import SuccessModal from "./success-modal";
 import AddSaleForm from "./add-sale-form";
 import GeneralErrorModal from "./general-error-modal";
 import NewCustomerStepper from "./new-customer-stepper";
+import CircularProgress from '@mui/material/CircularProgress';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide 
@@ -31,7 +32,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   {...props} />;
 });
 
-export function FullScreenDialog({products, title, sales}) {
+export function FullScreenDialog({products, title, sales, existingValue, loading}) {
   const [v_person_id, setPersonId] = useState("");
   const [v_doc_typeid, setDocTypeId] = useState("");
   const [v_cusm_ndoc, setCusmNdOC] = useState("");
@@ -81,37 +82,23 @@ export function FullScreenDialog({products, title, sales}) {
   const [stateData, setStateData] = useState("");
   const [municipalityData, setMunicipalityData] = useState("");
   const [parrishData, setParrishData] = useState("");
+
   const value = {
     v_person_id,
-    setPersonId,
     v_doc_typeid,
-    setDocTypeId,
     v_cusm_ndoc,
-    setCusmNdOC,
     v_actv_id,
-    setActvId,
     v_cusm_namec,
-    setCusmNameC,
     v_bank_id,
-    setBankId,
     v_acct_number,
-    setAcctNumber,
     v_percon_name,
-    setPerconName,
     v_percon_last,
-    setPerconLast,
     v_cod_movilid,
-    setCodMovilId,
     v_percon_movil,
-    setPerconMovil,
     v_cod_localid,
-    setCodLocalId,
     v_percon_local,
-    setPerconLocal,
     v_percon_email,
-    setPerconEmail,
     cod_localid_data,
-    setCodLocalIdData,
     v_com_add_typeid,
     v_com_cusm_id,
     v_com_pais_id,
@@ -142,6 +129,21 @@ export function FullScreenDialog({products, title, sales}) {
     v_rep_add_street,
     v_rep_add_level,
     v_rep_add_ofic,
+    setPersonId,
+    setDocTypeId,
+    setCusmNdOC,
+    setActvId,
+    setCusmNameC,
+    setBankId,
+    setAcctNumber,
+    setPerconName,
+    setPerconLast,
+    setCodMovilId,
+    setPerconMovil,
+    setCodLocalId,
+    setPerconLocal,
+    setPerconEmail,
+    setCodLocalIdData,
     set_v_com_add_typeid,
     set_v_com_cusm_id,
     set_v_com_pais_id,
@@ -193,7 +195,59 @@ export function FullScreenDialog({products, title, sales}) {
 
   useEffect(() => {
     setOpen(openDialog);
+    
   }, [openDialog]);
+
+  useEffect(()=>{
+    if(!loading && existingValue){
+      console.log(existingValue)
+      setPersonId(existingValue.v_person_id)
+      setDocTypeId(existingValue.v_doc_typeid)
+      setCusmNdOC(existingValue.v_cusm_ndoc)
+      setActvId(existingValue.v_actv_id)
+      setCusmNameC(existingValue.v_cusm_namec)
+      setBankId(existingValue.v_bank_id)
+      setAcctNumber(existingValue.v_acct_number)
+      setPerconName(existingValue.v_percon_name)
+      setPerconLast(existingValue.v_percon_last)
+      setCodMovilId(existingValue.v_cod_movilid)
+      setPerconMovil(existingValue.v_percon_movil)
+      setCodLocalId(existingValue.v_cod_localid)
+      setPerconLocal(existingValue.v_percon_local)
+      setPerconEmail(existingValue.v_percon_email)
+      setCodLocalIdData(existingValue.cod_localid_data)
+      set_v_com_add_typeid(existingValue.v_com_add_typeid)
+      set_v_com_cusm_id(existingValue.v_com_cusm_id)
+      set_v_com_pais_id(existingValue.v_com_pais_id)
+      set_v_com_estad_id(existingValue.v_com_estad_id)
+      set_v_com_ciud_id(existingValue.v_com_ciud_id)
+      set_v_com_municp_id(existingValue.v_com_municp_id)
+      set_v_com_parr_id(existingValue.v_com_parr_id)
+      set_v_com_add_street(existingValue.v_com_add_street)
+      set_v_com_add_level(existingValue.v_com_add_level)
+      set_v_com_add_ofic(existingValue.v_com_add_ofic)
+      set_v_pos_add_typeid(existingValue.v_pos_add_typeid)
+      set_v_pos_cusm_id(existingValue.v_pos_cusm_id)
+      set_v_pos_pais_id(existingValue.v_pos_pais_id)
+      set_v_pos_estad_id(existingValue.v_pos_estad_id)
+      set_v_pos_ciud_id(existingValue.v_pos_ciud_id)
+      set_v_pos_municp_id(existingValue.v_pos_municp_id)
+      set_v_pos_parr_id(existingValue.v_pos_parr_id)
+      set_v_pos_add_street(existingValue.v_pos_add_street)
+      set_v_pos_add_level(existingValue.v_pos_add_level)
+      set_v_pos_add_ofic(existingValue.v_pos_add_ofic)
+      set_v_rep_add_typeid(existingValue.v_rep_add_typeid)
+      set_v_rep_cusm_id(existingValue.v_rep_cusm_id)
+      set_v_rep_pais_id(existingValue.v_rep_pais_id)
+      set_v_rep_estad_id(existingValue.v_rep_estad_id)
+      set_v_rep_ciud_id(existingValue.v_rep_ciud_id)
+      set_v_rep_municp_id(existingValue.v_rep_municp_id)
+      set_v_rep_parr_id(existingValue.v_rep_parr_id)
+      set_v_rep_add_street(existingValue.v_rep_add_street)
+      set_v_rep_add_level(existingValue.v_rep_add_level)
+      set_v_rep_add_ofic(existingValue.v_rep_add_ofic)
+    }
+  },[loading, existingValue])
 
 /*   useEffect(() => {
     async function fetchData() {
@@ -247,6 +301,28 @@ export function FullScreenDialog({products, title, sales}) {
           </Button>
         </Toolbar>
       </AppBar>
+      {
+        loading && existingValue? 
+        <>
+        <CircularProgress 
+          color="inherit" 
+          size={50}/>
+        </> :
+        !loading && existingValue?
+        <CustomerContext.Provider value={existingValue}>
+      <AlertModal
+        opened={openAlertModal}
+        setOpened={setOpenAlertModal}
+      />
+      <SuccessModal title={title}/>
+      {
+        products? 
+        <ProductForm/> : 
+        sales? <AddSaleForm/>:
+        <NewCustomerStepper/>
+      }  
+      </CustomerContext.Provider> :
+      !loading && !existingValue? 
       <CustomerContext.Provider value={value}>
       <AlertModal
         opened={openAlertModal}
@@ -259,7 +335,11 @@ export function FullScreenDialog({products, title, sales}) {
         sales? <AddSaleForm/>:
         <NewCustomerStepper/>
       }  
-      </CustomerContext.Provider>
+      </CustomerContext.Provider> : 
+      <></>
+      }
+      
+      
     </Dialog>
   );
 }

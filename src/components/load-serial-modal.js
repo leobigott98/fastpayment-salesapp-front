@@ -35,6 +35,7 @@ export default function SerialModal({ open, setOpen, id, serial, assign}) {
   const handleModalClose = () => {
     setOpenModal(false);
     setOpen(false);
+    formik.setFieldValue("v_serial_num", "")
   };
 
     const formik = useFormik({
@@ -103,7 +104,8 @@ export default function SerialModal({ open, setOpen, id, serial, assign}) {
           <Typography 
           id="modal-modal-title" 
           variant="h6" 
-          component="h2">
+          component="h2"
+          sx={{mb:2}}>
             Cargar Serial
           </Typography>
           <form 
@@ -120,9 +122,9 @@ export default function SerialModal({ open, setOpen, id, serial, assign}) {
                   columnSpacing={1}>
                     <Grid xs={12}>
                       <TextField
-                        error={!!(formik.touched.v_serial_num && formik.errors.v_serial_num)}
+                        //error={!!(formik.touched.v_serial_num && formik.errors.v_serial_num)}
                         fullWidth
-                        helperText={formik.touched.v_serial_num && formik.errors.v_serial_num}
+                        //helperText={formik.touched.v_serial_num && formik.errors.v_serial_num}
                         label="Serial"
                         name="v_serial_num"
                         onBlur={formik.handleBlur}
@@ -138,6 +140,7 @@ export default function SerialModal({ open, setOpen, id, serial, assign}) {
                     //disabled={activeStep === 4}
                     variant="contained"
                     sx={{ marginLeft: "auto" }}
+                    disabled={formik.values.v_serial_num === ""? true : false}
                   >
                     Enviar
                   </Button>
