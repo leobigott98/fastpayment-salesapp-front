@@ -105,8 +105,16 @@ const AddSaleForm = () => {
             setMessage(json.result[0].message);
             if (json.result[0].error_num > 0) {
               setError(true);
+            }else{
+              fetch(`${process.env.NEXT_PUBLIC_APIURL}/api/v1/sales/pdf/${sale_id}`,{
+                method: 'GET',
+                headers: {
+                "Content-Type": "application/json",
+                "X-Auth-Token": window.localStorage.getItem("token"),
+              }
+              }).then(()=>{
+                setSuccess(true)})
             }
-            setSuccess(true);
           });
         });
 
